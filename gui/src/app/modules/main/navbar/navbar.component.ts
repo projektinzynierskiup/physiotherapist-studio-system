@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onModuleClick(item: MenuItem) {
     if(item.title && item.url) {
-      this.router.navigate([item.title, item.url]);
+      this.router.navigate([item.url]);
     }
   }
 

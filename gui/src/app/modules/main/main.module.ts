@@ -7,11 +7,13 @@ import {
   NbLayoutModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     MainComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent
 
   ],
   imports: [
