@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
   selector: 'app-main',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
 
+  constructor(private theme: NbThemeService) {}
 }
