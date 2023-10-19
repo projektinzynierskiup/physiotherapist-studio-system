@@ -19,27 +19,43 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.menuItems = [
       {
         title: 'home',
-        url: '/home'
+        url: '/home',
+        permissions: ['GUEST', 'USER', 'MOD', 'ADMIN']
       },
       {
-        title: 'book-visit',
-        url: 'book-visit'
+        title: 'booking',
+        url: 'booking',
+        permissions: ['GUEST', 'USER', 'MOD', 'ADMIN']
       },
       {
         title: 'reviews',
-        url: '/reviews'
+        url: '/reviews',
+        permissions: ['GUEST', 'USER', 'MOD', 'ADMIN']
+      },
+      {
+        title: 'calendar',
+        url: '/calendar',
+        permissions: ['MOD', 'ADMIN']
+      },
+      {
+        title: 'analytics',
+        url: '/analytics',
+        permissions: ['MOD', 'ADMIN']
       },
       {
         title: 'login',
-        url: '/login'
+        url: '/login',
+        permissions: ['GUEST', 'USER', 'MOD', 'ADMIN']
       },
       {
         title: 'register',
-        url: '/register'
+        url: '/register',
+        permissions: ['GUEST', 'ADMIN']
       },
       {
         title: 'account',
-        url: '/account'
+        url: '/account',
+        permissions: ['USER', 'MOD', 'ADMIN']
       }
       
     ]
