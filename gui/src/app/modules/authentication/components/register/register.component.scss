@@ -1,0 +1,87 @@
+// @import "../../../../buttons.scss";
+// @import "~@nebular/theme/styles/theming";
+// @import "~@nebular/theme/styles/themes";
+
+nb-card-header {
+   padding: 16px;
+ }
+ nb-card-body {
+   padding: 16px;
+
+ }
+ .center {
+   border: 1px solid gray;
+
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   width: 400px;
+   text-align: center;
+   background: rgba(255, 255, 255, 0.8);
+ }
+
+ #login,
+ #password,
+ #confirm-password,
+ #email,
+ #username,
+ #surname {
+   padding: 0.9em;
+
+   &:hover,
+   :focus,
+   :active {
+     background-color: rgb(246, 246, 246);
+   }
+ }
+
+ .submit-box {
+   a {
+     color: red;
+   }
+ }
+
+ small {
+   color: red;
+ }
+
+ .middle {
+   border: 1px solid #777777;
+   border-radius: 0;
+   border-bottom: 1px;
+ }
+
+ .start {
+   border: 2px solid #777777;
+   border-radius: 10px 10px 0 0;
+   border-bottom: 1px;
+ }
+
+ .end {
+   border: 2px solid #777777;
+   border-top: 1px;
+   border-radius: 0 0 10px 10px;
+ }
+
+ .login-form {
+   margin-left: 0px;
+   margin-right: 0px;
+ }
+
+ .submit-btn {
+   margin-top: 15px;
+   width: 100%;
+ }
+
+ .bottom-box {
+   margin-top: 2em;
+   p {
+     padding: 0;
+     margin: 0;
+   }
+
+   a {
+     color: nb-theme(color-primary-500);
+   }
+ }

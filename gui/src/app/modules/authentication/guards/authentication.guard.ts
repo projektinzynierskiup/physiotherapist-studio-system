@@ -13,7 +13,7 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     
     if (!this.auth.getToken()) {
-      // this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/home');
       return false;
     }
     return true;

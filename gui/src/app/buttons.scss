@@ -1,0 +1,27 @@
+@mixin button-style($color) {
+   color: #fff;
+   box-shadow: none!important;
+   text-transform: uppercase;
+   margin: 4px 0 -5px 0;
+   @if $color == 'primary' {
+       background: $primary-btn-bg;
+       &:hover {
+        //   background:darken($primary-btn-bg, 4%);
+           transition: all 0.3s ease;
+         }
+       &:active {
+      // background:darken($primary-btn-bg, 6%);
+       } 
+   }
+
+   @if $color == 'accent' {
+     //  background: $accent-btn-bg;
+       &:hover {
+       //    background:darken($accent-btn-bg, 4%);
+           transition: all 0.3s ease;
+         }
+       &:active {
+    //   background:darken($accent-btn-bg, 6%);
+       } 
+   }
+ }

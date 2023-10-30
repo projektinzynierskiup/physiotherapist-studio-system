@@ -9,6 +9,8 @@ import { LoginComponent } from './modules/authentication/components/login/login.
 import { RegisterComponent } from './modules/authentication/components/register/register.component';
 import { AccountEntryComponent } from './modules/account/account-entry/account-entry.component';
 import { AnalyticsEntryComponent } from './modules/analytics/analytics-entry/analytics-entry.component';
+import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
+import { LogoutComponent } from './modules/authentication/components/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -39,14 +41,19 @@ const routes: Routes = [
       },
       {
         path: 'analytics',
-        canActivate: [],
+        canActivate: [AuthenticationGuard],
         component: AnalyticsEntryComponent
       },
       {
         path: 'account',
-        canActivate: [],
+        canActivate: [AuthenticationGuard],
         component: AccountEntryComponent
       },
+      {
+        path: 'logout',
+        canActivate: [AuthenticationGuard],
+        component: LogoutComponent
+      }
     ]
   },
   {

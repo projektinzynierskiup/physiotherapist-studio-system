@@ -1,1 +1,36 @@
-<p>login works!</p>
+<nb-layout>
+   <nb-layout-column>
+      <nb-card class="center main-card"  fxLayout="column">
+         <nb-card-header>
+            <a routerLink="/home" style="font-weight: bold">
+               <img src="../../../assets/logo.png" style="width: 100%;"/>
+            </a>
+         </nb-card-header>
+         <nb-card-body>
+            <p style="font-weight: bold">SIGN IN:</p>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+               <div class="login-form" fxLayout="column" fxLayoutAlign="center none">
+                  <input nbInput id="email" type="text" class="email"
+                     placeholder="Email" formControlName="email" autocomplete="email" required />
+                  <input nbInput id="password" formControlName="password" class="password"
+                     placeholder="Password" autocomplete="password" type="password" required />
+                  <div class="submit-box">
+                     <button class="submit-btn" type="submit" [disabled]="loginForm.value.email === '' || loginForm.value.password === ''">
+                        SIGN IN
+                     </button>
+                     <!-- <a routerLink="/changepassword">
+                     Forgot password?
+                     </a> -->
+                     <div class="signup-box" fxLayoutAlign="end center" fxLayout="column">
+                     <p>Do not have an account?</p>
+                     <a routerLink="/register" style="font-weight: bold">
+                        Register
+                     </a>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </nb-card-body>
+      </nb-card>
+   </nb-layout-column>
+ </nb-layout>

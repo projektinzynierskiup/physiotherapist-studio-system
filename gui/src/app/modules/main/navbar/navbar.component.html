@@ -1,16 +1,30 @@
-<div class="navbar">
-   <div class="buttons">
-      <div class="button-container" *ngFor="let item of menuItems" fxLayoutAlign="center center">
-        <!-- <div *ngIf="(item.permissions ? hasPermission(item.permissions) : true) && !item.disabled" class="button-style"
-          [routerLink]="[item.url]" [routerLinkActive]="['active-module']"
-          (click)="onModuleClick(item); block()" fxLayout="row" fxLayoutAlign="center center"> -->
-          <!-- <mat-icon class="icon" svgIcon="{{item.icon}}">
-          </mat-icon> -->
-         <div  class="button-style" [routerLink]="[item.url]" [routerLinkActive]="['active-module']" 
-         (click)="onModuleClick(item);">
-          <p class="icon-text" fxHide fxShow.gt-md>{{ item.title }}</p>
+<div class="navbar" fxLayout="row"  fxLayoutWrap="wrap" >
+  <div class="buttons" fxLayoutAlign="start center">
+    <div class="button-container" *ngFor="let item of menuItems" fxLayoutAlign="center center">
+      <div *ngIf="(!item.loginRequired || isLogged)" class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
+      (click)="onModuleClick(item);">
+        <div *ngIf="!item.contextMenu"  fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon *ngIf="item.icon !== ''" class="icon" >
+            {{item.icon}}
+          </mat-icon>
+            <p class="icon-text" fxHide fxShow.gt-md>{{ item.title }}</p>
         </div>
       </div>
     </div>
+  </div>
+  <hr fxLayoutAlign="center center">
+  <div class="buttons" fxLayoutAlign="end center">
 
+      <div class="button-container" *ngFor="let item of accountActions" fxLayoutAlign="center center">
+        <div *ngIf="(!item.loginRequired || isLogged) && (!item.hideAfterLogin || !isLogged)"  class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
+        (click)="onModuleClick(item);">
+          <div  fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon *ngIf="item.icon !== ''" class="icon" >
+              {{item.icon}}
+            </mat-icon>
+              <p class="icon-text" fxHide fxShow.gt-md>{{ item.title }}</p>
+          </div>
+        </div>
+      </div>
+  </div>
 </div>
