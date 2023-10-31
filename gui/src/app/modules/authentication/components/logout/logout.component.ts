@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/modules/shared/models/user.model';
 import { AppState } from 'src/app/store/app.states';
-import { Login, Logout } from '../../store/authentication.actions';
 import { AuthenticationService } from '../../services/authentication.service';
+import { logout } from '../../store/authentication.actions';
 
 @Component({
   selector: 'app-logout',
@@ -19,7 +19,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new Logout())
+    this.store.dispatch(logout())
   }
 
   ngOnDestroy(): void {

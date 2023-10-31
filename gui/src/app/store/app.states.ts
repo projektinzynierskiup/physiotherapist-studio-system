@@ -2,5 +2,5 @@ import * as authentication from '../modules/authentication/store/authentication.
 
 
 export interface AppState {
-   authentication: authentication.AuthenticationState;
+   authentication: authentication.AuthState;
 }

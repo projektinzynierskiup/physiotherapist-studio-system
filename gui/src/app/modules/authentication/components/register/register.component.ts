@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
-import { Register } from '../../store/authentication.actions';
 import { User } from 'src/app/modules/shared/models/user.model';
+import { register } from '../../store/authentication.actions';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +37,7 @@ export class RegisterComponent {
     };
     console.log(user)
     console.log(this.registerForm)
-    this.store.dispatch(new Register(user))
+    this.store.dispatch(register({user: user}))
   }
 
   checkPasswords(group: FormGroup) {

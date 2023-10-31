@@ -10,12 +10,13 @@ import { NbMenuModule, NbThemeModule } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { StoreModule } from '@ngrx/store';
-import { AuthenticationReducer } from './modules/authentication/store/authentication.reducers';
 import { AuthenticationEffects } from './modules/authentication/store/authentication.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './store/app.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/app.reducers';
+import { RoleGuard } from './modules/authentication/guards/role.guard';
 
 @NgModule({
   declarations: [
@@ -32,13 +33,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     EffectsModule.forRoot([...Effects]),
     NbMenuModule.forRoot(),
     HttpClientModule,
-    StoreModule.forRoot(AuthenticationReducer),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     })
   ],
   providers: [
-    AuthenticationGuard
+    AuthenticationGuard,
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })

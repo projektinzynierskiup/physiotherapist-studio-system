@@ -16,7 +16,7 @@
   <div class="buttons" fxLayoutAlign="end center">
 
       <div class="button-container" *ngFor="let item of accountActions" fxLayoutAlign="center center">
-        <div *ngIf="(!item.loginRequired || isLogged) && (!item.hideAfterLogin || !isLogged)"  class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
+        <div *ngIf="canDisplay(item)"  class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
         (click)="onModuleClick(item);">
           <div  fxLayout="row" fxLayoutAlign="center center">
             <mat-icon *ngIf="item.icon !== ''" class="icon" >

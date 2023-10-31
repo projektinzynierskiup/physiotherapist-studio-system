@@ -1,53 +1,53 @@
-import { User } from "../../shared/models/user.model";
-import { AUTHENTICATION_ACTIONS, AuthenticationActions } from "./authentication.actions";
+import { Action, createReducer, on } from '@ngrx/store';
+import { User } from '../../shared/models/user.model';
+import * as AuthActions from '../store/authentication.actions'
 
-export interface AuthenticationState {
-  isAuthenticated: boolean
-  user: User| null
-  loginEnd: boolean
+export interface AuthState {
+  user: User | null;
+  token: string | null;
+  error: any | null;
 }
 
-export const initialAuthenticationState: AuthenticationState = {
-  isAuthenticated: false,
+export const initialState: AuthState = {
   user: null,
-  loginEnd: true
-}
+  token: null,
+  error: null,
+};
 
-export function AuthenticationReducer(state: AuthenticationState, action: AuthenticationActions){
+const authReducer = createReducer(
+  initialState,
+  on(AuthActions.loginSuccess, (state, { token, userData }) => ({
+    ...state,
+    token,
+    user: userData,
+    error: null,
+  })),
+  on(AuthActions.loginFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(AuthActions.registerSuccess, (state) => ({
+    ...state,
+    error: null,
+  })),
+  on(AuthActions.registerFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    user: null,
+    token: null,
+    error: null,
+  })),
+  on(AuthActions.logoutSuccess, (state) => ({
+    ...state,
+    user: null,
+    token: null,
+    error: null,
+  }))
+)
 
-   switch (action.type) {
-      case AUTHENTICATION_ACTIONS.LOGIN: {
-        return {
-          ...state,
-          loginEnd: false
-        };
-      }
-      case AUTHENTICATION_ACTIONS.LOGIN_SUCCESS: {
-        return {
-          ...state,
-          isAuthenticated: true,
-          user: {
-            email: action.payload.userData.email,
-            username: action.payload.userData.username,
-          },
-          loginEnd: true,
-  
-        };
-      }
-      case AUTHENTICATION_ACTIONS.LOGIN_FAILURE: {
-        return {
-          ...state
-        };
-      }
-      case AUTHENTICATION_ACTIONS.LOGOUT_SUCCESS: {
-        return {
-          ...state,
-          isAuthenticated: false,
-          user: null  
-        };
-      }
-      default:
-         return state;
-   }
-
+export function reducer(state: AuthState | undefined, action: Action) {
+  return authReducer(state, action);
 }

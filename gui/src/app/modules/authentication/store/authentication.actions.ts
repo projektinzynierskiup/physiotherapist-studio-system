@@ -1,64 +1,33 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { User } from '../../shared/models/user.model';
 
-export namespace AUTHENTICATION_ACTIONS {
-   export const LOGIN = '[Auth] Login Requested';
-   export const LOGIN_SUCCESS = '[Auth] Login Success';
-   export const LOGIN_FAILURE = '[Auth] Login Failure';
-   export const REGISTER = '[Auth] Register Requested';
-   export const REGISTER_SUCCESS = '[Auth] Register Success';
-   export const REGISTER_FAILURE = '[Auth] Register Failure';
-   export const LOGOUT = '[Auth] Logout';
-   export const LOGOUT_SUCCESS = '[Auth] Logout Success';
-}
+export const login = createAction(
+  '[Auth] Login Requested',
+  props<{ user: User }>()
+);
 
-export class Login implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.LOGIN;
-   constructor(public payload: User) { }
-}
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{ token: string; userData: any }>()
+);
 
-export class LoginSuccess implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.LOGIN_SUCCESS;
-   constructor(public payload: { token: string, userData: any }) { }
-}
+export const loginFailure = createAction(
+  '[Auth] Login Failure',
+  props<{ error: any, email: string | undefined }>()
+);
 
-export class LoginFailure implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.LOGIN_FAILURE;
-   constructor(public payload: any) { }
-}
+export const register = createAction(
+  '[Auth] Register Requested',
+  props<{ user: User }>()
+);
 
+export const registerSuccess = createAction('[Auth] Register Success');
 
-export class Register implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.REGISTER;
-   constructor(public payload: User) { }
-}
+export const registerFailure = createAction(
+  '[Auth] Register Failure',
+  props<{ error: any, email: string | undefined }>()
+);
 
-export class RegisterSuccess implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.REGISTER_SUCCESS;
-   constructor() { }
-}
+export const logout = createAction('[Auth] Logout');
 
-export class RegisterFailure implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.REGISTER_FAILURE;
-   constructor(public payload: any) { }
-}
-
-export class Logout implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.LOGOUT;
-   constructor() { }
-}
-
-export class LogoutSuccess implements Action {
-   readonly type = AUTHENTICATION_ACTIONS.LOGOUT_SUCCESS;
-   constructor() { }
-}
-
-export type AuthenticationActions = 
-   Login |
-   LoginSuccess |
-   LoginFailure |
-   Register |
-   RegisterSuccess |
-   RegisterFailure |
-   Logout |
-   LogoutSuccess
+export const logoutSuccess = createAction('[Auth] Logout Success');

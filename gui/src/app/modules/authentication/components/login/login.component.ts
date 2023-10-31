@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/modules/shared/models/user.model';
 import { AppState } from 'src/app/store/app.states';
-import { Login } from '../../store/authentication.actions';
 import { AuthenticationService } from '../../services/authentication.service';
+import { login } from '../../store/authentication.actions';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
     console.log(user)
     // this.store.dispatch(new FullStoreReset());
-    this.store.dispatch(new Login(user));
+    this.store.dispatch(login({user: user}));
   }
 
   ngOnDestroy(): void {

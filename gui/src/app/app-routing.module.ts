@@ -11,6 +11,8 @@ import { AccountEntryComponent } from './modules/account/account-entry/account-e
 import { AnalyticsEntryComponent } from './modules/analytics/analytics-entry/analytics-entry.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { LogoutComponent } from './modules/authentication/components/logout/logout.component';
+import { RoleGuard } from './modules/authentication/guards/role.guard';
+import { AdministrationEntryComponent } from './modules/administration/administration-entry/administration-entry.component';
 
 const routes: Routes = [
   {
@@ -36,13 +38,27 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        canActivate: [],
-        component: CalendarEntryComponent
+        canActivate: [AuthenticationGuard, RoleGuard],
+        component: CalendarEntryComponent,
+        data: {
+          permissions: ['MOD', 'ADMIN']
+        }
       },
       {
         path: 'analytics',
-        canActivate: [AuthenticationGuard],
-        component: AnalyticsEntryComponent
+        canActivate: [AuthenticationGuard, RoleGuard],
+        component: AnalyticsEntryComponent,
+        data: {
+          permissions: ['MOD', 'ADMIN']
+        }
+      },
+      {
+        path: 'administration',
+        canActivate: [AuthenticationGuard, RoleGuard],
+        component: AdministrationEntryComponent,
+        data: {
+          permissions: ['MOD', 'ADMIN']
+        }
       },
       {
         path: 'account',

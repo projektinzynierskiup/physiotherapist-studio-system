@@ -33,4 +33,7 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
+  getUserRole(): string | null {
+    return localStorage.getItem('role');
+  }
 }

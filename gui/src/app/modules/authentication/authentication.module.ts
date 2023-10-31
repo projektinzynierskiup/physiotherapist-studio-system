@@ -16,6 +16,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { LogoutComponent } from "./components/logout/logout.component";
+import { RoleGuard } from "./guards/role.guard";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { LogoutComponent } from "./components/logout/logout.component";
   ],
   providers: [
     AuthenticationGuard,
-    AuthenticationService
+    AuthenticationService,
+    RoleGuard
   ],
 })
 

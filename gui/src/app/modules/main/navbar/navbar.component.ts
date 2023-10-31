@@ -58,6 +58,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         permissions: ['MOD', 'ADMIN'],
         icon: ' show_chart',
         loginRequired: true
+      },
+      {
+        title: 'administration',
+        url: '/administration',
+        permissions: ['ADMIN'],
+        icon: 'settings-2-outline',
+        loginRequired: true
       }
 
       
@@ -68,7 +75,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         title: 'login',
         url: '/login',
         permissions: ['GUEST', 'USER', 'MOD', 'ADMIN'],
-        icon: '',
+        icon: 'login',
         loginRequired: false,
         hideAfterLogin: true
       },
@@ -76,7 +83,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         title: 'register',
         url: '/register',
         permissions: ['GUEST', 'ADMIN'],
-        icon: '',
+        icon: 'person_add',
         loginRequired: false,
         hideAfterLogin: true
       },
@@ -91,7 +98,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         title: 'logout',
         url: 'logout',
         permissions: ['USER', 'MOD', 'ADMIN'],
-        icon: '',
+        icon: 'logout',
         loginRequired: true
       }
     ]
@@ -101,6 +108,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if(item.title && item.url) {
       this.router.navigate([item.url]);
     }
+  }
+
+  canDisplay(item : MenuItem) {
+    return (!item.loginRequired || this.isLogged) && (!item.hideAfterLogin || !this.isLogged)
   }
 
   ngOnDestroy(): void {
