@@ -2,6 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from '../../shared/models/navbar.model';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { AuthorizationService } from '../../authentication/services/authorization.service';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.states';
+import { selectIsAuthenticated } from '../../authentication/store/authentication.selectors';
 
 @Component({
   selector: 'app-navbar',
@@ -11,17 +16,23 @@ import { AuthenticationService } from '../../authentication/services/authenticat
 export class NavbarComponent implements OnInit, OnDestroy {
 
   menuItems : MenuItem[] = []
-  isLogged : boolean = false
+
+  isAuthenticatedSubscription?: Subscription
+
+  isAuthenticated?: boolean  
+  
   accountActions : any[] = []
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private store: Store<AppState>,
+    private authorizationService: AuthorizationService
   ) {}
 
   ngOnInit() {
 
-    this.isLogged = this.authenticationService.getToken() != undefined
-    console.log(this.isLogged)
+    this.isAuthenticatedSubscription = this.store.select(selectIsAuthenticated).subscribe(res => {
+      this.isAuthenticated = res
+    })
 
     this.menuItems = [
       {
@@ -50,7 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         url: '/calendar',
         permissions: ['MOD', 'ADMIN'],
         icon: 'calendar_today',
-        loginRequired: false
+        loginRequired: true
       },
       {
         title: 'analytics',
@@ -111,11 +122,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   canDisplay(item : MenuItem) {
-    return (!item.loginRequired || this.isLogged) && (!item.hideAfterLogin || !this.isLogged)
+    return (!item.loginRequired || this.isAuthenticated) && (!item.hideAfterLogin || !this.isAuthenticated) && 
+      (item.permissions ? this.authorizationService.hasPermission(item.permissions) : true)
   }
 
   ngOnDestroy(): void {
-    
+    if(this.isAuthenticatedSubscription) this.isAuthenticatedSubscription.unsubscribe()
+
   }
 
 

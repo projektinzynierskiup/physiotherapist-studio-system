@@ -1,0 +1,14 @@
+<div *ngIf="offer" class="container"  fxLayoutGap="20px " fxLayout="row wrap">
+   <div class="card" *ngFor="let offerItem of offer"fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <div class="card-title">
+         <h4>
+            {{offerItem.massageName}}
+         </h4>
+      </div>
+      <div class="card-description">
+         {{offerItem.description}}
+      </div>
+      <hr>
+      <button>Book Visit</button>
+   </div>
+</div>

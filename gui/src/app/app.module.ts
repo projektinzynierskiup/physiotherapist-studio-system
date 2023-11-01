@@ -17,15 +17,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/app.reducers';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
+import { AccountModule } from './modules/account/account.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MainModule,
+    AccountModule,
     NbThemeModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticationModule,
@@ -42,6 +44,7 @@ import { RoleGuard } from './modules/authentication/guards/role.guard';
     AuthenticationGuard,
     RoleGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AppComponent]
 })
 export class AppModule { }

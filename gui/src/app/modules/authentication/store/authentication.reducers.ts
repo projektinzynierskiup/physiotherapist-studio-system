@@ -3,24 +3,27 @@ import { User } from '../../shared/models/user.model';
 import * as AuthActions from '../store/authentication.actions'
 
 export interface AuthState {
-  user: User | null;
-  token: string | null;
-  error: any | null;
+  isAuthenticated: boolean;
+  user: User | undefined;
+  token: string | undefined;
+  error: any | undefined;
 }
 
 export const initialState: AuthState = {
-  user: null,
-  token: null,
-  error: null,
+  isAuthenticated: false,
+  user: undefined,
+  token: undefined,
+  error: undefined,
 };
 
 const authReducer = createReducer(
   initialState,
   on(AuthActions.loginSuccess, (state, { token, userData }) => ({
     ...state,
+    isAuthenticated: true,
     token,
     user: userData,
-    error: null,
+    error: undefined,
   })),
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
@@ -28,7 +31,7 @@ const authReducer = createReducer(
   })),
   on(AuthActions.registerSuccess, (state) => ({
     ...state,
-    error: null,
+    error: undefined,
   })),
   on(AuthActions.registerFailure, (state, { error }) => ({
     ...state,
@@ -36,15 +39,16 @@ const authReducer = createReducer(
   })),
   on(AuthActions.logout, (state) => ({
     ...state,
-    user: null,
-    token: null,
-    error: null,
+    user: undefined,
+    token: undefined,
+    error: undefined,
   })),
   on(AuthActions.logoutSuccess, (state) => ({
     ...state,
-    user: null,
-    token: null,
-    error: null,
+    isAuthenticated: false,
+    user: undefined,
+    token: undefined,
+    error: undefined,
   }))
 )
 

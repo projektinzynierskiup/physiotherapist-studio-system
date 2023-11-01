@@ -1,7 +1,7 @@
 <div class="navbar" fxLayout="row"  fxLayoutWrap="wrap" >
   <div class="buttons" fxLayoutAlign="start center">
     <div class="button-container" *ngFor="let item of menuItems" fxLayoutAlign="center center">
-      <div *ngIf="(!item.loginRequired || isLogged)" class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
+      <div *ngIf="canDisplay(item)" class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   
       (click)="onModuleClick(item);">
         <div *ngIf="!item.contextMenu"  fxLayout="row" fxLayoutAlign="center center">
           <mat-icon *ngIf="item.icon !== ''" class="icon" >

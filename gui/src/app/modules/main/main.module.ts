@@ -10,8 +10,9 @@ import {
   NbLayoutModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home/components/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OfferComponent } from './home/components/offer/offer.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     MainComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    OfferComponent
 
   ]
 })

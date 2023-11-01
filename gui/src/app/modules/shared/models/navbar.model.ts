@@ -1,4 +1,4 @@
-export class MenuItem {
+export interface MenuItem {
    title?: string;
    url?: string;
    permissions?: string[];
