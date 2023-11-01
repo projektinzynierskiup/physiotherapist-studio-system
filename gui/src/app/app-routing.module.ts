@@ -11,6 +11,7 @@ import { AccountEntryComponent } from './modules/account/account-entry/account-e
 import { AnalyticsEntryComponent } from './modules/analytics/analytics-entry/analytics-entry.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { LogoutComponent } from './modules/authentication/components/logout/logout.component';
+import {CalComponent} from "./modules/cal/cal.component";
 
 const routes: Routes = [
   {
@@ -66,6 +67,11 @@ const routes: Routes = [
     canActivate: [],
     component: RegisterComponent
   },
+  {
+    path: 'cal',
+    canActivate: [],
+    component: CalComponent
+  }
 ];
 
 @NgModule({

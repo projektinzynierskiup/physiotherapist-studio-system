@@ -16,10 +16,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './store/app.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {CalComponent} from "./modules/cal/cal.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CalComponent
   ],
   imports: [
     BrowserModule,

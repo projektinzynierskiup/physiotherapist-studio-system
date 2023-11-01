@@ -1,0 +1,34 @@
+.kalendarz {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.kalendarz th, .kalendarz td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.kalendarz th {
+  background-color: #f2f2f2;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
