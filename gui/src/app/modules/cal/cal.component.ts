@@ -15,14 +15,7 @@ export class CalComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<LoginSuccessData>('http://localhost:8080/guest/c80f2044-78ec-11ee-b962-0242ac120002').subscribe(data => {
-      const dzisiaj = new Date(data.token);
-      this.ustawTydzien(dzisiaj);
-
-      this.http.get<Day[]>('http://localhost:8080/guest/calendar/2023-10-30').subscribe(jsonData => {
-        this.przypiszDane(jsonData);
-      });
-    });
+    this.pobierzDaneTygodnia(new Date());
   }
 
   przypiszDane(dane: Day[]) {
@@ -44,19 +37,39 @@ export class CalComponent implements OnInit {
 
   ustawTydzien(dzisiaj: Date) {
     const dzienTygodnia = dzisiaj.getDay();
-    console.log(dzienTygodnia);
     const poniedzialek = new Date(dzisiaj);
     poniedzialek.setDate(dzisiaj.getDate() - (dzienTygodnia === 0 ? 6 : dzienTygodnia - 1));
 
-    for (let i = 0; i < 5; i++) { // Dla dni od poniedziałku do piątku
+    for (let i = 0; i < 7; i++) {
       const dzien = new Dzien(new Date(poniedzialek));
       dzien.data.setDate(poniedzialek.getDate() + i);
       this.dni.push(dzien);
 
-      // Przypisujemy godziny
       for (let h = 10; h <= 22; h++) {
         dzien.godziny.push(h);
       }
     }
+  }
+
+  pobierzDaneTygodnia(tydzien: Date) {
+    const formattedDate = this.formatujDate(tydzien);
+    this.http.get<Day[]>(`http://localhost:8080/guest/calendar/${formattedDate}`).subscribe(jsonData => {
+      this.dni = []; // Wyczyszczamy aktualne dni
+      this.ustawTydzien(tydzien);
+      this.przypiszDane(jsonData);
+    });
+  }
+
+  przewinTydzien(liczbaTygodni: number) {
+    const aktualnyTydzien = this.dni[0].data;
+    aktualnyTydzien.setDate(aktualnyTydzien.getDate() + liczbaTygodni * 7);
+    this.pobierzDaneTygodnia(aktualnyTydzien);
+  }
+
+  formatujDate(data: Date): string {
+    const year = data.getFullYear();
+    const month = (data.getMonth() + 1).toString().padStart(2, '0');
+    const day = data.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

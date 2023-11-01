@@ -1,8 +1,14 @@
-<table class="table table-bordered">
+<div class="cal-container">
+  <button class="cal-button" (click)="przewinTydzien(-1)">Poprzedni tydzień</button>
+  <button class="cal-button" (click)="przewinTydzien(1)">Następny tydzień</button>
+</div>
+<table class="calendar-table">
   <thead>
   <tr>
     <th>Godzina</th>
-    <th *ngFor="let dzien of dni">{{ dzien.data | date: 'yyyy-MM-dd' }}</th>
+    <th class="day-header" *ngFor="let dzien of dni">
+      {{dzien.data | date: 'EEEE' }}
+    </th>
   </tr>
   </thead>
   <tbody>
