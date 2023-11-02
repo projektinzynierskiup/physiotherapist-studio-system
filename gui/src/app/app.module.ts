@@ -18,10 +18,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/app.reducers';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AccountModule } from './modules/account/account.module';
+import { OpinionComponent } from './modules/opinion/opinion.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
+    OpinionComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { AccountModule } from './modules/account/account.module';
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
-    })
+    }),
+    FormsModule
   ],
   providers: [
     AuthenticationGuard,
