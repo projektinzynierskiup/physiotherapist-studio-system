@@ -9,23 +9,20 @@
          <nb-card-body>
             <p style="font-weight: bold">SIGN IN:</p>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-               <div class="login-form" fxLayout="column" fxLayoutAlign="center none">
-                  <input nbInput id="email" type="text" class="email"
+               <div class="login-form" fxLayout="column" fxLayoutAlign="center center">
+                  <input nbInput fullWidth fieldSize="small"  id="email" type="text" class="email"
                      placeholder="Email" formControlName="email" autocomplete="email" required />
-                  <input nbInput id="password" formControlName="password" class="password"
+                  <input nbInput fullWidth fieldSize="small"  id="password" formControlName="password" class="password"
                      placeholder="Password" autocomplete="password" type="password" required />
-                  <div class="submit-box">
-                     <button class="submit-btn" type="submit" [disabled]="loginForm.value.email === '' || loginForm.value.password === ''">
-                        SIGN IN
-                     </button>
-                     <!-- <a routerLink="/changepassword">
-                     Forgot password?
-                     </a> -->
+                  <button nbButton  size="medium"  class="submit-btn" type="submit" [disabled]="loginForm.value.email === '' || loginForm.value.password === ''">
+                     SIGN IN
+                  </button>
+                  <div class="bottom-box">
                      <div class="signup-box" fxLayoutAlign="end center" fxLayout="column">
-                     <p>Do not have an account?</p>
-                     <a routerLink="/register" style="font-weight: bold">
-                        Register
-                     </a>
+                        <p>Do not have an account?</p>
+                        <a routerLink="/register" style="font-weight: bold">
+                           Register
+                        </a>
                      </div>
                   </div>
                </div>

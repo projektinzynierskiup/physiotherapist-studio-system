@@ -1,6 +1,6 @@
 <nb-layout>
-   <nb-layout-column>
-     <nb-card [class]="'center'">
+   <nb-layout-column >
+     <nb-card [class]="'center'" >
        <nb-card-header>
          <a routerLink="/home" style="font-weight: bold">
             <img src="../../../assets/logo.png" style="width: 100%;"/>
@@ -8,50 +8,47 @@
        </nb-card-header>
  
        <nb-card-body>
+          SIGN UP
          <form  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-           <p style="font-weight: bold">
-             SIGN UP
-           </p>
-           <div class="login-form" fxLayout="column" fxLayoutAlign="center none">
-             <input nbInput id="email" type="email" class="top"  placeholder="Email" formControlName="email" required inputTrim />
+           <div class="register-form" fxLayout="column" fxLayoutAlign="center center">
+             <input nbInput  id="email" type="email" fieldSize="small" placeholder="Email" formControlName="email"  fullWidth required inputTrim />
  
-             <input id="password"  nbInput
+             <input id="password"  nbInput 
                [status]="
-                 (registerForm.controls['password'].touched || registerForm.controls['confirmPassword'].touched) && !registerForm.valid? 'danger' : 'primary'" formControlName="password" class="middle"
+                 (registerForm.controls['password'].touched || registerForm.controls['confirmPassword'].touched) && !registerForm.valid? 'danger' : 'basic'" formControlName="password" fieldSize="small" fullWidth 
                autocomplete="new-password" placeholder="Password" type="password" required />
  
-             <input id="confirm-password" nbInput
+             <input id="confirm-password" nbInput 
                 [status]="(registerForm.controls['password'].touched ||
                    registerForm.controls['confirmPassword'].touched) &&
                  !registerForm.valid
                    ? 'danger'
-                   : 'primary' "
-                  formControlName="confirmPassword" placeholder="Confirm password"
-               type="password" autocomplete="new-password" [class]="'bottom' "
+                   : 'basic' "
+                  formControlName="confirmPassword" placeholder="Confirm password" fullWidth 
+               type="password" fieldSize="small" autocomplete="new-password"
                required />
 
-               <input nbInput id="username" type="username" class="top"  placeholder="Name" formControlName="username" required inputTrim />
+               <input nbInput  id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
 
                
-               <input nbInput id="surname" type="surname" class="top"  placeholder="Surname" formControlName="surname" required inputTrim />
+               <input nbInput  id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
  
              <!-- <div style="width:100%; margin-top:20px;" fxLayoutAlign="start start" fxLayout="column" fxLayoutGap="10px">
                <nb-checkbox status="primary" formControlName="acceptPrivacy" style="text-align: left;">
                 Accept <a [href]="" target=”_blank”>Policy</a> and
-                 <a [href]="" target=”_blank”> regulations</a>. *
-               </nb-checkbox>
-             </div> -->
- 
-             <div>
-               <button class="submit-btn" type="submit"
-                 [disabled]="!registerForm.valid">
-                 Register
-               </button>
-             </div>
+                <a [href]="" target=”_blank”> regulations</a>. *
+              </nb-checkbox>
+            </div> -->
+            
+            <button nbButton class="submit-btn" type="submit"  size="medium" 
+              [disabled]="!registerForm.valid">
+              Register
+            </button>
+
            </div>
          </form>
          <div class="bottom-box" fxLayout="column" fxLayoutAlign="end center">
-           <p>Have aacount?</p>
+           <p>Have account?</p>
            <a routerLink="/login" style="font-weight: bold">
              Log in
             </a>

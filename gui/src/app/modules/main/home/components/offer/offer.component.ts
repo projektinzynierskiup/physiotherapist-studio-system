@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { OfferItem } from 'src/app/modules/shared/models/offeritem.model';
 import { AppState } from 'src/app/store/app.states';
 import { selectOffer } from '../../store/home.selectors';
+import { setSelectedVisitType } from 'src/app/modules/booking/store/booking.actions';
+import { Router } from '@angular/router';
+import { getOffer } from '../../store/home.actions';
 
 @Component({
   selector: 'app-offer',
@@ -17,18 +20,25 @@ export class OfferComponent implements OnInit, OnDestroy {
   offer?: OfferItem[]
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     
     this.offerSubscription = this.store.select(selectOffer).subscribe(res => {
-      if(res) {
+      console.log(res)
+      if(res.length) {
         this.offer = res
-      }
+      } 
     })
 
-    console.log(this.offer)
+  }
+
+  onOfferItemClick(offerItem: OfferItem) {
+    this.store.dispatch(setSelectedVisitType({visitType: offerItem}))
+
+    this.router.navigate(['/booking'])
   }
 
   ngOnDestroy(): void {

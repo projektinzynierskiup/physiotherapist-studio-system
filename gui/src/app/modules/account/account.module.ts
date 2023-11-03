@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountEntryComponent } from './account-entry/account-entry.component';
-import { AccountCardComponent } from './account-card/account-card.component';
+import { AccountCardComponent } from './account-entry/account-card/account-card.component';
 
 
 

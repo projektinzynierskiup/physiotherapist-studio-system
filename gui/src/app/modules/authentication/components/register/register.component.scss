@@ -3,22 +3,20 @@
 // @import "~@nebular/theme/styles/themes";
 
 nb-card-header {
-   padding: 16px;
- }
- nb-card-body {
-   padding: 16px;
+  padding:16px;   
+}
 
- }
+nb-card-body {
+  padding: 16px;
+}
+
  .center {
-   border: 1px solid gray;
-
    position: absolute;
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
    width: 400px;
    text-align: center;
-   background: rgba(255, 255, 255, 0.8);
  }
 
  #login,
@@ -27,50 +25,26 @@ nb-card-header {
  #email,
  #username,
  #surname {
-   padding: 0.9em;
+  padding: 0.6em 1.6em;
+  margin: 0.3rem;
 
-   &:hover,
-   :focus,
-   :active {
-     background-color: rgb(246, 246, 246);
-   }
- }
+  &:hover,
+  :focus,
+  :active {
+    border-color: black;
+    z-index: 9999;
+  }
+}
 
- .submit-box {
-   a {
-     color: red;
-   }
- }
-
- small {
-   color: red;
- }
-
- .middle {
-   border: 1px solid #777777;
-   border-radius: 0;
-   border-bottom: 1px;
- }
-
- .start {
-   border: 2px solid #777777;
-   border-radius: 10px 10px 0 0;
-   border-bottom: 1px;
- }
-
- .end {
-   border: 2px solid #777777;
-   border-top: 1px;
-   border-radius: 0 0 10px 10px;
- }
-
- .login-form {
+ .register-form {
    margin-left: 0px;
    margin-right: 0px;
+   width: 100%;
  }
 
  .submit-btn {
    margin-top: 15px;
+   padding: 0.9em 1.8em;
    width: 100%;
  }
 
@@ -82,6 +56,6 @@ nb-card-header {
    }
 
    a {
-     color: nb-theme(color-primary-500);
+     text-decoration: none;
    }
  }

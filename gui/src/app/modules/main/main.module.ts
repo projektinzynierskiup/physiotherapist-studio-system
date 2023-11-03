@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 
 import {
+  NbButtonModule,
+  NbCardModule,
   NbContextMenuModule,
   NbLayoutModule
 } from '@nebular/theme';
@@ -19,7 +21,8 @@ import { OfferComponent } from './home/components/offer/offer.component';
     CommonModule,
     RouterModule,
     NbLayoutModule,
-    NbLayoutModule,
+    NbButtonModule,
+    NbCardModule,
     FlexLayoutModule,
     MatIconModule,
     NbContextMenuModule

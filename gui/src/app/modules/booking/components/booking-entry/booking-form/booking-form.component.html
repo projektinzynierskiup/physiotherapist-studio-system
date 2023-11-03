@@ -1,0 +1,26 @@
+
+<form *ngIf="appointmentForm" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" >
+   <div class="appointment-form" fxFlex fxLayout="column" fxLayoutAlign="center center">
+
+      <nb-select *ngIf="offer" class="type" placeholder="Typ" formControlName="type" fullWidth  >
+         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.massageName"  >{{ offerItem.massageName }}</nb-option>
+
+      </nb-select>
+
+      <input nbInput id="date" formControlName="date" class="date" fullWidth 
+         placeholder="Data" required />
+      <input nbInput id="email" formControlName="email" class="email" formControlName="email"  fullWidth 
+         autocomplete="email" placeholder="Email" required/>
+      <!-- <input nbInput id="phoneNumber" formControlName="phoneNumber" class="phoneNumber" fullWidth 
+         placeholder="Phone number" required /> -->
+      <input nbInput id="username" type="text"formControlName="username" class="username" fullWidth 
+         placeholder="Username" required />
+      <input nbInput id="surname" formControlName="surname" class="surname" fullWidth 
+         placeholder="Surname" required />
+      <div class="submit-box">
+         <button nbButton class="submit-btn" type="submit" [disabled]="isFormFilled()"  fullWidth >
+            SUBMIT
+         </button>
+      </div>
+   </div>
+</form>

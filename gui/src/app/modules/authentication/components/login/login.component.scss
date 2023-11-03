@@ -5,7 +5,6 @@
    transform: translate(-50%, -50%);
    width: 400px;
    text-align: center;
-   background: rgba(255, 255, 255, 0.8);
 }
 
 nb-card-header {
@@ -16,14 +15,12 @@ nb-card-body {
    padding: 16px;
 }
 
-.main-card {
-   border: 1px solid gray;
-}
 
-.email,
-.password {
-   padding: 0.9em;
-   margin: 0.9rem;
+
+#email,
+#password {
+   padding: 0.6em 1.6em;
+   margin: 0.3rem;
 
    &:hover,
    :focus,
@@ -32,3 +29,27 @@ nb-card-body {
      z-index: 9999;
    }
 }
+
+.login-form {
+   margin-left: 0px;
+   margin-right: 0px;
+   width: 100%;
+ }
+
+ .submit-btn {
+   margin-top: 15px;
+   padding: 0.9em 1.8em;
+   width: 100%;
+ }
+
+ .bottom-box {
+   margin-top: 2em;
+   p {
+     padding: 0;
+     margin: 0;
+   }
+
+   a {
+     text-decoration: none;
+   }
+ }

@@ -8,6 +8,7 @@ import { SharedService } from '../../shared/services/shared.service';
 import { Subscription } from 'rxjs';
 import { selectIsAuthenticated } from '../../authentication/store/authentication.selectors';
 import { getOffer } from '../home/store/home.actions';
+import { selectLastPageVisited } from '../store/main.selectors';
 
 @Component({
   selector: 'app-main',
@@ -17,6 +18,8 @@ import { getOffer } from '../home/store/home.actions';
 export class MainComponent implements OnInit, OnDestroy {
 
   isAuthenticatedSubscription?: Subscription
+
+  lastPageVisitedSubscription?: Subscription
 
   isAuthenticated?: boolean
 
@@ -37,17 +40,23 @@ export class MainComponent implements OnInit, OnDestroy {
     
     this.restoreSession()
     
-    this.router.navigate(['/home']);
+    this.lastPageVisitedSubscription = this.store.select(selectLastPageVisited).subscribe(res => {
+      if(res) {
+        this.router.navigate([res]);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    })
   }
 
   restoreSession() {
     const token = this.authenticationService.getToken()
-    if(this.isAuthenticated && token) {
+    if(!this.isAuthenticated && token) {
       this.store.dispatch(loginSuccess({
         token: token,
         userData: this.sharedService.getModifyToken(token)
       }))
-    } else {
+    } else if(!this.isAuthenticated) {
       localStorage.setItem('role', 'GUEST');
     }
   }

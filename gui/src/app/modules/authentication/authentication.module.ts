@@ -22,6 +22,8 @@ import { RoleGuard } from "./guards/role.guard";
   imports: [
     RouterModule,
     NbLayoutModule,
+    NbButtonModule,
+    NbCardModule,
     FormsModule,
     NbInputModule,
     ReactiveFormsModule,

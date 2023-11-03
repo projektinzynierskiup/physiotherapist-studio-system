@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
-import { User } from '../../shared/models/user.model';
+import { User } from '../../../shared/models/user.model';
 import { Subscription } from 'rxjs';
-import { selectUser } from '../../authentication/store/authentication.selectors';
+import { selectUser } from '../../../authentication/store/authentication.selectors';
 
 @Component({
   selector: 'app-account-card',

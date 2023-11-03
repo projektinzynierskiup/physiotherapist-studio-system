@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './modules/main/main/main.component';
 import { HomeComponent } from './modules/main/home/components/home.component';
-import { BookingEntryComponent } from './modules/booking/booking-entry/booking-entry.component';
+import { BookingEntryComponent } from './modules/booking/components/booking-entry/booking-entry.component';
 import { ReviewsEntryComponent } from './modules/reviews/reviews-entry/reviews-entry.component';
 import { CalendarEntryComponent } from './modules/calendar/calendar-entry/calendar-entry.component';
 import { LoginComponent } from './modules/authentication/components/login/login.component';

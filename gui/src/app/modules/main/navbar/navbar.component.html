@@ -1,4 +1,4 @@
-<div class="navbar" fxLayout="row"  fxLayoutWrap="wrap" >
+<div class="navbar" fxFlex fxLayout="row"  fxLayoutWrap="wrap" >
   <div class="buttons" fxLayoutAlign="start center">
     <div class="button-container" *ngFor="let item of menuItems" fxLayoutAlign="center center">
       <div *ngIf="canDisplay(item)" class="button-style" [routerLink]="[item?.url]"  fxLayout="row" fxLayoutAlign="center center" [routerLinkActive]="['active-module']"   

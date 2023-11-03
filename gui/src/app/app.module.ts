@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/app.reducers';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AccountModule } from './modules/account/account.module';
+import { BookingModule } from './modules/booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AccountModule } from './modules/account/account.module';
     AppRoutingModule,
     MainModule,
     AccountModule,
+    BookingModule,
     NbThemeModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticationModule,

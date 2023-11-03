@@ -1,4 +1,11 @@
 .container {
-   margin: 30px auto;
-   width: 80%;
+   width: 100%;
+   margin: 0;
+   padding-top: 40px;
+}
+
+nb-card {
+   margin: 0;
+   padding: 0;
+   border-radius: 0;
 }
