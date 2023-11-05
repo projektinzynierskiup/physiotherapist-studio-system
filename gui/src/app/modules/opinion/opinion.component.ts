@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OpinionPage} from "../shared/models/opinion-page";
 import {OpinionService} from "../shared/services/opinion.service";
+import {NbDialogService} from "@nebular/theme";
+import {TestComponent} from "../test/test.component";
 
 @Component({
   selector: 'app-opinion',
@@ -10,9 +12,19 @@ import {OpinionService} from "../shared/services/opinion.service";
 export class OpinionComponent implements OnInit{
   opinionPage: OpinionPage | undefined;
 
-  constructor(private opinionService: OpinionService) { }
+  constructor(private opinionService: OpinionService,
+              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
+    this.getOpinions(0);
+  }
+
+  openDialog() {
+    this.dialogService.open(TestComponent, {
+      context: {
+
+      }
+    });
     this.getOpinions(0);
   }
 
@@ -40,4 +52,6 @@ export class OpinionComponent implements OnInit{
       }
     );
   }
+
+  protected readonly Math = Math;
 }
