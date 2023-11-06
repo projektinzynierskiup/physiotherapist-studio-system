@@ -19,6 +19,7 @@ import { reducers } from './store/app.reducers';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AccountModule } from './modules/account/account.module';
 import { BookingModule } from './modules/booking/booking.module';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { BookingModule } from './modules/booking/booking.module';
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
-    })
+    }),
+    NbEvaIconsModule
   ],
   providers: [
     AuthenticationGuard,
