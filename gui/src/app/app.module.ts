@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { MainModule } from './modules/main/main.module';
-import { NbMenuModule, NbThemeModule } from '@nebular/theme';
+import { NbMenuModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { StoreModule } from '@ngrx/store';
@@ -37,6 +37,7 @@ import { BookingModule } from './modules/booking/booking.module';
     EffectsModule.forRoot([...Effects]),
     NbMenuModule.forRoot(),
     HttpClientModule,
+    NbToastrModule.forRoot(),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10

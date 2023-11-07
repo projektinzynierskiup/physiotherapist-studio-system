@@ -2,13 +2,16 @@
 <form *ngIf="appointmentForm" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" >
    <div class="appointment-form" fxFlex fxLayout="column" fxLayoutAlign="center center">
 
-      <nb-select *ngIf="offer" class="type" placeholder="Typ" formControlName="type" fullWidth  >
-         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.massageName"  >{{ offerItem.massageName }}</nb-option>
+      <nb-select *ngIf="offer" class="type" placeholder="Typ" formControlName="type" fullWidth required >
+         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.id"  >{{ offerItem.massageName }}</nb-option>
 
       </nb-select>
 
-      <input nbInput id="date" formControlName="date" class="date" fullWidth 
-         placeholder="Data" required />
+      <nb-select *ngIf="groupedAppointments" class="date" placeholder="Available appointments" formControlName="date" fullWidth required>
+         <nb-option-group  *ngFor="let group of groupedAppointments" title="{{group.key}}">
+            <nb-option *ngFor="let appointment of group.appointments" value="{{appointment.id}}">{{getTime(appointment.startDate)}} - {{getDuration(appointment.startDate, appointment.endDate)}}</nb-option>
+         </nb-option-group>
+      </nb-select>
       <input nbInput id="email" formControlName="email" class="email" formControlName="email"  fullWidth 
          autocomplete="email" placeholder="Email" required/>
       <!-- <input nbInput id="phoneNumber" formControlName="phoneNumber" class="phoneNumber" fullWidth 

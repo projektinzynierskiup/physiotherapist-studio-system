@@ -11,27 +11,33 @@
           SIGN UP
          <form  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
            <div class="register-form" fxLayout="column" fxLayoutAlign="center center">
-             <input nbInput  id="email" type="email" fieldSize="small" placeholder="Email" formControlName="email"  fullWidth required inputTrim />
+             <input nbInput  id="email" type="email" fieldSize="small" placeholder="Email" formControlName="email"  fullWidth required inputTrim
+             [status]="
+                 registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   
+             [nbTooltip]="prepareTooltip('email')" [nbTooltipStatus]="registerForm.controls['email'].value === ''  || registerForm.controls['email'].hasError('email') ? 'danger' : 'success'" />
  
-             <input id="password"  nbInput 
+             <input id="password"  nbInput [nbTooltip]="prepareTooltip('password')"
+             [nbTooltipStatus]="registerForm.controls['password'].value === '' || registerForm.controls['password'].hasError('pattern') ? 'danger' : 'success'" 
                [status]="
-                 (registerForm.controls['password'].touched || registerForm.controls['confirmPassword'].touched) && !registerForm.valid? 'danger' : 'basic'" formControlName="password" fieldSize="small" fullWidth 
+                 registerForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'" 
+                 formControlName="password" fieldSize="small" fullWidth 
                autocomplete="new-password" placeholder="Password" type="password" required />
  
              <input id="confirm-password" nbInput 
-                [status]="(registerForm.controls['password'].touched ||
-                   registerForm.controls['confirmPassword'].touched) &&
-                 !registerForm.valid
-                   ? 'danger'
-                   : 'basic' "
-                  formControlName="confirmPassword" placeholder="Confirm password" fullWidth 
+             [nbTooltip]="prepareTooltip('confirmPassword')" [status]="
+             registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   [nbTooltipStatus]="registerForm.controls['confirmPassword'].value === '' || registerForm.controls['confirmPassword'].value !== registerForm.controls['password'].value || registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'success'" placeholder="Confirm password" fullWidth  formControlName="confirmPassword"
                type="password" fieldSize="small" autocomplete="new-password"
                required />
 
-               <input nbInput  id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
+               <input nbInput 
+               [nbTooltip]="prepareTooltip('username')"
+               [nbTooltipStatus]="registerForm.controls['username'].value === '' ? 'danger' : 'success'"
+               id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
 
-               
-               <input nbInput  id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
+               <input nbInput 
+               [nbTooltip]="prepareTooltip('surname')"
+               [nbTooltipStatus]="registerForm.controls['surname'].value === '' ? 'danger' : 'success'"
+               id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
  
              <!-- <div style="width:100%; margin-top:20px;" fxLayoutAlign="start start" fxLayout="column" fxLayoutGap="10px">
                <nb-checkbox status="primary" formControlName="acceptPrivacy" style="text-align: left;">

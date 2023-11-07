@@ -1,9 +1,10 @@
 
-.type {
+.type,
+.date {
    margin: 0.9rem 0;
 }
 
-.date,
+
 .email,
 .phoneNumber,
 .username,
@@ -18,4 +19,8 @@
    margin-top: 15px;
    padding: 0.9em 1.8em;
    width: 100%;
+ }
+
+ nb-option-group {
+   flex-direction: row;
  }

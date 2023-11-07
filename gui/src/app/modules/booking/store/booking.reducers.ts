@@ -1,13 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { OfferItem } from 'src/app/modules/shared/models/offeritem.model';
 import * as BookingActions from '../store/booking.actions'
+import { Appointment } from '../../shared/models/appointment.model';
 
 export interface BookingState {
   selectedItemType: OfferItem | undefined
+  availableAppointments: Appointment[] | undefined
 }
 
 export const initialState: BookingState = {
-   selectedItemType: undefined
+   selectedItemType: undefined,
+   availableAppointments: []
 };
 
 const bookingReducer = createReducer(
@@ -15,6 +18,10 @@ const bookingReducer = createReducer(
   on(BookingActions.setSelectedVisitType, (state, { visitType }) => ({
     ...state,
     selectedItemType: visitType
+  })),
+  on(BookingActions.getAvailableAppointmentsSuccess, (state, { appointments }) => ({
+    ...state,
+    availableAppointments: appointments
   }))
 )
 

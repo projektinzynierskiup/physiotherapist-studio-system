@@ -9,3 +9,9 @@ export const selectSelectedItemType = createSelector(
    selectBookingState,
   (state: BookingState) => state?.selectedItemType
 );
+
+export const selectAvailableAppointments = createSelector(
+  selectBookingState,
+ (state: BookingState) => state?.availableAppointments
+);
+

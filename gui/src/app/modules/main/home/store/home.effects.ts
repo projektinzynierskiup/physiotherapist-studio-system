@@ -20,8 +20,7 @@ export class HomeEffects {
 
    getOffer$ = createEffect(() => this.actions.pipe(
       ofType(getOffer),
-      switchMap(action => {
-        const payload = action;
+      switchMap(() => {
         return this.homeService.getOffer()
           .pipe(
             map((offer: any) => {
