@@ -1,0 +1,18 @@
+<nb-card class="smaller-card">
+    <nb-card-body>
+
+      <nb-form-field>
+        <nb-icon nbPrefix icon="at-outline" pack="eva"></nb-icon>
+        <input nbInput type="text" [formControl]="inputItemFormControl">
+      </nb-form-field>
+      <div *ngIf="inputItemFormControl.hasError('required') && inputItemFormControl.touched">
+        <nb-alert status="danger" *nbError>This field is required.</nb-alert>
+      </div>
+      <div *ngIf="inputItemFormControl.hasError('email') && inputItemFormControl.touched">
+        <nb-alert status="danger" *nbError>Invalid email format.</nb-alert>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton type="primary" fullWidth shape="round" (click)="signInToNewsletter()">Zapisz się do newslettera!</button>
+     </nb-card-footer>
+  </nb-card>

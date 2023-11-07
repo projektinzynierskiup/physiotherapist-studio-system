@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
 import { User } from 'src/app/modules/shared/models/user.model';
 import { register } from '../../store/authentication.actions';
+import { NewsletterService } from 'src/app/modules/shared/services/newsletter.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterComponent {
   regexPassword: any;
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private newsletterService: NewsletterService
   ) {
 
     this.patternPassword = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{1,}$/"
@@ -28,7 +30,8 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{1,}$/)]],
       confirmPassword: [''],
       username: ['', [Validators.required]],
-      surname: ['', [Validators.required]]
+      surname: ['', [Validators.required]],
+      newsletter: ['', []],
       // acceptPrivacy: [false]
     }, { validator: this.checkPasswords });
   }
@@ -42,6 +45,9 @@ export class RegisterComponent {
     };
     console.log(user)
     console.log(this.registerForm)
+    if(this.registerForm.value.newsletter){
+      this.newsletterService.signToNewsletter(this.registerForm.value.email).subscribe();
+    }
     this.store.dispatch(register({user: user}))
   }
 

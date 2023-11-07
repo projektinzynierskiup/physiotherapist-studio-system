@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   NbButtonModule,
   NbCardModule,
+  NbCheckboxModule,
   NbInputModule,
   NbLayoutModule,
   NbTooltipModule
@@ -30,7 +31,8 @@ import { RoleGuard } from "./guards/role.guard";
     NbCardModule,
     NbTooltipModule,
     FlexLayoutModule,
-    NbButtonModule
+    NbButtonModule,
+    NbCheckboxModule
   ],
   declarations: [
     LoginComponent,

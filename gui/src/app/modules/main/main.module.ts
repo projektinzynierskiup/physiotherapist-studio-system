@@ -6,15 +6,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 
 import {
+  NbAlertModule,
   NbButtonModule,
   NbCardModule,
   NbContextMenuModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
   NbLayoutModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/components/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OfferComponent } from './home/components/offer/offer.component';
+import { NewsletterComponent } from '../newsletter/newsletter/newsletter.component';
 
 @NgModule({
   imports: [
@@ -25,13 +30,20 @@ import { OfferComponent } from './home/components/offer/offer.component';
     NbCardModule,
     FlexLayoutModule,
     MatIconModule,
-    NbContextMenuModule
+    NbContextMenuModule,
+    NbCardModule,
+    NbFormFieldModule,
+    ReactiveFormsModule,
+    NbInputModule,
+    NbIconModule,
+    NbAlertModule
   ],
   declarations: [
     MainComponent,
     NavbarComponent,
     HomeComponent,
-    OfferComponent
+    OfferComponent,
+    NewsletterComponent
 
   ]
 })
