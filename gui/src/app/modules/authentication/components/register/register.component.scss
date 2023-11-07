@@ -36,6 +36,18 @@ nb-card-body {
   }
 }
 
+.checkbox {
+  padding: 0.6em 1.6em;
+  margin: 0.3rem;
+
+  &:hover,
+  :focus,
+  :active {
+    border-color: black;
+    z-index: 9999;
+  }
+}
+
  .register-form {
    margin-left: 0px;
    margin-right: 0px;
