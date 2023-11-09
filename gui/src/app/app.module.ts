@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { MainModule } from './modules/main/main.module';
-import { NbMenuModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbDialogModule, NbMenuModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { StoreModule } from '@ngrx/store';
@@ -36,6 +36,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     AuthenticationModule,
     FlexLayoutModule,
     EffectsModule.forRoot([...Effects]),
+    NbDialogModule.forRoot(),
     NbMenuModule.forRoot(),
     HttpClientModule,
     NbToastrModule.forRoot(),

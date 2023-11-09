@@ -7,6 +7,8 @@ export interface AuthState {
   user: User | undefined;
   token: string | undefined;
   error: any | undefined;
+  resetPasswordInfo: string;
+  sendLinkExecuted: boolean
 }
 
 export const initialState: AuthState = {
@@ -14,6 +16,8 @@ export const initialState: AuthState = {
   user: undefined,
   token: undefined,
   error: undefined,
+  resetPasswordInfo: '',
+  sendLinkExecuted: false
 };
 
 const authReducer = createReducer(
@@ -49,6 +53,19 @@ const authReducer = createReducer(
     user: undefined,
     token: undefined,
     error: undefined,
+  })),
+  on(AuthActions.sendResetPasswordLink, (state, {  }) => ({
+    ...state,
+    sendLinkExecuted: false
+  })),
+  on(AuthActions.sendResetPasswordLinkSuccess, AuthActions.sendResetPasswordLinkFailure, (state, { info }) => ({
+    ...state,
+    resetPasswordInfo: info,
+    sendLinkExecuted: true
+  })),
+  on(AuthActions.setSendLinkExecuted, (state, { flag }) => ({
+    ...state,
+    sendLinkExecuted: flag
   }))
 )
 

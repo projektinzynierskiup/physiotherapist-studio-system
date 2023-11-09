@@ -14,16 +14,12 @@ import { NewsletterService } from 'src/app/modules/shared/services/newsletter.se
 export class RegisterComponent {
 
   registerForm: FormGroup;
-  patternPassword: any;
-  regexPassword: any;
+  
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
     private newsletterService: NewsletterService
   ) {
-
-    this.patternPassword = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{1,}$/"
-    this.regexPassword = new RegExp(this.patternPassword);
 
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,6 +41,7 @@ export class RegisterComponent {
     };
     console.log(user)
     console.log(this.registerForm)
+
     if(this.registerForm.value.newsletter){
       this.newsletterService.signToNewsletter(this.registerForm.value.email).subscribe();
     }

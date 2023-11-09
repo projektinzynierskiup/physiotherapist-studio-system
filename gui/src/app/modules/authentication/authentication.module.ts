@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { LogoutComponent } from "./components/logout/logout.component";
 import { RoleGuard } from "./guards/role.guard";
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   imports: [
@@ -32,12 +34,14 @@ import { RoleGuard } from "./guards/role.guard";
     NbTooltipModule,
     FlexLayoutModule,
     NbButtonModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    CommonModule
   ],
   declarations: [
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    ResetPasswordComponent
   ],
   providers: [
     AuthenticationGuard,

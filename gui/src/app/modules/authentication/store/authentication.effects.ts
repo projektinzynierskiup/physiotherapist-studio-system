@@ -6,7 +6,7 @@ import { AuthenticationService } from "../services/authentication.service";
 import { SharedService } from "../../shared/services/shared.service";
 import { Router } from "@angular/router";
 import { createAction } from '@ngrx/store';
-import { login, loginFailure, loginSuccess, logout, logoutSuccess, register, registerFailure, registerSuccess } from './authentication.actions'; // Make sure the path is correct
+import { login, loginFailure, loginSuccess, logout, logoutSuccess, register, registerFailure, registerSuccess, sendResetPasswordLink, sendResetPasswordLinkSuccess } from './authentication.actions'; // Make sure the path is correct
 import { NotificationService } from "../../shared/services/notification.service";
 
 @Injectable()
@@ -76,6 +76,26 @@ export class AuthenticationEffects {
         return of(logoutSuccess());
       })
    ));
+
+   
+   sendResetPasswordLink$ = createEffect(() => this.actions.pipe(
+    ofType(sendResetPasswordLink),
+    switchMap(action => {
+      const payload = action;
+      return this.authenticationService.sendResetPasswordLink(payload.email)
+        .pipe(
+          map((response: any) => {
+
+            return sendResetPasswordLinkSuccess({ info: response.info });
+          }),
+          catchError((err) => {
+            console.log(err);
+
+            return of(sendResetPasswordLinkSuccess({ info: err.error.info }));
+          })
+        );
+    })
+ ));
 
    private updateLocalStorage(userData: any, token: string): void {
       localStorage.removeItem('role');

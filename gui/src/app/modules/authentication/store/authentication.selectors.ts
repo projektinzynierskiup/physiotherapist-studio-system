@@ -14,4 +14,13 @@ export const selectIsAuthenticated = createSelector(
    selectAuthState,
    (state: AuthState) => state?.isAuthenticated
  );
- 
+
+ export const selectResetPasswordInfo = createSelector(
+  selectAuthState,
+  (state: AuthState) => state?.resetPasswordInfo
+);
+
+export const selectSendLinkExecuted= createSelector(
+  selectAuthState,
+  (state: AuthState) => state?.sendLinkExecuted
+);

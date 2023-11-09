@@ -29,6 +29,10 @@ export class AuthenticationService {
     return this.http.post('http://localhost:8080/guest/register', body)
   }
 
+  sendResetPasswordLink(email: string) {
+    return this.http.post(`http://localhost:8080/guest/users/restartpassword/${email}`, null);
+  }
+
   getToken(): string | null {    
     return localStorage.getItem('token');
   }

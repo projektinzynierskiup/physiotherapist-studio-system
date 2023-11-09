@@ -31,3 +31,23 @@ export const registerFailure = createAction(
 export const logout = createAction('[Auth] Logout');
 
 export const logoutSuccess = createAction('[Auth] Logout Success');
+
+export const sendResetPasswordLink = createAction(
+  '[Auth] Send Reset Password Link Requested',
+  props<{ email: string }>()
+);
+
+export const sendResetPasswordLinkSuccess = createAction(
+  '[Auth] Send Reset Password Link Success',
+  props<{ info: string }>()
+);
+
+export const sendResetPasswordLinkFailure = createAction(
+  '[Auth] Send Reset Password Link Failure',
+  props<{ error: any, info: string }>()
+);
+
+export const setSendLinkExecuted = createAction(
+  '[Auth] Set Send Link Executed',
+  props<{ flag: boolean }>()
+);
