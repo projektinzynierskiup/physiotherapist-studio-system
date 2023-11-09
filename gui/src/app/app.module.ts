@@ -20,10 +20,13 @@ import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AccountModule } from './modules/account/account.module';
 import { BookingModule } from './modules/booking/booking.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { OpinionComponent } from './modules/opinion/opinion.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
+    OpinionComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    FormsModule
   ],
   providers: [
     AuthenticationGuard,
