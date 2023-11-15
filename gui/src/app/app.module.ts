@@ -6,11 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { MainModule } from './modules/main/main.module';
-import { NbDialogModule, NbMenuModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbDialogModule, NbDialogService, NbIconModule, NbLayoutModule, NbMenuModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { StoreModule } from '@ngrx/store';
-import { AuthenticationEffects } from './modules/authentication/store/authentication.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './store/app.effects';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,11 +18,16 @@ import { reducers } from './store/app.reducers';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AccountModule } from './modules/account/account.module';
 import { BookingModule } from './modules/booking/booking.module';
+import { OpinionComponent } from './modules/opinion/opinion.component';
+import { TestComponent } from './modules/test/test.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
     AppComponent,
+    OpinionComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,19 +42,29 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     EffectsModule.forRoot([...Effects]),
     NbDialogModule.forRoot(),
     NbMenuModule.forRoot(),
+    NbDialogModule.forRoot(),
     HttpClientModule,
     NbToastrModule.forRoot(),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),
+    FormsModule,
+    NbLayoutModule,
+    NbIconModule,
+    ReactiveFormsModule,
     NbEvaIconsModule
   ],
   providers: [
     AuthenticationGuard,
-    RoleGuard
+    RoleGuard,
+    NbDialogService,
+    OpinionComponent
   ],
   bootstrap: [AppComponent],
+  exports: [
+    OpinionComponent
+  ],
   entryComponents: [AppComponent]
 })
 export class AppModule { }

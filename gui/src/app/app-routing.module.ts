@@ -13,6 +13,7 @@ import { AuthenticationGuard } from './modules/authentication/guards/authenticat
 import { LogoutComponent } from './modules/authentication/components/logout/logout.component';
 import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AdministrationEntryComponent } from './modules/administration/administration-entry/administration-entry.component';
+import {OpinionComponent} from "./modules/opinion/opinion.component";
 import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
 
 const routes: Routes = [
@@ -87,6 +88,11 @@ const routes: Routes = [
     path: 'guest/users/restartpassword/:uuid',
     canActivate: [],
     component: ResetPasswordComponent
+  },
+  {
+    path: 'opinion',
+    canActivate: [],
+    component: OpinionComponent
   }
 ];
 

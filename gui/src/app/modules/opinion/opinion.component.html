@@ -1,0 +1,28 @@
+<nb-layout>
+  <nb-layout-column class="button-container">
+    <button type="button" class="btn btn-primary" (click)="openDialog()">
+      Dodaj opinie
+    </button>
+  </nb-layout-column>
+</nb-layout>
+<div *ngIf="opinionPage">
+  <div class="review" *ngFor="let opinion of opinionPage.content">
+    <div class="review-header">
+      <span class="username"> {{opinion.username}}
+        <div style="display: flex;">
+          <ng-container *ngFor="let star of [].constructor(5); let i = index">
+            <i class="bi" [class.bi-star-fill]="i < opinion.rate" [class.bi-star-half]="i === Math.ceil(opinion.rate) - 1 && opinion.rate % 1" [class.bi-star]="i >= opinion.rate"></i>
+          </ng-container>
+        </div>
+      </span>
+    </div>
+    <div class="description">
+      {{opinion.description}}
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="btn btn-primary" (click)="getOpinions((opinionPage?.pageable?.pageNumber ?? 0) - 1)" [disabled]="opinionPage?.first">Poprzednia</button>
+
+    <button class="btn btn-primary" (click)="getOpinions((opinionPage?.pageable?.pageNumber ?? 0) + 1)" [disabled]="opinionPage?.last">Następna</button>
+  </div>
+</div>
