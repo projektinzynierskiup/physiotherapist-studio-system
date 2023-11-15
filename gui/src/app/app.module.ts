@@ -23,11 +23,12 @@ import { TestComponent } from './modules/test/test.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     OpinionComponent,
-    TestComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
