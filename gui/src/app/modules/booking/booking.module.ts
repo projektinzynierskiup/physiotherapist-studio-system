@@ -23,7 +23,8 @@ import { RouterModule } from '@angular/router';
     NbInputModule,
     ReactiveFormsModule,
     NbSelectModule,
-    NbOptionModule
+    NbOptionModule,
+    NbCardModule
   ]
 })
 export class BookingModule { }

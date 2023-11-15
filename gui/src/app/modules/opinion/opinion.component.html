@@ -1,10 +1,10 @@
-<nb-layout>
-  <nb-layout-column class="button-container">
+<div>
+  <div class="button-container">
     <button type="button" class="btn btn-primary" (click)="openDialog()">
       Dodaj opinie
     </button>
-  </nb-layout-column>
-</nb-layout>
+  </div>
+</div>
 <div *ngIf="opinionPage">
   <div class="review" *ngFor="let opinion of opinionPage.content">
     <div class="review-header">

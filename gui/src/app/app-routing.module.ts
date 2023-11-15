@@ -36,7 +36,7 @@ const routes: Routes = [
       {
         path: 'reviews',
         canActivate: [],
-        component: ReviewsEntryComponent
+        component: OpinionComponent
       },
       {
         path: 'calendar',
@@ -88,11 +88,6 @@ const routes: Routes = [
     path: 'guest/users/restartpassword/:uuid',
     canActivate: [],
     component: ResetPasswordComponent
-  },
-  {
-    path: 'opinion',
-    canActivate: [],
-    component: OpinionComponent
   }
 ];
 
