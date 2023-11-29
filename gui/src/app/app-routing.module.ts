@@ -3,8 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './modules/main/main/main.component';
 import { HomeComponent } from './modules/main/home/components/home.component';
 import { BookingEntryComponent } from './modules/booking/components/booking-entry/booking-entry.component';
-import { ReviewsEntryComponent } from './modules/reviews/reviews-entry/reviews-entry.component';
-import { CalendarEntryComponent } from './modules/calendar/calendar-entry/calendar-entry.component';
 import { LoginComponent } from './modules/authentication/components/login/login.component';
 import { RegisterComponent } from './modules/authentication/components/register/register.component';
 import { AccountEntryComponent } from './modules/account/account-entry/account-entry.component';
@@ -15,6 +13,8 @@ import { RoleGuard } from './modules/authentication/guards/role.guard';
 import { AdministrationEntryComponent } from './modules/administration/administration-entry/administration-entry.component';
 import {OpinionComponent} from "./modules/opinion/opinion.component";
 import { ResetPasswordComponent } from './modules/authentication/components/reset-password/reset-password.component';
+import { LoginGuard } from './modules/authentication/guards/login.guard';
+import { CalendarEntryComponent } from './modules/calendar/components/calendar-entry/calendar-entry.component';
 
 const routes: Routes = [
   {
@@ -76,7 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    canActivate: [],
+    canActivate: [LoginGuard],
     component: LoginComponent
   },
   {
@@ -86,7 +86,7 @@ const routes: Routes = [
   },
   {
     path: 'guest/users/restartpassword/:uuid',
-    canActivate: [],
+    canActivate: [LoginGuard],
     component: ResetPasswordComponent
   }
 ];

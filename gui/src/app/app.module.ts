@@ -22,6 +22,7 @@ import { OpinionComponent } from './modules/opinion/opinion.component';
 import { TestComponent } from './modules/test/test.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { CalendarModule } from './modules/calendar/calendar.module';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbLayoutModule,
     NbIconModule,
     ReactiveFormsModule,
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    CalendarModule
   ],
   providers: [
     AuthenticationGuard,

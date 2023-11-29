@@ -6,7 +6,7 @@ import { SharedService } from "../../shared/services/shared.service";
 import { Router } from "@angular/router";
 import { createAction } from '@ngrx/store';
 import { BookingService } from "../services/booking.service";
-import { getAvailableAppointments, getAvailableAppointmentsFailure, getAvailableAppointmentsSuccess } from "./booking.actions";
+import { bookAppointment, bookAppointmentFailure, bookAppointmentSuccess, getAvailableAppointments, getAvailableAppointmentsFailure, getAvailableAppointmentsSuccess } from "./booking.actions";
 
 @Injectable()
 export class BookingEffects {
@@ -34,4 +34,19 @@ export class BookingEffects {
       })
    ));
 
+   bookAppointment$ = createEffect(() => this.actions.pipe(
+      ofType(bookAppointment),
+      switchMap(action => {
+         return this.bookingService.bookAppointment(action.appointment)
+            .pipe(
+            map((response) => {
+              return bookAppointmentSuccess({response: response});
+            }),
+            catchError((err) => {
+              console.log(err);
+              return of(bookAppointmentFailure({error : err}));
+            })
+          );
+      })
+   ));
 }

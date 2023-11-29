@@ -1,0 +1,52 @@
+
+<form *ngIf="appointmentForm" [formGroup]="appointmentForm" (ngSubmit)="onSubmit(dialog)" >
+   <div class="appointment-form" fxFlex fxLayout="column" fxLayoutAlign="center center">
+
+      <nb-select *ngIf="offer" class="type" placeholder="Typ" formControlName="type" fullWidth required >
+         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.id"  >{{ offerItem.massageName }}</nb-option>
+      </nb-select>
+
+      <nb-select *ngIf="groupedAppointments ; else noDates" class="date" placeholder="Available appointments" formControlName="date" fullWidth required>
+         <nb-option-group  *ngFor="let group of groupedAppointments" title="{{group.key}}">
+            <nb-option *ngFor="let appointment of group.appointments" value="{{appointment.id}}">{{getTime(appointment.startDate)}} - {{getDuration(appointment.startDate, appointment.endDate)}}</nb-option>
+         </nb-option-group>
+      </nb-select>
+      <ng-template #noDates>
+         <p>No available dates</p>
+       </ng-template>
+      <input nbInput id="email" formControlName="email" class="email" formControlName="email"  fullWidth 
+         autocomplete="email" placeholder="Email" required/>
+      <input nbInput appPhoneMask maxlength="11" id="phoneNumber" formControlName="phoneNumber" class="phoneNumber" fullWidth 
+         placeholder="Phone number" required />
+      <!-- <input nbInput id="username" type="text" formControlName="username" class="username" fullWidth 
+         placeholder="Username" required />
+      <input nbInput id="surname" formControlName="surname" class="surname" fullWidth 
+         placeholder="Surname" required /> -->
+      <div class="submit-box">
+         <button nbButton class="submit-btn" type="submit" [disabled]="isFormFilled()" fullWidth >
+            SUBMIT
+         </button>
+      </div>
+   </div>
+</form>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Booking status</nb-card-header>
+      <nb-card-body>
+         {{data}}
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+
+         <div *ngIf="bookingStatus?.failure" class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="bookAgain(); ref.close()">Try again</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="goToHome(); ref.close()">Close</button>
+         </div>
+         <div *ngIf="bookingStatus?.success" class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="bookAgain(); ref.close()">Book another appointment</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="goToHome(); ref.close()">Close</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>

@@ -24,7 +24,8 @@ nb-card-body {
  #confirm-password,
  #email,
  #username,
- #surname {
+ #surname,
+ #phone {
   padding: 0.6em 1.6em;
   margin: 0.3rem;
 
@@ -48,26 +49,26 @@ nb-card-body {
   }
 }
 
- .register-form {
-   margin-left: 0px;
-   margin-right: 0px;
-   width: 100%;
- }
+.register-form {
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;
+}
 
- .submit-btn {
-   margin-top: 15px;
-   padding: 0.9em 1.8em;
-   width: 100%;
- }
+.submit-btn {
+  margin-top: 15px;
+  padding: 0.9em 1.8em;
+  width: 100%;
+}
 
- .bottom-box {
-   margin-top: 2em;
-   p {
-     padding: 0;
-     margin: 0;
-   }
+.bottom-box {
+  margin-top: 2em;
+  p {
+    padding: 0;
+    margin: 0;
+  }
 
-   a {
-     text-decoration: none;
-   }
- }
+  a {
+    text-decoration: none;
+  }
+}

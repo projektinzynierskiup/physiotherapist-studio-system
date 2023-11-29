@@ -20,6 +20,7 @@ import { HomeComponent } from './home/components/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OfferComponent } from './home/components/offer/offer.component';
 import { NewsletterComponent } from '../newsletter/newsletter/newsletter.component';
+import { CalendarModule } from '../calendar/calendar.module';
 
 @NgModule({
   imports: [

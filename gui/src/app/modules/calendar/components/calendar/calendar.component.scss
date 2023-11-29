@@ -1,0 +1,50 @@
+
+.day {
+   border: 1px solid black;
+   text-align: center
+}
+
+#start,
+#end {
+   padding: 0.6em 1.6em;
+   margin: 0.3rem;
+   width: 80px;
+   text-align: center;
+
+   &:hover,
+   :focus,
+   :active {
+     border-color: black;
+     z-index: 9999;
+   }
+}
+
+
+a {
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.login-form {
+   margin-left: 0px;
+   margin-right: 0px;
+   width: 100%;
+ }
+
+ .submit-btn {
+   margin-top: 15px;
+   padding: 0.9em 1.8em;
+   width: 100%;
+ }
+
+ .bottom-box {
+   margin-top: 2em;
+   p {
+     padding: 0;
+     margin: 0;
+   }
+
+   a {
+     text-decoration: none;
+   }
+ }

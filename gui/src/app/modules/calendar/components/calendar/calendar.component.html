@@ -1,0 +1,60 @@
+
+<div class="content" fxFlex fxLayout="column" >
+
+   <div class="header" fxFlex fxLayout="row" fxLayoutAlign="center center">
+      <button [disabled]="currentWeek == 0" (click)="changeCurrentWeek(-1)"> prev </button>
+      <hr>
+      <p>{{calendarData[currentWeek].week}}</p>
+      <hr>
+      <button (click)="changeCurrentWeek(1)"> next</button>
+   </div>
+   
+   <div *ngIf="calendarData.length > 0">
+      <div  fxFlex fxLayout="column" class="day" *ngFor="let days of calendarData[currentWeek].days">
+         <p>{{days.day}}</p>
+         <div class="cells" *ngFor="let cell of days.cells">
+            <p>cell.id</p>
+         </div>
+         <a (click)="openDialog(dialog, days.day)" style="font-weight: bold">
+            + add free slot
+         </a>
+      </div>
+   </div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Add free slot for {{data}}</nb-card-header>
+      <nb-card-body>
+         <form [formGroup]="freeSlotForm" (ngSubmit)="onSubmitFreeSlot()">
+            <div class="login-form" fxLayout="column" fxLayoutAlign="center center">
+               <label fxFlex.gt-lg="20" fxFlex.lt-xl="25" fxLayoutAlign="end center" class="label-property">
+                 Enter start hours&ensp;
+               </label>
+               <div class="start"  fxFlex fxLayout="row">
+                  <input nbInput maxlength="2"
+                  id="start" type="text" fieldSize="small" placeholder="HH" fullWidth formControlName="startHours" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
+                  
+                  <input nbInput maxlength="2"
+                  id="start" type="text" fieldSize="small" placeholder="mm" fullWidth formControlName="startMinutes" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
+               </div>
+               <label fxFlex.gt-lg="20" fxFlex.lt-xl="25" fxLayoutAlign="end center" class="label-property">
+                  Enter end hours&ensp;
+                </label>
+               <div class="end"  fxFlex fxLayout="row">
+                  <input nbInput maxlength="2"
+                  id="end" type="text" fieldSize="small" placeholder="HH" fullWidth formControlName="endHours" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
+                  
+                  <input nbInput maxlength="2"
+                  id="end" type="text" fieldSize="small" placeholder="mm" fullWidth formControlName="endMinutes" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
+               </div>
+
+               <div class="bottom-box">
+                  <button  nbButton  size="medium" class="signup-box" type="submit" >Add</button>
+               </div>
+            </div>
+         </form>
+      </nb-card-body>
+
+   </nb-card>
+ </ng-template>

@@ -12,39 +12,36 @@
          <form  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
            <div class="register-form" fxLayout="column" fxLayoutAlign="center center">
              <input nbInput  id="email" type="email" fieldSize="small" placeholder="Email" formControlName="email"  fullWidth required inputTrim
-             [status]="
-                 registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   
-             [nbTooltip]="prepareTooltip('email')" [nbTooltipStatus]="registerForm.controls['email'].value === ''  || registerForm.controls['email'].hasError('email') ? 'danger' : 'success'" />
+              [status]="registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   
+              [nbTooltip]="prepareTooltip('email')" [nbTooltipStatus]="registerForm.controls['email'].value === ''  || registerForm.controls['email'].hasError('email') ? 'danger' : 'success'" />
  
-             <input id="password"  nbInput [nbTooltip]="prepareTooltip('password')"
-             [nbTooltipStatus]="registerForm.controls['password'].value === '' || registerForm.controls['password'].hasError('pattern') ? 'danger' : 'success'" 
-               [status]="
-                 registerForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'" 
-                 formControlName="password" fieldSize="small" fullWidth 
-               autocomplete="new-password" placeholder="Password" type="password" required />
+            <input id="password"  nbInput [nbTooltip]="prepareTooltip('password')"
+              [nbTooltipStatus]="registerForm.controls['password'].value === '' || registerForm.controls['password'].hasError('pattern') ? 'danger' : 'success'" 
+              [status]="registerForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'" 
+              formControlName="password" fieldSize="small" fullWidth 
+              autocomplete="new-password" placeholder="Password" type="password" required />
  
              <input id="confirm-password" nbInput 
-             [nbTooltip]="prepareTooltip('confirmPassword')" [status]="
-             registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   [nbTooltipStatus]="registerForm.controls['confirmPassword'].value === '' || registerForm.controls['confirmPassword'].value !== registerForm.controls['password'].value || registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'success'" placeholder="Confirm password" fullWidth  formControlName="confirmPassword"
+              [nbTooltip]="prepareTooltip('confirmPassword')" [status]="
+              registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'basic'"   [nbTooltipStatus]="registerForm.controls['confirmPassword'].value === '' || registerForm.controls['confirmPassword'].value !== registerForm.controls['password'].value || registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'success'" placeholder="Confirm password" fullWidth  formControlName="confirmPassword"
                type="password" fieldSize="small" autocomplete="new-password"
                required />
 
-               <input nbInput 
-               [nbTooltip]="prepareTooltip('username')"
-               [nbTooltipStatus]="registerForm.controls['username'].value === '' ? 'danger' : 'success'"
-               id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
+            <input nbInput 
+              [nbTooltip]="prepareTooltip('username')"
+              [nbTooltipStatus]="registerForm.controls['username'].value === '' ? 'danger' : 'success'"
+              id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
 
-               <input nbInput 
-               [nbTooltip]="prepareTooltip('surname')"
-               [nbTooltipStatus]="registerForm.controls['surname'].value === '' ? 'danger' : 'success'"
-               id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
- 
-             <!-- <div style="width:100%; margin-top:20px;" fxLayoutAlign="start start" fxLayout="column" fxLayoutGap="10px">
-               <nb-checkbox status="primary" formControlName="acceptPrivacy" style="text-align: left;">
-                Accept <a [href]="" target=”_blank”>Policy</a> and
-                <a [href]="" target=”_blank”> regulations</a>. *
-              </nb-checkbox>
-            </div> -->
+            <input nbInput
+              [nbTooltip]="prepareTooltip('surname')"
+              [nbTooltipStatus]="registerForm.controls['surname'].value === '' ? 'danger' : 'success'"
+              id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
+
+            <input nbInput appPhoneMask maxlength="11"
+              [nbTooltip]="prepareTooltip('phone')"
+              [nbTooltipStatus]="registerForm.controls['phone'].value === '' || registerForm.controls['phone'].hasError('pattern') ? 'danger' : 'success'"
+              id="phone" type="text" fieldSize="small" placeholder="Phone number" fullWidth formControlName="phone" required inputTrim />
+
 
             <nb-checkbox status="basic" formControlName="newsletter" style="text-align: left;" class="checkbox">Newsletter</nb-checkbox>
             

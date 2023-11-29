@@ -10,6 +10,7 @@ import { setLastPageVisited } from '../../../main/store/main.actions';
 })
 export class BookingEntryComponent implements OnInit, OnDestroy {
 
+
   constructor(
     private store: Store<AppState>
   ) {}
@@ -17,6 +18,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(setLastPageVisited({url: '/booking'}))
   }
+
 
   ngOnDestroy(): void {
     

@@ -50,7 +50,7 @@ export class AuthenticationEffects {
       ofType(register),
       switchMap(action => {
         const payload = action;
-        return this.authenticationService.register(payload.user.email, payload.user.password, payload.user.username, payload.user.surname)
+        return this.authenticationService.register(payload.user)
           .pipe(
             map(() => {
               this.router.navigate(['/login']);
@@ -58,7 +58,9 @@ export class AuthenticationEffects {
             }),
             catchError((err) => {
               console.log(err);
-
+              if(err.status == 400) {
+                this.notificationService.show('danger', "Błąd", err.error.info, "bottom-right", 4000)
+              }
               return of(registerFailure({ error: err.error, email: payload.user.email }));
             })
           );

@@ -27,6 +27,7 @@ export class RegisterComponent {
       confirmPassword: [''],
       username: ['', [Validators.required]],
       surname: ['', [Validators.required]],
+      phone: ['', [Validators.required,  Validators.pattern("^[1-9]{3} [1-9]{3} [1-9]{3}$")]],
       newsletter: ['', []],
       // acceptPrivacy: [false]
     }, { validator: this.checkPasswords });
@@ -37,10 +38,9 @@ export class RegisterComponent {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       username: this.registerForm.value.username,
-      surname: this.registerForm.value.surname
+      surname: this.registerForm.value.surname,
+      phone: this.registerForm.value.phone
     };
-    console.log(user)
-    console.log(this.registerForm)
 
     if(this.registerForm.value.newsletter){
       this.newsletterService.signToNewsletter(this.registerForm.value.email).subscribe();
@@ -101,6 +101,18 @@ export class RegisterComponent {
           tip += "Surname valid"
         } 
         break;
+      case 'phone':
+        const phoneControl = this.registerForm.get('phone');
+        console.log(this.registerForm.get('phone'))
+        if(phoneControl?.value === '') {
+          tip += "Phone number required"
+        } else 
+        if (phoneControl?.hasError('pattern')) {
+          tip = "Phone number must be 9 characters long";
+        } else if(phoneControl?.value !== '') {
+          tip = 'Phone number valid.';
+        }   
+        break; 
     }
     return tip
   }

@@ -60,8 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(sendResetPasswordLink({email: email}))
     console.log(email)
-
-    
   }
 
   openDialog(dialog: TemplateRef<any>) {

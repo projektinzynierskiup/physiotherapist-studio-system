@@ -20,6 +20,8 @@ import { LogoutComponent } from "./components/logout/logout.component";
 import { RoleGuard } from "./guards/role.guard";
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { CommonModule } from "@angular/common";
+import { PhoneMaskDirective } from "./directives/phone-mask.directive";
+import { LoginGuard } from "./guards/login.guard";
 
 @NgModule({
   imports: [
@@ -41,13 +43,18 @@ import { CommonModule } from "@angular/common";
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    PhoneMaskDirective
   ],
   providers: [
     AuthenticationGuard,
     AuthenticationService,
-    RoleGuard
+    RoleGuard,
+    LoginGuard
   ],
+  exports: [
+    PhoneMaskDirective
+  ]
 })
 
 export class AuthenticationModule { }

@@ -14,4 +14,3 @@ export const selectAvailableAppointments = createSelector(
   selectBookingState,
  (state: BookingState) => state?.availableAppointments
 );
-
