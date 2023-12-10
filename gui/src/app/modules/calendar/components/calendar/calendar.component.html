@@ -1,21 +1,52 @@
 
 <div class="content" fxFlex fxLayout="column" >
-
+   <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <h2>Kalendarz</h2>
+      Aktualny czas:
+      <div>{{ currentDateTime }}</div>
+   </div>
+   <a class="configuration" (click)="openDialog(configurationDialog, '')" fxFlex fxLayout="row wrap" fxLayoutAlign="end center">
+      
+      <p  fxHide fxShow.gt-md>Konfiguruj kalendarz</p>
+      <mat-icon>settings</mat-icon>
+   </a>
    <div class="header" fxFlex fxLayout="row" fxLayoutAlign="center center">
-      <button [disabled]="currentWeek == 0" (click)="changeCurrentWeek(-1)"> prev </button>
+      <a (click)="currentWeek > 0 ? changeCurrentWeek(-1) : null" [ngClass]="currentWeek == 0 ? 'disabled' : 'link'"  fxLayoutAlign="center center">
+         <mat-icon class="icon">navigate_before</mat-icon>
+         <p  fxHide fxShow.gt-md>Poprzedni tydzień</p>
+      </a>
       <hr>
-      <p>{{calendarData[currentWeek].week}}</p>
+      <p  fxFlex fxLayout="row wrap" fxLayoutAlign="center center">{{calendarData[currentWeek].week}}</p>
       <hr>
-      <button (click)="changeCurrentWeek(1)"> next</button>
+      <a (click)="changeCurrentWeek(1)" class="link"  fxLayoutAlign="center center">
+         
+         <p  fxHide fxShow.gt-md>Następny tydzień</p>
+         <mat-icon class="icon">navigate_next</mat-icon>
+      </a>
+
    </div>
    
-   <div *ngIf="calendarData.length > 0">
-      <div  fxFlex fxLayout="column" class="day" *ngFor="let days of calendarData[currentWeek].days">
-         <p>{{days.day}}</p>
-         <div class="cells" *ngFor="let cell of days.cells">
-            <p>cell.id</p>
+   <div *ngIf="calendarData.length > 0" fxFlex fxLayout="row wrap" >
+      <div [ngClass]="{'column': true, 'today': days.today, 'passed': days.passed}" fxFlex fxLayout="column" *ngFor="let days of calendarData[currentWeek].days">
+         <div class="column-title" [innerHTML]="formatDate(days.day)"></div>
+         <div [ngClass]="cell.isBooked ? 'booked cell' : 'cell'" *ngFor="let cell of days.cells" (click)="triggerCellExpand(cell)">
+            <p>{{cell.startDate}}</p>
+            <div *ngIf="cell.isBooked">
+               <p><b>Typ wizyty:</b> {{cell.appointment?.massageDTO.massageName}}</p>
+               <p><b>Klient:</b> {{cell.appointment?.usersDTO?.username}} {{cell.appointment?.usersDTO?.surname}}</p>
+               <p><b>Czas trwania:</b> {{cell.startDate}}-{{cell.endDate}}</p>
+
+               <mat-icon *ngIf="!days.passed" class="icon" (click)="openCancelDialog(cancelDialog, cell.appointment)">cancel</mat-icon>
+
+            </div>
+            <div *ngIf="cell.isExpanded && !cell.isBooked">
+               <p><b>Wolny termin</b></p>
+
+               <mat-icon *ngIf="!days.passed" class="icon" (click)="deleteAppointment(cell.appointment)">delete</mat-icon>
+
+            </div>
          </div>
-         <a (click)="openDialog(dialog, days.day)" style="font-weight: bold">
+         <a *ngIf="!days.passed" (click)="openDialog(dialog, days.day)" class="add-free" style="font-weight: bold">
             + add free slot
          </a>
       </div>
@@ -24,37 +55,87 @@
 
 <ng-template #dialog let-data let-ref="dialogRef">
    <nb-card>
-      <nb-card-header>Add free slot for {{data}}</nb-card-header>
+      <nb-card-header>Dodaj wolny termin - {{data}}</nb-card-header>
       <nb-card-body>
-         <form [formGroup]="freeSlotForm" (ngSubmit)="onSubmitFreeSlot()">
-            <div class="login-form" fxLayout="column" fxLayoutAlign="center center">
-               <label fxFlex.gt-lg="20" fxFlex.lt-xl="25" fxLayoutAlign="end center" class="label-property">
-                 Enter start hours&ensp;
-               </label>
-               <div class="start"  fxFlex fxLayout="row">
-                  <input nbInput maxlength="2"
-                  id="start" type="text" fieldSize="small" placeholder="HH" fullWidth formControlName="startHours" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
-                  
-                  <input nbInput maxlength="2"
-                  id="start" type="text" fieldSize="small" placeholder="mm" fullWidth formControlName="startMinutes" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
-               </div>
-               <label fxFlex.gt-lg="20" fxFlex.lt-xl="25" fxLayoutAlign="end center" class="label-property">
-                  Enter end hours&ensp;
-                </label>
-               <div class="end"  fxFlex fxLayout="row">
-                  <input nbInput maxlength="2"
-                  id="end" type="text" fieldSize="small" placeholder="HH" fullWidth formControlName="endHours" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
-                  
-                  <input nbInput maxlength="2"
-                  id="end" type="text" fieldSize="small" placeholder="mm" fullWidth formControlName="endMinutes" required inputTrim inputmode="numeric"  pattern="[0-9]*" />
-               </div>
+         <div class="time-controls" fxLayout="column" fxLayoutAlign="center start">
+            <div>Ustal czas pracy:</div>
+            <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <label>Godzina rozpoczęcia: </label>
+               <app-time-picker [(hour)]="singleWorkingTime.startHours" [(minutes)]="singleWorkingTime.startMinutes"></app-time-picker>
+             </div>
+             
+             <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <label>Godzina zakończenia: </label>
+               <app-time-picker [(hour)]="singleWorkingTime.endHours" [(minutes)]="singleWorkingTime.endMinutes"></app-time-picker>
+             </div>
+            <!-- <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <label>Przerwy między wizytami: </label>
+               <app-minutes-picker [minutes]="generalWorkingHours.breaks"></app-minutes-picker>min
+            </div> -->
+         </div>
+      </nb-card-body>
+      <nb-card-footer fxLayoutAlign="center center">
+         <button nbButton type="primary" (click)="generateSingleFreeSlot(data); ref.close()">Dodaj termin</button>
+      </nb-card-footer>
+   </nb-card>
+ </ng-template>
 
-               <div class="bottom-box">
-                  <button  nbButton  size="medium" class="signup-box" type="submit" >Add</button>
+ <ng-template #cancelDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Czy na pewno chcesz anulować wizytę?</nb-card-header>
+      <nb-card-body>
+         <div class="bottom-box">
+            <button  nbButton  size="medium" class="signup-box" type="submit" (click)="cancelAppointment(data); ref.close()">Tak</button>
+            <button  nbButton  size="medium" class="signup-box" type="submit" (click)=" ref.close()">Powrót</button>
+         </div>
+      </nb-card-body>
+   </nb-card>
+ </ng-template>
+
+
+ <ng-template class="configurationDialog" #configurationDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Konfiguracja kalendarza</nb-card-header>
+      <nb-card-body  fxLayout="column">
+         <div  fxLayout="row wrap">
+            <div fxFlex fxLayout="column">
+               <div>Wybierz dni pracujące:</div>
+               <div fxFlex fxLayout="row" >
+                  <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="column configuration-day-column" *ngFor="let days of calendarData[currentWeek].days;  index as i">
+                     <nb-checkbox 
+                     status="basic" 
+                     (change)="toggleDaySelection(days.day)"
+                     [checked]="selectedWorkDays.includes(days.day)"
+                     ></nb-checkbox>
+                     <div class="configuration-column-title">{{days.day}}</div>
+                     {{getDayName(days.day)}}
+                     <app-time-picker [(hour)]="differentWorkHours[i].startHours" [(minutes)]="differentWorkHours[i].startMinutes"></app-time-picker>
+                     <app-time-picker [(hour)]="differentWorkHours[i].endHours" [(minutes)]="differentWorkHours[i].endMinutes" ></app-time-picker>
+                  </div>
                </div>
             </div>
-         </form>
+            
+            <div class="time-controls" fxLayout="column" fxLayoutAlign="center start">
+               <div>Ustal domyślny czas pracy:</div>
+               <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+                  <label>Godzina rozpoczęcia: </label>
+                  <app-time-picker [(hour)]="generalWorkingHours.startHours" [(minutes)]="generalWorkingHours.startMinutes" (timeChanged)="onTimeChange('start')"></app-time-picker>
+                </div>
+                
+                <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+                  <label>Godzina zakończenia: </label>
+                  <app-time-picker [(hour)]="generalWorkingHours.endHours" [(minutes)]="generalWorkingHours.endMinutes" (timeChanged)="onTimeChange('end')"></app-time-picker>
+                </div>
+               <!-- <div class="time-picker-field" fxFlex fxLayout="row" fxLayoutAlign="center center">
+                  <label>Przerwy między wizytami: </label>
+                  <app-minutes-picker [minutes]="generalWorkingHours.breaks"></app-minutes-picker>min
+               </div> -->
+            </div>
+         </div>
       </nb-card-body>
+      <nb-card-footer fxLayoutAlign="center center">
+         <button nbButton type="primary" (click)="generateCalendar(); ref.close()">Wygeneruj kalendarz</button>
+      </nb-card-footer>
 
    </nb-card>
  </ng-template>

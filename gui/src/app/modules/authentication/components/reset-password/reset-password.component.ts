@@ -18,6 +18,7 @@ export class ResetPasswordComponent implements OnInit {
 
   resetPasswordView?: boolean
   cannotResetPasswordView?: boolean
+  submitButtonClick: boolean = false
 
   resetPasswordStatus?: ActionStatus
 
@@ -59,6 +60,11 @@ export class ResetPasswordComponent implements OnInit {
 
   onSubmit(dialog : TemplateRef<any>): void {
     this.dialog = dialog
+    this.submitButtonClick = true
+    this.openDialog(dialog, "xxxxxxxxx")
+
+    if(!this.resetPasswordForm.valid) return 
+
     console.log(this.resetPasswordForm)
 
     const body = {
@@ -110,24 +116,19 @@ export class ResetPasswordComponent implements OnInit {
     switch (type) {
       case 'password':
         const passwordControl = this.resetPasswordForm.get('password');
-        if(passwordControl?.value === '') {
-          tip += "Password required"
+        if(passwordControl?.value === '' && this.submitButtonClick) {
+          tip += "Hasło wymagane"
         } else 
         if (passwordControl?.hasError('pattern')) {
-          tip = "The password must be at least 8 characters long, contain upper and lower letter and sepcial character.";
-        } else if(passwordControl?.value !== '') {
-          tip = 'Password is valid.';
-        }   
+          tip = "Hasło musi mieć co najmniej 8 znaków, zawierać dużą i małą literę oraz znak specjalny.";
+        }
         break;
       case 'confirmPassword':
         const confirmPasswordControl = this.resetPasswordForm.get('confirmPassword');
-        if (this.resetPasswordForm.controls['password'].value === this.resetPasswordForm.controls['confirmPassword'].value) {
-          tip += "Passwords match"
-        } else if (this.resetPasswordForm.controls['password'].value === '') {
-          tip += "Insert password first"
-        }
-        else if (this.resetPasswordForm.controls['password'].value !== confirmPasswordControl?.value) {
-          tip = "Password does not match"
+        if (this.resetPasswordForm.controls['password'].value === '' && this.submitButtonClick) {
+          tip += "Ponowne wprowadzenie hasła wymagane"
+        } else if (confirmPasswordControl?.value != '' && this.resetPasswordForm.controls['password'].value !== confirmPasswordControl?.value) {
+          tip = "Hasła nie są takie same"
         }
         break;
     }

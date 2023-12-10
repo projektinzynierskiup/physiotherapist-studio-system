@@ -1,0 +1,40 @@
+.container {
+   height: 100%;
+   margin-top: 20px;
+}
+
+.main-card {
+   width: 700px;
+}
+
+.account-info {
+   margin: 10px 0px;
+   height: 100%;
+}
+
+nb-card-header {
+   padding:16px;   
+}
+
+nb-card-body {
+   padding: 16px;
+}
+
+.row {
+   margin: 2px 0px;
+
+   border: 1px solid rgb(234, 234, 234);
+   border-radius: 3px;
+   padding: 15px;
+}
+
+.left-column {
+   text-align: left;
+   border-right: 1px solid rgb(234, 234, 234);
+   width: 150px;
+ }
+ 
+ .right-column {
+   width: 100%;
+   text-align: center;
+ }

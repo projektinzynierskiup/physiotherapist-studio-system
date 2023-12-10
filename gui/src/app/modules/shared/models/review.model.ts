@@ -1,7 +1,5 @@
 export interface Review {
-   id: number;
-   username: string;
-   description: string;
-   rate: number;
-   localDate: string;
- }
+  username : string
+  rate : number
+  description : string
+}

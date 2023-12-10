@@ -35,11 +35,6 @@ export class AuthenticationEffects {
               return loginSuccess({ token: tokenObject.token, userData: userData });
             }),
             catchError((err) => {
-              console.log(err);
-              if(err.status == 401) {
-                this.notificationService.show('danger', "Authentication error", "Invalid email or password", "bottom-right", 4000)
-              }
-
               return of(loginFailure({ error: err.error, email: payload.user.email }));
             })
           );

@@ -6,7 +6,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User | undefined;
   token: string | undefined;
-  error: any | undefined;
+  error: boolean | undefined;
   resetPasswordInfo: string;
   sendLinkExecuted: boolean
 }
@@ -22,16 +22,20 @@ export const initialState: AuthState = {
 
 const authReducer = createReducer(
   initialState,
+  on(AuthActions.login, (state) => ({
+    ...state,
+    error: false,
+  })),
   on(AuthActions.loginSuccess, (state, { token, userData }) => ({
     ...state,
     isAuthenticated: true,
     token,
     user: userData,
-    error: undefined,
+    error: false,
   })),
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
-    error,
+    error: true,
   })),
   on(AuthActions.registerSuccess, (state) => ({
     ...state,

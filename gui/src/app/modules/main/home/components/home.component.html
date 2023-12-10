@@ -1,11 +1,37 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center" >
 
    <nb-card class="title" fxFlex fxLayout="column" fxLayoutAlign="center center" >
-      <nb-card-header>Opis działaności tego ziomeczka(może jakieś zdjecie powyżej)</nb-card-header>
+      <nb-card-header  fxFlex fxLayout="column" fxLayoutAlign="center center">
+         <div class="image-container">
+            <!-- Placeholder or default image -->
+            <img class="placeholder-image" src="placeholder.jpg" alt="Placeholder Image">
+            <!-- Use the "src" attribute to load the actual image when available -->
+            <!-- <img src="path/to/your/real-image.jpg" alt="Real Image"> -->
+        </div>
+        <br>
+         Opis działaności tego ziomeczka(może jakieś zdjecie powyżej)
+
+      </nb-card-header>
       <nb-card-body>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae dicta sapiente perspiciatis magnam aspernatur adipisci hic, beatae suscipit laborum, tempore odit ex nesciunt aliquam nemo iste? Quod ipsam provident unde! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem aliquam voluptas consequuntur eveniet doloribus eius, impedit fugit, ullam consequatur, quam quos veritatis natus iure ipsam maiores libero repudiandae commodi! Perspiciatis!</nb-card-body>
       
    </nb-card>
-   
-   <app-offer></app-offer>
+   <br>
+     <app-offer></app-offer>
    <app-newsletter></app-newsletter>
+
+  <!-- Button 1 -->
+  <div class="button-container-1" [ngClass]="{'simulate-hover': simulateHover}"  (click)="navigateToReview()">
+   <div class="button"  fxLayoutAlign="center center">
+     <mat-icon class="icon">rate_review</mat-icon>
+     <span class="button-text">Sprawdź opinie</span>
+   </div>
+ </div>
+
+ <!-- Button 2 -->
+ <div class="button-container-2" [ngClass]="{'simulate-hover': simulateHover}"  (click)="navigateToReview()">
+   <div class="button"  fxLayoutAlign="center center">
+     <mat-icon class="icon">email</mat-icon>
+     <span class="button-text">Zapisz się do newslettera</span>
+   </div>
+ </div>
 </div>

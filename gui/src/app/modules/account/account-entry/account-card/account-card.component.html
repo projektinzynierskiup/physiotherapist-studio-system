@@ -1,4 +1,62 @@
-<div *ngIf="user" class="container">
-   <div class="row">{{user.username}}</div>
-   <div class="row">{{user.email}}</div>
+<div class="container" *ngIf="user" fxFlex fxLayout="column" fxLayoutAlign="center center">
+   <nb-card class="main-card" fxFlex fxLayout="column">
+      <nb-card-header>
+         Nadchodzące wizyty: (jeśli są)
+      </nb-card-header>
+      <nb-card-body class="account-info"  fxLayout="column" >
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Data</div> 
+               <div class="right-column">Typ</div>
+            </div>
+      </nb-card-body>
+   </nb-card>
+
+   <nb-card class="main-card" fxFlex fxLayout="column" >
+      <nb-card-header>
+         Dane użytkownika:
+      </nb-card-header>
+      <nb-card-body class="account-info"  fxLayout="column" >
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Imię:</div> 
+               <div class="right-column">{{user.username}}</div>
+            </div>
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Nazwisko:</div> 
+               <div class="right-column">{{user.username}}</div>
+            </div>
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Adres email:</div> 
+               <div class="right-column">{{user.email}}</div>
+            </div>
+      </nb-card-body>
+      <nb-card-footer fxLayout="row" fxLayoutAlign="space-around center" >
+         <div>
+            Usuń konto
+         </div>
+         <div>
+            Edytuj dane osobowe
+         </div>
+      </nb-card-footer>
+   </nb-card>
+   
+
+   <nb-card class="main-card" fxFlex fxLayout="column">
+      <nb-card-header>
+         Historia wizyt:
+      </nb-card-header>
+      <nb-card-body class="account-info"  fxLayout="column" >
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Data</div> 
+               <div class="right-column">Typ</div>
+            </div>
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Data:</div> 
+               <div class="right-column">Typ</div>
+            </div>
+            <div class="row" fxFlex fxLayout="row" >
+               <div class="left-column">Data:</div> 
+               <div class="right-column">Typ</div>
+            </div>
+      </nb-card-body>
+   </nb-card>
 </div>

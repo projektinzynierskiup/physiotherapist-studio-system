@@ -1,34 +1,52 @@
 <nb-layout>
-   <nb-layout-column>
-      <nb-card class="center main-card"  fxLayout="column">
-         <nb-card-header>
-            <a routerLink="/home" style="font-weight: bold">
+   <nb-layout-column class="left-slant" fxLayoutAlign="center center">
+      <nb-card class="center"  fxLayout="column"  fxLayoutAlign="space-between center">
+         <nb-card-header fxLayout="row" fxLayoutAlign="center center">
+            <a routerLink="/home" style="font-weight: bold" >
                <img src="../../../assets/logo.png" style="width: 100%;"/>
             </a>
          </nb-card-header>
-         <nb-card-body>
-            <p style="font-weight: bold">SIGN IN:</p>
+         <nb-card-body fxLayout="column" fxLayoutAlign="center center">
+            <div class="title">
+               <h4>Odkryj nową jakość w zarządzaniu wizytami i doświadcz kompleksowej opieki nad Twoim zdrowiem.</h4>
+               <p>
+                  
+                  Witamy Cię w miejscu, gdzie dbamy o Twoje dobre samopoczucie. Nasza dedykowana aplikacja została stworzona, aby uczynić Twoje doświadczenie z masażem jeszcze bardziej komfortowym i dostosowanym do Twoich potrzeb.
+               </p>
+            </div>
+            
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                <div class="login-form" fxLayout="column" fxLayoutAlign="center center">
-                  <input nbInput fullWidth fieldSize="small"  id="email" type="text" class="email"
-                     placeholder="Email" formControlName="email" autocomplete="email" required />
+                  <p style="font-weight: bold">Zaloguj się, aby skorzystać z pełni możliwości:</p>
+
+                  <label class="label" >Adres email:</label>
+                  <input nbInput fullWidth fieldSize="small" id="email" type="text" class="email"
+                     placeholder="Wprowadź adres email" formControlName="email" autocomplete="email" required />
+                  <label class="label bottom-label">{{emailRequiredInfo}}</label>
+                  
+                  <label class="label">Hasło:</label>
                   <input nbInput fullWidth fieldSize="small"  id="password" formControlName="password" class="password"
-                     placeholder="Password" autocomplete="password" type="password" required />
-                  <button nbButton  size="medium"  class="submit-btn" type="submit" [disabled]="loginForm.value.email === '' || loginForm.value.password === ''">
-                     SIGN IN
+                     placeholder="Wprowadź hasło" autocomplete="password" type="password" required />
+                  <label class="label bottom-label">{{passwordRequiredInfo}}</label>
+
+                  <label class="label bottom-label">{{authenticationErrorInfo}}</label>
+
+
+                  <button nbButton  size="medium" fullWidth class="submit-btn" type="submit">
+                     Zaloguj się
                   </button>
                   <div class="bottom-box">
                      <div class="reset-password-box" fxLayoutAlign="end center" fxLayout="column">
-                        <p>Forgot password?</p>
+                        <p>Zapomniałeś hasła?</p>
                         <a (click)="openDialog(dialog)" style="font-weight: bold">
-                           Reset password
+                           Kliknij tutaj
                         </a>
                      </div>
                      <br>
                      <div class="signup-box" fxLayoutAlign="end center" fxLayout="column">
-                        <p>Do not have an account?</p>
+                        <p>Dołącz do nas już dziś i zarządzaj swoimi wizytami! Nie masz konta?</p>
                         <a routerLink="/register" style="font-weight: bold">
-                           Register
+                           Zarejestruj się
                         </a>
                      </div>
                   </div>
@@ -39,31 +57,27 @@
    </nb-layout-column>
  </nb-layout>
  <ng-template #dialog let-data let-ref="dialogRef">
-   <nb-card>
-      <nb-card-header>Reset password</nb-card-header>
-      <nb-card-body>
-         <div *ngIf="!sendLinkExecuted">
+   <nb-card class="reset-password-dialog" fxFlex fxLayout="column" fxLayoutAlign="space-between center">
+      <nb-card-header *ngIf="!sendLinkExecuted">Odzyskiwanie hasła</nb-card-header>
+      <nb-card-header *ngIf="sendLinkExecuted">Sprawdź skrzynkę odbiorczą!</nb-card-header>
+         <div class="reset-passsword-dialog-content" *ngIf="!sendLinkExecuted">
             <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPasswordSubmit()">
                <div class="login-form" fxLayout="column" fxLayoutAlign="center center">
-                  <input nbInput fullWidth fieldSize="small"  id="email" type="text" class="email"
-                  placeholder="Email" formControlName="email" autocomplete="email" required placeholder="Enter email" 
-                  [status]="resetPasswordForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'" 
-                  [nbTooltip]="prepareTooltip('email')" [nbTooltipStatus]="resetPasswordForm.controls['email'].value === ''  || resetPasswordForm.controls['email'].hasError('email') ? 'danger' : 'success'"/>
+                  <label class="label" >Adres email:</label>
+                  <input nbInput fullWidth fieldSize="small" id="email" type="text" class="email"
+                     placeholder="Wprowadź adres email" formControlName="email" autocomplete="email" required />
+                     <label class="label bottom-label">{{prepareTooltip('email')}}</label>
+                  
                </div>
-               <div class="bottom-box">
-                  <button  nbButton  size="medium" class="signup-box" type="submit" [disabled]="!resetPasswordForm.valid">Send reset password request</button>
-               </div>
+                  <button  nbButton fullWidth size="medium"  class="submit-btn" type="submit" [disabled]="!resetPasswordForm.valid">Wyślij maila</button>
             </form>
          </div>
-         <div *ngIf="sendLinkExecuted">
-            <p>
+         <div class="reset-passsword-dialog-content" *ngIf="sendLinkExecuted" fxLayout="column" fxLayoutAlign="space-between center">
+            <div >
                {{resetPasswordInfo}}
-            </p>
-            <div class="bottom-box">
-               <button nbButton  size="medium" class="signup-box" type="submit" (click)="openDialogAgain()">Send reset password request again</button>
             </div>
+               <button nbButton fullWidth size="medium"  class="submit-btn" type="submit" (click)="openDialogAgain()">Wyślij ponownie</button>
          </div>
-      </nb-card-body>
 
       <!-- <nb-card-footer>
          <button  nbButton  size="medium"  type="submit">Send reset password request</button>

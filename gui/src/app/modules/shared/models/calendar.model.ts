@@ -1,16 +1,17 @@
 import { Appointment } from "./appointment.model"
 
 export interface CalendarCell {
-   id: number
    startDate: string
    endDate: string
-   isFree: boolean
+   isBooked: boolean
    appointment?: Appointment
    isExpanded: boolean
 }
 
 export interface CalendarDay {
    day: string
+   today: boolean
+   passed: boolean
    cells: CalendarCell[]
 }
 

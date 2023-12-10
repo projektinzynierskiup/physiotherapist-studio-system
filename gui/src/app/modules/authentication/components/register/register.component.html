@@ -1,61 +1,66 @@
 <nb-layout>
-   <nb-layout-column >
-     <nb-card [class]="'center'" >
-       <nb-card-header>
+   <nb-layout-column  class="left-slant" fxLayoutAlign="center center">
+     <nb-card class="center" fxLayout="column"  fxLayoutAlign="space-between center">
+       <nb-card-header fxLayout="row" fxLayoutAlign="center center"> 
          <a routerLink="/home" style="font-weight: bold">
             <img src="../../../assets/logo.png" style="width: 100%;"/>
          </a>
        </nb-card-header>
  
-       <nb-card-body>
-          SIGN UP
+       <nb-card-body fxLayout="column" fxLayoutAlign="center center">
+          <div class="title">
+            <h4>Dołącz do nas już dziś i zarządzaj swoimi wizytami!</h4>
+               Nie masz konta? Zarejestruj się i korzystaj z pełni możliwości naszej aplikacji.
+          </div>
+          <br>
          <form  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
            <div class="register-form" fxLayout="column" fxLayoutAlign="center center">
-             <input nbInput  id="email" type="email" fieldSize="small" placeholder="Email" formControlName="email"  fullWidth required inputTrim
-              [status]="registerForm.controls['email'].hasError('pattern') ? 'danger' : 'basic'"   
-              [nbTooltip]="prepareTooltip('email')" [nbTooltipStatus]="registerForm.controls['email'].value === ''  || registerForm.controls['email'].hasError('email') ? 'danger' : 'success'" />
- 
-            <input id="password"  nbInput [nbTooltip]="prepareTooltip('password')"
-              [nbTooltipStatus]="registerForm.controls['password'].value === '' || registerForm.controls['password'].hasError('pattern') ? 'danger' : 'success'" 
-              [status]="registerForm.controls['password'].hasError('pattern') ? 'danger' : 'basic'" 
-              formControlName="password" fieldSize="small" fullWidth 
-              autocomplete="new-password" placeholder="Password" type="password" required />
- 
-             <input id="confirm-password" nbInput 
-              [nbTooltip]="prepareTooltip('confirmPassword')" [status]="
-              registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'basic'"   [nbTooltipStatus]="registerForm.controls['confirmPassword'].value === '' || registerForm.controls['confirmPassword'].value !== registerForm.controls['password'].value || registerForm.controls['confirmPassword'].hasError('pattern') ? 'danger' : 'success'" placeholder="Confirm password" fullWidth  formControlName="confirmPassword"
-               type="password" fieldSize="small" autocomplete="new-password"
-               required />
+            <label class="label" >Adres email:</label>
+            <input nbInput  id="email" type="email" [ngClass]="{ 'danger': hasError('email') }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim/>
+            <label class="label bottom-label">{{prepareTooltip('email')}}</label>
 
-            <input nbInput 
-              [nbTooltip]="prepareTooltip('username')"
-              [nbTooltipStatus]="registerForm.controls['username'].value === '' ? 'danger' : 'success'"
-              id="username" type="text" fieldSize="small" placeholder="Name" formControlName="username" fullWidth  required inputTrim />
+            <label class="label" >Hasło:</label>
+            <input id="password"  nbInput fullWidth [ngClass]="{ 'danger': hasError('password') }"
+              formControlName="password" fieldSize="small"  
+              autocomplete="new-password" placeholder="Wprowadź hasło" type="password" required />
+            <label class="label bottom-label">{{prepareTooltip('password')}}</label>
 
-            <input nbInput
-              [nbTooltip]="prepareTooltip('surname')"
-              [nbTooltipStatus]="registerForm.controls['surname'].value === '' ? 'danger' : 'success'"
-              id="surname" type="text" fieldSize="small" placeholder="Surname" fullWidth formControlName="surname" required inputTrim />
+            <label class="label" >Potwierdź hasło:</label>
+            <input id="confirm-password" nbInput [ngClass]="{ 'danger': hasError('confirmPassword') }" fullWidth placeholder="Wprowadź hasło ponownie" formControlName="confirmPassword"
+              type="password" fieldSize="small" autocomplete="new-password" required />
+            <label class="label bottom-label">{{prepareTooltip('confirmPassword')}}</label>
 
-            <input nbInput appPhoneMask maxlength="11"
-              [nbTooltip]="prepareTooltip('phone')"
-              [nbTooltipStatus]="registerForm.controls['phone'].value === '' || registerForm.controls['phone'].hasError('pattern') ? 'danger' : 'success'"
-              id="phone" type="text" fieldSize="small" placeholder="Phone number" fullWidth formControlName="phone" required inputTrim />
+            <label class="label" >Imię:</label>
+            <input nbInput  fullWidth [ngClass]="{ 'danger': hasError('username') }"
+             id="username" type="text" fieldSize="small" placeholder="Wprowadź imię" formControlName="username" required inputTrim />
+              <label class="label bottom-label">{{prepareTooltip('username')}}</label>
 
+              <label class="label" >Nazwisko:</label>
+              <input nbInput fullWidth [ngClass]="{ 'danger': hasError('surname') }"
+                id="surname" type="text" fieldSize="small" placeholder="Wprowadź nazwisko"  formControlName="surname" required inputTrim />
+              <label class="label bottom-label">{{prepareTooltip('surname')}}</label>
 
-            <nb-checkbox status="basic" formControlName="newsletter" style="text-align: left;" class="checkbox">Newsletter</nb-checkbox>
+              <label class="label" >Numer telefonu:</label>
+              <input nbInput appPhoneMask maxlength="11" fullWidth [ngClass]="{ 'danger': hasError('phone') }"
+              id="phone" type="text" fieldSize="small" placeholder="Numer telefonu"  formControlName="phone" required inputTrim />
+              <label class="label bottom-label">{{prepareTooltip('phone')}}</label>
+
+              <div class="checkboxes"  fxLayout="column"  fxLayoutAlign="center center">
+
+                <nb-checkbox formControlName="newsletter"  class="checkbox" fxLayout="row" fullWidth  fxLayoutAlign="start center">Zapisz mnie do newslettera!</nb-checkbox>
+                <nb-checkbox  class="checkbox">Akceptuje regulamin</nb-checkbox>
+              </div>
             
-            <button nbButton class="submit-btn" type="submit"  size="medium" 
-              [disabled]="!registerForm.valid">
-              Register
+            <button nbButton fullWidth class="submit-btn" type="submit"  size="medium" >
+              Zarejestruj się
             </button>
 
            </div>
          </form>
          <div class="bottom-box" fxLayout="column" fxLayoutAlign="end center">
-           <p>Have account?</p>
+           <p>Masz już konto?</p>
            <a routerLink="/login" style="font-weight: bold">
-             Log in
+             Zaloguj się
             </a>
          </div>
        </nb-card-body>

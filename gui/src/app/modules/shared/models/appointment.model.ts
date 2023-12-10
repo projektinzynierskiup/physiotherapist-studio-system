@@ -1,3 +1,5 @@
+import { OfferItem } from "./offeritem.model"
+import { User } from "./user.model"
 
 export interface Appointment {
    id?: number
@@ -8,6 +10,8 @@ export interface Appointment {
    status?: 'FREE' | 'BOOKED'
    userEmail?: string
    userPhone?: string
+   usersDTO?: any
+   massageDTO?: any
 }
 
 // export interface AppointmentGuest {

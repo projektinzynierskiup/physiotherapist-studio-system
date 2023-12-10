@@ -1,0 +1,13 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="center center">
+   <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <mat-icon style="margin-bottom: -5px;" (click)="upHour()">arrow_drop_up</mat-icon>
+      <div>{{hour}}</div>
+      <mat-icon style="margin-top: -5px;" (click)="downHour()">arrow_drop_down</mat-icon>
+   </div>
+   :
+   <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <mat-icon style="margin-bottom: -5px;" (click)="upMinutes()">arrow_drop_up</mat-icon>
+      <div *ngIf="minutes != undefined">{{ minutes < 10 ? '0' + minutes : minutes }}</div>
+      <mat-icon style="margin-top: -5px;" (click)="downMinutes()">arrow_drop_down</mat-icon>
+   </div>
+</div>

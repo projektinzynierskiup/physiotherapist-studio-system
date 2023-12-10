@@ -1,7 +1,11 @@
 
-.day {
-   border: 1px solid black;
-   text-align: center
+.column {
+   border: 1px solid rgb(241, 241, 241);
+   text-align: center;
+   margin: 5px;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+   border-radius: 3px;
+   min-height: 600px;
 }
 
 #start,
@@ -19,10 +23,65 @@
    }
 }
 
+.column-title {
+  border-bottom: 1px solid rgb(241, 241, 241);
+  padding: 10px 0;
+}
 
-a {
+.cell {
+  border-bottom: 1px solid rgb(241, 241, 241);
+}
+
+.cell:hover {
+  background-color: rgb(247, 247, 247);
+  cursor: pointer;
+}
+
+.booked {
+  background: repeating-linear-gradient(
+    -45deg,
+    #e0f5e957,   /* Lightest green */
+    #e0f5e957 10px,
+    #c0ebd957 10px,
+    #c0ebd957 20px
+  );
+}
+
+.booked:hover {
+  background: repeating-linear-gradient(
+    -45deg,
+    #e0f5e987,   /* Lightest green */
+    #e0f5e987 10px,
+    #c0ebd987 10px,
+    #c0ebd987 20px
+  );
+}
+
+.link, a {
    text-decoration: none;
    cursor: pointer;
+   color: black;
+}
+
+.link, .disabled {
+  min-width: 150px
+}
+
+.link:hover, a:hover {
+  color: black;
+  .icon {
+    font-weight: 600;
+  }
+}
+
+.disabled {
+  text-decoration: none;
+  cursor:default;
+  color: lightgray;
+}
+
+.disabled:hover {
+  color: lightgray;
 }
 
 .login-form {
@@ -48,3 +107,35 @@ a {
      text-decoration: none;
    }
  }
+
+ .add-free {
+  padding: 10px 0;
+ }
+
+
+.configuration-day-column {
+  padding: 5px 10px;
+}
+.configuration-column-title {
+  font-weight: 600;
+  padding: 15px;
+}
+
+.time-controls {
+  margin-left: 20px;
+}
+
+label {
+  min-width: 180px
+}
+
+.today{
+  border: 1px solid rgb(85, 85, 85);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+
+}
+
+.passed {
+  opacity: 0.5; /* Adjust the opacity as needed */
+
+}

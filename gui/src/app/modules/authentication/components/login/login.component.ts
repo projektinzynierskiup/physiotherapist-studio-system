@@ -7,7 +7,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { login, sendResetPasswordLink, setSendLinkExecuted } from '../../store/authentication.actions';
 import { NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { selectResetPasswordInfo, selectSendLinkExecuted } from '../../store/authentication.selectors';
+import { selectErrorFlag, selectResetPasswordInfo, selectSendLinkExecuted } from '../../store/authentication.selectors';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +17,16 @@ import { selectResetPasswordInfo, selectSendLinkExecuted } from '../../store/aut
 export class LoginComponent implements OnInit, OnDestroy {
   resetPasswordInfoSubscription?: Subscription
   sendLinkExecutedSubscription?: Subscription
+  loginErrorSubscription?: Subscription
 
   loginForm: FormGroup;
   resetPasswordForm: FormGroup;
   resetPasswordInfo?: string
   sendLinkExecuted?: boolean = false
+  
+  emailRequiredInfo: string = ''
+  passwordRequiredInfo: string = ''
+  authenticationErrorInfo: string = ''
 
   constructor(private fb: FormBuilder, private store: Store<AppState>, private dialogService: NbDialogService) {
     this.loginForm = this.fb.group({
@@ -43,9 +48,46 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.sendLinkExecuted = res
       }
     })
+
+    this.loginErrorSubscription = this.store.select(selectErrorFlag).subscribe(res => {
+      if(res) {
+        this.authenticationErrorInfo = 'Wprowadzono nieprawidłowy email bądź hasło!'
+      }
+    })
   }
 
+  prepareTooltip(type: string): string {
+    let tip: string = ''
+    switch (type) {
+      case 'email':
+        const emailControl = this.resetPasswordForm.get('email');
+        if(emailControl?.hasError('email')) {
+          tip += "Adres email powinien posiadać @"
+        }
+        break;
+      }
+      return tip
+   }
+  
+
   onSubmit(): void {
+    this.emailRequiredInfo = ''
+    this.passwordRequiredInfo = ''
+    this.authenticationErrorInfo = ''
+    if(this.loginForm.value.email === '' || this.loginForm.value.password === '' || this.loginForm.get('email')?.hasError('email')) {
+      console.log(this.loginForm.value)
+      if(this.loginForm.value.email == '') {
+        this.emailRequiredInfo = "Adres email wymagany"
+      } else if(this.loginForm.get('email')?.hasError('email')) {
+        this.emailRequiredInfo = "Nieprawidłowy format adresu email"
+      }
+      if(this.loginForm.value.password == '') {
+        this.passwordRequiredInfo = "Hasło wymagane"
+      }
+
+      return
+    }
+    
     const user: User = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
@@ -74,27 +116,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   openDialogAgain() {
     this.store.dispatch(setSendLinkExecuted({flag: false}))
   }
-
-  prepareTooltip(type: string): string {
-    let tip: string = ''
-    switch (type) {
-      case 'email':
-        const emailControl = this.resetPasswordForm.get('email');
-        if (emailControl?.value === '') {
-          tip += "Email required"
-        } else if(emailControl?.hasError('email')) {
-          tip += "Invalid email patternn"
-        }
-        else if(emailControl?.value !== '') {
-          tip += "Email valid"
-        }
-        break;
-    }
-    return tip
-  }
-
+  
   ngOnDestroy(): void {
     if(this.resetPasswordInfoSubscription) this.resetPasswordInfoSubscription.unsubscribe()
     if(this.sendLinkExecutedSubscription) this.sendLinkExecutedSubscription.unsubscribe()
+    if(this.loginErrorSubscription) this.loginErrorSubscription.unsubscribe()
   }
 }

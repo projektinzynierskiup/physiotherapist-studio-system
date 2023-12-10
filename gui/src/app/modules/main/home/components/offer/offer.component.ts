@@ -17,6 +17,8 @@ export class OfferComponent implements OnInit, OnDestroy {
 
   offerSubscription?: Subscription
 
+  modRole: boolean = false
+
   offer?: OfferItem[]
 
   constructor(
@@ -25,7 +27,8 @@ export class OfferComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    
+    this.modRole = localStorage.getItem('role') == 'MOD'
+
     this.offerSubscription = this.store.select(selectOffer).subscribe(res => {
       console.log(res)
       if(res.length) {
@@ -39,6 +42,11 @@ export class OfferComponent implements OnInit, OnDestroy {
     this.store.dispatch(setSelectedVisitType({visitType: offerItem}))
 
     this.router.navigate(['/booking'])
+  }
+
+  goToAdministration() {
+    this.router.navigate(['/administration'])
+
   }
 
   ngOnDestroy(): void {

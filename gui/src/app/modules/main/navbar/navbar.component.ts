@@ -36,44 +36,44 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.menuItems = [
       {
-        title: 'home',
+        title: 'Strona główna',
         url: '/home',
         permissions: ['GUEST', 'USER', 'MOD', 'ADMIN'],
         icon: 'home',
         loginRequired: false
       },
       {
-        title: 'booking',
+        title: 'Rezerwacja',
         url: 'booking',
         permissions: ['GUEST', 'USER', 'MOD', 'ADMIN'],
         icon: 'assignment',
         loginRequired: false
       },
       {
-        title: 'reviews',
+        title: 'Opinie',
         url: '/reviews',
         permissions: ['GUEST', 'USER', 'MOD', 'ADMIN'],
         icon: 'rate_review',
         loginRequired: false
       },
       {
-        title: 'calendar',
+        title: 'Kalendarz',
         url: '/calendar',
         permissions: ['MOD', 'ADMIN'],
         icon: 'calendar_today',
         loginRequired: true
       },
       {
-        title: 'analytics',
+        title: 'Analityka',
         url: '/analytics',
         permissions: ['MOD', 'ADMIN'],
         icon: ' show_chart',
         loginRequired: true
       },
       {
-        title: 'administration',
+        title: 'Administracja',
         url: '/administration',
-        permissions: ['ADMIN'],
+        permissions: ['MOD', 'ADMIN'],
         icon: 'settings-2-outline',
         loginRequired: true
       }
@@ -83,7 +83,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.accountActions = [
       {
-        title: 'login',
+        title: 'Zaloguj się',
         url: '/login',
         permissions: ['GUEST', 'USER', 'MOD', 'ADMIN'],
         icon: 'login',
@@ -91,7 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         hideAfterLogin: true
       },
       {
-        title: 'register',
+        title: 'Zarejestruj się',
         url: '/register',
         permissions: ['GUEST', 'ADMIN'],
         icon: 'person_add',
@@ -99,14 +99,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
         hideAfterLogin: true
       },
       {
-        title: 'account',
+        title: 'Moje konto',
         url: 'account',
         permissions: ['USER', 'MOD', 'ADMIN'],
         icon: 'account_circle',
         loginRequired: true,
       },
       {
-        title: 'logout',
+        title: 'Wyloguj się',
         url: 'logout',
         permissions: ['USER', 'MOD', 'ADMIN'],
         icon: 'logout',

@@ -24,3 +24,8 @@ export const selectSendLinkExecuted= createSelector(
   selectAuthState,
   (state: AuthState) => state?.sendLinkExecuted
 );
+
+export const selectErrorFlag = createSelector(
+  selectAuthState,
+  (state: AuthState) => state?.error
+)

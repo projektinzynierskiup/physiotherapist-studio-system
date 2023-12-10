@@ -22,6 +22,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { CommonModule } from "@angular/common";
 import { PhoneMaskDirective } from "./directives/phone-mask.directive";
 import { LoginGuard } from "./guards/login.guard";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { LoginGuard } from "./guards/login.guard";
     FlexLayoutModule,
     NbButtonModule,
     NbCheckboxModule,
-    CommonModule
+    CommonModule,
+    MatIconModule
   ],
   declarations: [
     LoginComponent,

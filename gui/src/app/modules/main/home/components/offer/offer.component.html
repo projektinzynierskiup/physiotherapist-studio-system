@@ -1,13 +1,27 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+<div class="title" fxFlex fxLayout="row" fxLayoutAlign="center center">
+   <h2>Nasza oferta</h2><mat-icon class="edit-icon" (click)="goToAdministration()" *ngIf="modRole">edit</mat-icon>
+</div>
 <nb-column *ngIf="offer" class="container" fxLayout="row wrap" fxLayoutAlign="center center">
    <nb-card size="large" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="center center">
       <nb-card-header class="card-title">
          {{offerItem.massageName}}
       </nb-card-header>
       <nb-card-body class="card-description">
-         {{offerItem.description}}
+         <div class="image-container">
+            <!-- Placeholder or default image -->
+            <img class="placeholder-image" src="placeholder.jpg" alt="Placeholder Image">
+            <!-- Use the "src" attribute to load the actual image when available -->
+            <!-- <img src="path/to/your/real-image.jpg" alt="Real Image"> -->
+        </div>
+         <p>
+            {{offerItem.description}}
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, ratione distinctio. Repudiandae enim, nulla quibusdam ducimus dolorem veritatis, quo sapiente architecto explicabo vel quos possimus earum placeat tempore doloribus voluptatum!
+         </p>
       </nb-card-body>
       <nb-card-footer>
          <button nbButton type="primary" fullWidth shape="round" (click)="onOfferItemClick(offerItem)">Book Visit</button>
       </nb-card-footer>
    </nb-card>
 </nb-column>
+</div>

@@ -9,3 +9,102 @@ nb-card {
    padding: 0;
    border-radius: 0;
 }
+
+.image-container {
+   width: 300px;
+   height: 200px;
+   border: 1px solid #ccc;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
+}
+
+.placeholder-image {
+   width: 100%;
+   height: auto;
+   max-width: 100%;
+   opacity: 0.5;
+}
+
+.button-container-1{
+   bottom: 20px;
+ }
+
+ .button-container-2{
+   bottom: 100px;
+ }
+ 
+ .button-container-1,
+ .button-container-2 {
+   position: fixed;
+   right: 20px;
+   width: 60px;
+   height: 60px;
+   overflow: hidden;
+   background-color: #ffffff; /* Adjust the background color */
+   border-radius: 30px;
+   transition: width 0.3s, height 0.3s;
+   border: 1px solid gray;
+ }
+ 
+ .button-container-1:hover,
+ .button-container-2:hover,
+ .simulate-hover {
+   width: 250px;
+   height: 60px; /* Adjust the height as needed */
+ }
+ 
+ .button {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+   text-decoration: none;
+   color: #000000; /* Adjust the text color */
+   cursor: pointer;
+ }
+ 
+.icon {
+   margin-right: -200px;
+   opacity: 1;
+   transition: opacity 0.2s;
+ }
+
+ 
+ .button-text {
+   overflow: hidden;
+   white-space: nowrap;
+   opacity: 0;
+   transition: opacity 0.2s;
+   width: 200px;
+   text-align: center;
+ }
+ 
+ .button-container-1:hover .icon,
+ .button-container-2:hover .icon,
+ .simulate-hover .icon  {
+   display: none;
+   margin-right: 0px; /* Adjust spacing between icon and text */
+
+ }
+ .button-container-1:hover .button-text,
+ .button-container-2:hover .button-text {
+   opacity: 1;
+ }
+ .button-container-1:hover,
+ .button-container-2:hover,
+ .simulate-hover  {
+   border-radius: 30px;
+
+   opacity: 1;
+ }
+
+ .simulate-hover .icon {
+   display: none;
+ }
+ 
+ .simulate-hover .button-text {
+   opacity: 1;
+ }

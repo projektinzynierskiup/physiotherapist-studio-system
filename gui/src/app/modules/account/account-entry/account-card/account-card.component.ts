@@ -4,6 +4,7 @@ import { AppState } from 'src/app/store/app.states';
 import { User } from '../../../shared/models/user.model';
 import { Subscription } from 'rxjs';
 import { selectUser } from '../../../authentication/store/authentication.selectors';
+import { setLastPageVisited } from 'src/app/modules/main/store/main.actions';
 
 @Component({
   selector: 'app-account-card',
@@ -20,6 +21,7 @@ export class AccountCardComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>
   ) {}
+  
 
   ngOnInit(): void {
     this.userSubscription = this.store.select(selectUser).subscribe(res => {
@@ -27,6 +29,9 @@ export class AccountCardComponent implements OnInit, OnDestroy {
         this.user = res
       }
     })
+
+    this.store.dispatch(setLastPageVisited({url: '/account'}))
+
   }
 
   ngOnDestroy(): void {

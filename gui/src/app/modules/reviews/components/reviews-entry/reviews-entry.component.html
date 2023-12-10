@@ -1,45 +1,69 @@
-<!-- Przycisk otwierający modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOpinionModal">
-   Dodaj opinię
- </button>
- 
- <!-- Modal -->
- <div class="modal fade" id="addOpinionModal" tabindex="-1" aria-labelledby="addOpinionModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="addOpinionModalLabel">Dodaj nową opinię</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-         <form #opinionForm="ngForm" (ngSubmit)="submitOpinion(opinionForm.value)">
-           <div class="mb-3">
-             <label for="username" class="form-label">Nazwa użytkownika</label>
-             <input type="text" class="form-control" id="username" name="username" ngModel required>
-           </div>
-           <div class="mb-3">
-             <label for="description" class="form-label">Opis</label>
-             <textarea class="form-control" id="description" name="description" ngModel required></textarea>
-           </div>
-           <div class="mb-3">
-             <label for="rate" class="form-label">Ocena</label>
-             <input type="number" class="form-control" id="rate" name="rate" ngModel required>
-           </div>
-           <button type="submit" class="btn btn-primary">Zatwierdź</button>
-         </form>
-       </div>
-     </div>
-   </div>
- </div>
- 
- 
- <div *ngIf="opinionPage">
-   <div *ngFor="let opinion of opinionPage.content">
-     <p>{{ opinion.username }}: {{ opinion.description }}</p>
-   </div>
- 
-   <!-- Paginacja -->
-   <button (click)="getOpinions((opinionPage?.pageable?.pageNumber ?? 0) - 1)" [disabled]="opinionPage?.first">Poprzednia</button>
- 
-   <button (click)="getOpinions((opinionPage?.pageable?.pageNumber ?? 0) + 1)" [disabled]="opinionPage?.last">Następna</button>
- </div>
+<div class="container" fxFlex fxLayout="row wrap" >
+      <nb-card class="card"fxFlex fxLayout="column" fxLayoutAlign="center center">
+         <nb-card-header class="card-title">
+            <h4 class="title-heading" fxLayoutAlign="center center">
+              Twoja Opinia Ma Znaczenie!
+            </h4>
+            <p class="description">
+              Masz już za sobą wizytę w naszym salonie masażu?<br>
+              Podziel się swoimi spostrzeżeniami, aby pomóc innym w podjęciu decyzji. Wypełnij formularz poniżej i napisz, co sądzisz o naszych usługach. <br>
+              Jesteśmy ciekawi Twoich opinii!
+            </p>
+          </nb-card-header>
+         <nb-card-body class="card-description" fxLayoutAlign="center center">
+            <form *ngIf="!reviewSent" [formGroup]="addReviewForm" (ngSubmit)="submitForm()" fxLayout="column">
+               <label for="username">Imię:</label>
+               <input nbInput type="text" id="username" formControlName="username">
+               <br>
+               <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <label for="rate">Ocena:</label>
+                  <app-star-rating [rating]="addReviewForm.get('rate')?.value" (ratingChange)="onRatingChange($event)"></app-star-rating>
+               </div>
+               <br>
+               <label for="description">Opinia:</label>
+               <textarea nbInput id="description" formControlName="description"></textarea>
+
+               <nb-card-footer>
+                  <button type="submit"nbButton type="primary" fullWidth shape="round" >Dodaj opinię</button>
+               </nb-card-footer>
+             </form>
+             <div *ngIf="reviewSent"fxLayout="column"  fxLayoutAlign="center center">
+               <h4 class="title-heading" fxLayoutAlign="center center">
+                  Dziękujemy za wystawienie opinii!
+                </h4>
+                <p class="description">
+                  Zapraszamy ponownie
+                </p>
+             </div>
+         </nb-card-body>
+      </nb-card>
+      <nb-card class="card" fxFlex fxLayout="column" fxLayoutAlign="center center">
+         <nb-card-header class="card-title">
+            Opinie:
+         </nb-card-header>
+         <nb-card-body class="card-description" >
+            <div *ngFor="let review of reviews" fxLayout="column" class="review">
+               <div  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div class="username">{{ review.username }}</div>
+                  <div class="rating">
+                     <app-star-rate [rating]="review.rate"></app-star-rate>
+                  </div>
+               </div>
+               <div  fxLayoutAlign="center center">
+                  <div class="review-description">{{ review.description }}</div>
+               </div>
+             </div>
+         </nb-card-body>
+         <nb-card-footer class="paging" fxLayout="row" fxLayoutAlign="space-around center">
+            <div [class.hidden]="currentPage <= 1" (click)="prevPage()" class="paging-button" fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon>chevron_left</mat-icon>
+                Poprzednia strona
+            </div>
+            {{currentPage}} / {{totalPages}}
+            <div [class.hidden]="currentPage >= totalPages" (click)="nextPage()" class="paging-button" fxLayout="row" fxLayoutAlign="center center">
+                Nastepna strona
+                <mat-icon>chevron_right</mat-icon>
+            </div>
+        </nb-card-footer>
+      </nb-card>
+</div>
