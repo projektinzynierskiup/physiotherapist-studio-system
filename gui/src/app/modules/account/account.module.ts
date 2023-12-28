@@ -6,6 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NbLayoutModule, NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbOptionModule } from '@nebular/theme';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AccountService } from './services/account.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -26,11 +30,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NbSelectModule,
     NbOptionModule,
     NbCardModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatIconModule,
+    MatTooltipModule,
+    HttpClientModule
   ], 
   entryComponents: [
     AccountEntryComponent,
     AccountCardComponent
+  ],
+  providers: [
+    AccountService
   ]
 })
 export class AccountModule { }

@@ -2,39 +2,138 @@
    height: 100%;
    margin-top: 20px;
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap');
+*:not(mat-icon) {
+  font-family: 'Rethink Sans', sans-serif !important;
+}
 .main-card {
    width: 700px;
 }
 
-.account-info {
-   margin: 10px 0px;
-   height: 100%;
-}
+
 
 nb-card-header {
    padding:16px;   
 }
 
-nb-card-body {
-   padding: 16px;
+.account-info {
+  margin: 5px 15px;
 }
 
-.row {
-   margin: 2px 0px;
 
-   border: 1px solid rgb(234, 234, 234);
-   border-radius: 3px;
-   padding: 15px;
+.row {
+  margin: 5px 0px;
+  
+  border: 1px solid rgb(234, 234, 234);
+  border-radius: 3px;
+  padding: 10px 15px;
+}
+.row:hover {
+  border: 1px solid gray!important;
 }
 
 .left-column {
    text-align: left;
-   border-right: 1px solid rgb(234, 234, 234);
-   width: 150px;
  }
  
  .right-column {
    width: 100%;
    text-align: center;
+ }
+
+ #login,
+ #email,
+ #username,
+ #phone,
+ #surname {
+  padding: 0.6em 1.6em;
+  margin: 0.3rem;
+
+  &:hover,
+  &:focus,
+  &:active {
+   border-color: darkgray !important;
+ }
+}
+
+input {
+   border: 1px solid rgb(229, 229, 229)!important;
+   background-color:  white !important;
+   margin: 2px;
+   width: 100% !important;
+   box-shadow: 0 0 2px rgba(175, 175, 175, 0.1); /* Add light gray shadow */
+ }
+ 
+ .danger {
+   border: 0.5px solid rgb(204, 0, 0)!important;
+   transition: border 0.5s ease;  // Adjust the duration and timing function as needed
+ 
+ }
+ 
+ .register-form {
+   width: 100%;
+ }
+
+ .label {
+   z-index: 1000;
+   font-size: 13px;
+   color: rgb(63, 63, 63)!important;
+   margin-bottom: -8px;
+   margin-top: -5px;
+   background-color:  transparent;
+   text-align: left;
+  }
+ 
+  .bottom-label {
+   color: rgb(204, 0, 0)!important;;
+   font-weight: 400;
+   min-height: 20px;
+   margin-bottom: 8px;
+   transition: color 0.3s ease, font-weight 0.3s ease;  // Adjust the duration and timing function as needed
+ }
+ 
+  form {
+   width: 100%;
+  }
+ 
+  @media screen and (max-width: 700px) {
+   form {
+     width: 100%;
+    }
+    .main-card {
+      width: 100%;
+   }
+ }
+
+ .disabled-input {
+   color: black!important;
+   cursor:auto;
+   opacity: 1!important;
+ }
+
+ 
+
+ mat-icon {
+   cursor: pointer;
+   color: rgb(61, 61, 61)!important;;
+ }
+
+ .input-container {
+   position: relative;
+   width: 100%;
+ }
+ 
+ .edit-icon {
+   position: absolute;
+   right: 8px; /* Adjust the right distance as needed */
+   top: 50%;
+   transform: translateY(-50%);
+   cursor: pointer;
+}
+
+:host ::ng-deep .mat-tooltip {
+   background-color: #3498db !important;
+   color: #fff!important;;
+   border-radius: 4px;
+   /* Add more styles as needed */
  }

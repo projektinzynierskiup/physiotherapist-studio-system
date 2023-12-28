@@ -44,6 +44,10 @@ export class OfferComponent implements OnInit, OnDestroy {
     this.router.navigate(['/booking'])
   }
 
+  getUrl(id : number | undefined) {
+    return `../../../../../../assets/${id}.jpg`
+  }
+
   goToAdministration() {
     this.router.navigate(['/administration'])
 

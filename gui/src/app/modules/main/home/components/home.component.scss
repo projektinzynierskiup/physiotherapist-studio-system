@@ -1,31 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap');
+*:not(mat-icon) {
+  font-family: 'Rethink Sans', sans-serif !important;
+}
+
 .container {
    width: 100%;
    margin: 0;
    padding-top: 40px;
 }
 
-nb-card {
-   margin: 0;
-   padding: 0;
-   border-radius: 0;
+.title {
+  width: 100%;
 }
 
-.image-container {
-   width: 300px;
-   height: 200px;
-   border: 1px solid #ccc;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   overflow: hidden;
+.background-image {
+  height: 300px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative; /* Ensure positioning for child elements */
+  overflow: hidden; /* Hide overflowing content */
+  transition: transform 0.3s;
 }
 
-.placeholder-image {
-   width: 100%;
-   height: auto;
-   max-width: 100%;
-   opacity: 0.5;
+.overlay {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.5); /* Adjust the color and opacity of the overlay */
 }
+
+.text {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  padding: 0 5%;
+  p, h1 {
+    text-transform: uppercase;
+    color: black!important;
+  }
+
+  h1 {
+    letter-spacing: 0.8mm;
+  }
+}
+// .content b {
+//   letter-spacing: 1mm;
+//   color: #fff!important; /* Set text color to white or a color that contrasts well with the overlay */
+
+//   text-transform: uppercase;
+// }
 
 .button-container-1{
    bottom: 20px;
@@ -62,7 +90,7 @@ nb-card {
    width: 100%;
    height: 100%;
    text-decoration: none;
-   color: #000000; /* Adjust the text color */
+   color: #000000!important;; /* Adjust the text color */
    cursor: pointer;
  }
  
@@ -108,3 +136,98 @@ nb-card {
  .simulate-hover .button-text {
    opacity: 1;
  }
+
+
+ .sidebar-container {
+  position: fixed;
+  top: 75px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sidebar-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.sidebar-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 350px; /* Adjust the width as needed */
+  background-color: #fff; /* Adjust the background color as needed */
+  box-shadow: -1px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Dodatkowe style dla treści sidebaru */
+
+.sidebar-content p {
+  margin-bottom: 10px;
+}
+
+.sidebar-content button {
+  padding: 10px;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar-content button:hover {
+  background-color: #45a049;
+}
+
+
+input {
+  border: 1px solid rgb(229, 229, 229)!important;
+  background-color:  white!important;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+}
+
+.label {
+  z-index: 1000;
+  font-size: 13px;
+  color: rgb(63, 63, 63)!important;;
+  margin-bottom: -8px;
+  background-color:  transparent;
+  text-align: left;
+ }
+
+ .bottom-label {
+  color: rgb(204, 0, 0)!important;;
+  font-weight: 400;
+  min-height: 30px;
+  margin-bottom: 3px;
+ }
+
+ #email {
+   padding: 0.6em 1.6em;
+   margin: 0.3rem;
+
+   &:hover,
+   &:focus,
+   &:active {
+    border-color: darkgray !important;
+  }
+}
+
+.submit-btn {
+  padding: 0.9em 1.8em;
+  background-color: white !important;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+ border-color: rgb(120, 120, 120) !important;
+ cursor: pointer;
+}

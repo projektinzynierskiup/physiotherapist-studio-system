@@ -12,6 +12,7 @@ import { TimeInputDirective } from './directives/time-input.directive';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 import { MinutesPickerComponent } from './components/minutes-picker/minutes-picker.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -37,7 +38,8 @@ import { MinutesPickerComponent } from './components/minutes-picker/minutes-pick
     FlexLayoutModule,
     NbButtonModule,
     NbCheckboxModule,
-    CommonModule
+    CommonModule,
+    MatTooltipModule
   ],
   providers: [
     CalendarService

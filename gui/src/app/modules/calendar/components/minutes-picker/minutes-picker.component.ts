@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-minutes-picker',
@@ -8,23 +8,26 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 export class MinutesPickerComponent implements OnInit {
   @Input() minutes?: number
   minutesStep: number = 5
+  @Output() minutesChange: EventEmitter<number> = new EventEmitter<number>();
 
   ngOnInit(): void {
   }
   
   upMinutes() {
-    if(this.minutes != undefined && this.minutes + this.minutesStep < 60) {
+    if(this.minutes != undefined) {
       this.minutes += this.minutesStep
-    } else if(this.minutes != undefined  && this.minutes + this.minutesStep >= 60)  {
-      this.minutes = 0
+      this.updateMinutes() 
     }
   }
 
   downMinutes() {
     if(this.minutes != undefined && this.minutes - this.minutesStep >= 0) {
       this.minutes -= this.minutesStep
-    } else if(this.minutes != undefined  && this.minutes == 0)  {
-      this.minutes = 60 - this.minutesStep
+      this.updateMinutes() 
     }
+  }
+
+  updateMinutes() {
+    this.minutesChange.emit(this.minutes);
   }
 }

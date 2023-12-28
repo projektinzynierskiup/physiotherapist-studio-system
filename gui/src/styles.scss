@@ -33,18 +33,72 @@ $gui-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($gui-theme);
 
+@font-face {
+  font-family: 'Rethink Sans';
+  src: url('./assets/fonts/rethink-sans.woff2') format('woff2'),
+       url('./assets/fonts/rethink-sans.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { 
   margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
-  // background-image: url('./assets/background.jpg');
+  font-family: 'Rethink Sans', sans-serif ;
   background-position: center; /* Adjust as needed */
   background-size: cover; /* Adjust as needed */
+  user-select: none; /* Standard syntax */
+}
+body {
+  background-image: url('./assets/background.jpg');
+
+}
+// * {
+//   color: #292929!important;
+
+// }
+
+nb-layout {
+  background-color: #F2F2F2;
 }
 
+a {
+  color: black!important;
+}
+
+mat-icon {
+  cursor: pointer!important;
+}
 
 .nb-theme-default nb-layout .layout {
   background-color: transparent !important;
+}
+
+/* Apply styles to the scrollbar track */
+::-webkit-scrollbar {
+  width: 7px; /* Width of the scrollbar */
+}
+
+/* Handle on hover and when dragged */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Color of the scrollbar handle */
+  border-radius: 6px; /* Rounded corners of the scrollbar handle */
+}
+
+/* Handle on hover and when dragged */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa; /* Color of the scrollbar handle on hover */
+}
+
+/* Track background */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+/* Corner between horizontal and vertical scrollbar */
+::-webkit-scrollbar-corner {
+  background: transparent; /* Background color of the scrollbar corner */
 }

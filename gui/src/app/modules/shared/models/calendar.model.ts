@@ -4,8 +4,11 @@ export interface CalendarCell {
    startDate: string
    endDate: string
    isBooked: boolean
+   isFinished: boolean
    appointment?: Appointment
    isExpanded: boolean
+   id?: number
+   isSelected?: boolean
 }
 
 export interface CalendarDay {

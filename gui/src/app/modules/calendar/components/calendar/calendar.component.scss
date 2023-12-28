@@ -6,6 +6,22 @@
    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
    border-radius: 3px;
    min-height: 600px;
+   background-color: white
+}
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap');
+*:not(mat-icon) {
+  font-family: 'Rethink Sans', sans-serif !important;
+}
+@media screen and (max-width: 1000px) {
+  .column {
+    padding: 0px 20px;
+
+  }
+
+  .configuration-column {
+    padding: 0px 40px;
+
+  }
 }
 
 #start,
@@ -30,6 +46,7 @@
 
 .cell {
   border-bottom: 1px solid rgb(241, 241, 241);
+  width: 100%;
 }
 
 .cell:hover {
@@ -40,27 +57,41 @@
 .booked {
   background: repeating-linear-gradient(
     -45deg,
-    #e0f5e957,   /* Lightest green */
-    #e0f5e957 10px,
-    #c0ebd957 10px,
-    #c0ebd957 20px
+    #a4a4a430,   /* Lightest green */
+    #a4a4a430 10px,
+    #c7c7c730 10px,
+    #c7c7c730 20px
   );
+  box-shadow: 0 0 2px rgba(175, 175, 175, 0.1); /* Add light gray shadow */
+}
+
+.finished {
+  background: 
+         linear-gradient(to top left,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%);
+  opacity: 0.5;
+
+
 }
 
 .booked:hover {
-  background: repeating-linear-gradient(
-    -45deg,
-    #e0f5e987,   /* Lightest green */
-    #e0f5e987 10px,
-    #c0ebd987 10px,
-    #c0ebd987 20px
-  );
+  // background: repeating-linear-gradient(
+  //   -45deg,
+  //   #e0f5e987,   /* Lightest green */
+  //   #e0f5e987 10px,
+  //   #c0ebd987 10px,
+  //   #c0ebd987 20px
+  // );
 }
 
 .link, a {
    text-decoration: none;
    cursor: pointer;
-   color: black;
+   
 }
 
 .link, .disabled {
@@ -68,20 +99,30 @@
 }
 
 .link:hover, a:hover {
-  color: black;
+  
   .icon {
     font-weight: 600;
   }
 }
 
+.appointment-action {
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 0px 10px;
+}
+
+mat-icon:hover {
+  transform: scale(1.1);
+}
+
 .disabled {
   text-decoration: none;
   cursor:default;
-  color: lightgray;
+  color: lightgray!important;;
 }
 
 .disabled:hover {
-  color: lightgray;
+  color: lightgray!important;;
 }
 
 .login-form {
@@ -112,13 +153,21 @@
   padding: 10px 0;
  }
 
+ .configurationBox {
+  width: 100%;
+ }
 
 .configuration-day-column {
-  padding: 5px 10px;
+  padding: 5px 20px;
+  cursor: pointer;
 }
 .configuration-column-title {
   font-weight: 600;
   padding: 15px;
+}
+
+.narrow:hover {
+  background-color: rgb(247, 247, 247);
 }
 
 .time-controls {
@@ -127,6 +176,10 @@
 
 label {
   min-width: 180px
+}
+
+.break-label {
+  background-color: transparent!important;
 }
 
 .today{
@@ -138,4 +191,127 @@ label {
 .passed {
   opacity: 0.5; /* Adjust the opacity as needed */
 
+}
+
+.label {
+  margin-bottom: -5px;
+}
+
+.label-height {
+  min-height: 50px;
+
+}
+
+.add-slot {
+  cursor: pointer;
+  margin: 15px;
+}
+
+.expanded {
+  width: 1.5rem;
+}
+
+.narrow {
+  width: 0.8rem;
+}
+
+.column-bottom {
+  padding: 10px 0px;
+}
+
+.time-controls {
+  margin-top: -60px;
+  max-width: 250px;
+}
+
+.config-cell {
+  border-bottom: 1px solid rgb(241, 241, 241);
+  width: 100%;
+}
+
+.medium-icon {
+  transform: scale(1.5);
+  cursor: pointer;
+
+
+}
+.medium-icon:hover {
+  transform: scale(1.6);
+}
+
+#email,
+#username,
+#surname,
+#phone {
+ padding: 0.6em 1.6em;
+ margin: 0.3rem;
+
+ &:hover,
+ &:focus,
+ &:active {
+  border-color: darkgray !important;
+}
+}
+
+
+input {
+ border: 1px solid rgb(229, 229, 229)!important;
+ background-color:  white !important;
+ margin: 2px;
+ width: 100% !important;
+ box-shadow: 0 0 2px rgba(175, 175, 175, 0.1); /* Add light gray shadow */
+}
+
+.danger {
+ border: 0.5px solid rgb(204, 0, 0)!important;
+ transition: border 0.5s ease;  // Adjust the duration and timing function as needed
+
+}
+
+.register-form {
+ width: 100%;
+}
+
+.submit-btn {
+ margin-top: 10px;
+ padding: 0.9em 1.8em;
+ background-color: white !important;
+ cursor: pointer;
+}
+
+.bottom-box {
+ margin-top: 2em;
+ p {
+   padding: 0;
+   margin: 0;
+ }
+
+ a {
+   text-decoration: none;
+   
+   cursor: pointer;
+ }
+}
+
+nb-checkbox {
+ transform: scale(0.9);
+
+}
+
+.label {
+ z-index: 1000;
+ font-size: 13px;
+ color: rgb(63, 63, 63)!important;;
+ margin-bottom: -8px;
+ margin-top: -5px;
+ background-color:  transparent;
+ text-align: left;
+}
+
+.bottom-label {
+ color: rgb(204, 0, 0)!important;;
+ font-weight: 400;
+ min-height: 20px;
+ margin-bottom: 8px;
+ transition: color 0.3s ease, font-weight 0.3s ease;  // Adjust the duration and timing function as needed
 }

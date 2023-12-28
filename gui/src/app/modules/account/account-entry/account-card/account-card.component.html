@@ -1,62 +1,76 @@
 <div class="container" *ngIf="user" fxFlex fxLayout="column" fxLayoutAlign="center center">
-   <nb-card class="main-card" fxFlex fxLayout="column">
+   <nb-card class="main-card" fxFlex fxLayout="column"  *ngIf="futureAppointments.length > 0">
       <nb-card-header>
-         Nadchodzące wizyty: (jeśli są)
+         Nadchodzące wizyty:
       </nb-card-header>
-      <nb-card-body class="account-info"  fxLayout="column" >
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Data</div> 
-               <div class="right-column">Typ</div>
+      <div class="account-info"  fxLayout="column" >
+            <div class="row" fxFlex fxLayout="row" *ngFor="let appointment of futureAppointments">
+               <div class="left-column"  fxFlex fxLayout="row" >{{formatDate(appointment.startDate)}}</div> 
+               <div class="right-column"  fxFlex fxLayout="row" >{{appointment.massageDTO.massageName}}</div>
+               <mat-icon  class="appointment-action" class="icon" matTooltip="Odwołaj wizytę">close</mat-icon> 
             </div>
-      </nb-card-body>
+      </div>
    </nb-card>
 
    <nb-card class="main-card" fxFlex fxLayout="column" >
-      <nb-card-header>
-         Dane użytkownika:
-      </nb-card-header>
+      <nb-card-header fxLayout="row" fxLayoutAlign="space-between center">
+         <b>Dane użytkownika:</b>
+         <div fxLayout="row">
+           <mat-icon (click)="toggleEditMode()" matTooltip="Zapisz">{{ isEditMode ? 'save' : '' }}</mat-icon>
+           <mat-icon>settings-2-outline</mat-icon>
+         </div>
+       </nb-card-header>
       <nb-card-body class="account-info"  fxLayout="column" >
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Imię:</div> 
-               <div class="right-column">{{user.username}}</div>
+         <form  [formGroup]="userInfo" (ngSubmit)="onSubmit()">
+            <div class="register-form" fxLayout="column" fxLayoutAlign="center center" >
+             <label class="label" >Adres email:</label>
+             <div class="input-container">
+               <input nbInput id="email" type="email" [ngClass]="{ 'danger': hasError('email'), 'disabled-input': !isEditMode }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim />
+               <mat-icon *ngIf="!isEditMode" class="edit-icon"  (click)="toggleEditMode()" matTooltip="Edytuj informacje zmiany">edit</mat-icon>
+             </div>
+             <label class="label bottom-label">{{prepareTooltip('email')}}</label>
+ 
+             <label class="label" >Imię:</label>
+             <div class="input-container">
+               <input nbInput  fullWidth [ngClass]="{ 'danger': hasError('username'), 'disabled-input': !isEditMode }"
+              id="username" type="text" fieldSize="small" placeholder="Wprowadź imię" formControlName="username" required inputTrim />
+              <mat-icon *ngIf="!isEditMode" class="edit-icon"  (click)="toggleEditMode()" matTooltip="Edytuj informacje">edit</mat-icon>
             </div>
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Nazwisko:</div> 
-               <div class="right-column">{{user.username}}</div>
+            <label class="label bottom-label">{{prepareTooltip('username')}}</label>
+ 
+               <label class="label" >Nazwisko:</label>
+               <div class="input-container">
+                  <input nbInput fullWidth [ngClass]="{ 'danger': hasError('surname'), 'disabled-input': !isEditMode }"
+                 id="surname" type="text" fieldSize="small" placeholder="Wprowadź nazwisko"  formControlName="surname" required inputTrim />
+                 <mat-icon *ngIf="!isEditMode" class="edit-icon"  (click)="toggleEditMode()" matTooltip="Edytuj informacje">edit</mat-icon>
+               </div>
+               <label class="label bottom-label">{{prepareTooltip('surname')}}</label>
+
             </div>
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Adres email:</div> 
-               <div class="right-column">{{user.email}}</div>
+            <label class="label bottom-label">{{prepareTooltip('phone')}}</label>
+ 
+            <label class="label"fxLayoutAlign="center center"  >Numer telefonu:</label>
+            <div class="input-container">
+               <input nbInput fullWidth appPhoneMask [ngClass]="{ 'danger': hasError('phone'), 'disabled-input': !isEditMode }"
+              id="phone" type="text" fieldSize="small" placeholder="Wprowadź numer telefonu"  formControlName="phone" required inputTrim />
+              <mat-icon *ngIf="!isEditMode" class="edit-icon"  (click)="toggleEditMode()" matTooltip="Edytuj informacje">edit</mat-icon>
             </div>
+            <label class="label bottom-label">{{prepareTooltip('phone')}}</label>
+
+          </form>
       </nb-card-body>
-      <nb-card-footer fxLayout="row" fxLayoutAlign="space-around center" >
-         <div>
-            Usuń konto
-         </div>
-         <div>
-            Edytuj dane osobowe
-         </div>
-      </nb-card-footer>
    </nb-card>
    
 
-   <nb-card class="main-card" fxFlex fxLayout="column">
+   <nb-card class="main-card" fxFlex fxLayout="column" *ngIf="finishedAppointments.length > 0">
       <nb-card-header>
          Historia wizyt:
       </nb-card-header>
-      <nb-card-body class="account-info"  fxLayout="column" >
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Data</div> 
-               <div class="right-column">Typ</div>
-            </div>
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Data:</div> 
-               <div class="right-column">Typ</div>
-            </div>
-            <div class="row" fxFlex fxLayout="row" >
-               <div class="left-column">Data:</div> 
-               <div class="right-column">Typ</div>
-            </div>
-      </nb-card-body>
+      <div class="account-info"  fxLayout="column">
+         <div class="row" fxFlex fxLayout="row" *ngFor="let appointment of finishedAppointments" >
+            <div class="left-column"  fxFlex fxLayout="row" >{{formatDate(appointment.startDate)}}</div> 
+            <div class="right-column"  fxFlex fxLayout="row" >{{appointment.massageDTO.massageName}}</div>
+         </div>
+   </div>
    </nb-card>
 </div>

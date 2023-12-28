@@ -14,6 +14,15 @@ export interface Appointment {
    massageDTO?: any
 }
 
+export interface AvailableAppointment {
+   localDate: string,
+   simpleAppointmentDTO: {
+      id: number,
+      startDate: string,
+      endDate: string
+   }[]
+}
+
 // export interface AppointmentGuest {
 //    id: number
 //    startDate?: string

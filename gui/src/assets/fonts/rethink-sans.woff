@@ -1,0 +1,32 @@
+{
+  "kind": "webfonts#webfontList",
+  "items": [
+    {
+      "family": "Rethink Sans",
+      "variants": [
+        "regular",
+        "italic"
+      ],
+      "subsets": [
+        "latin",
+        "latin-ext"
+      ],
+      "version": "v3",
+      "lastModified": "2023-12-07",
+      "files": {
+        "regular": "http://fonts.gstatic.com/s/rethinksans/v3/AMOWz4SDuXOMCPfdoglY9JQ0U1K2w9lb4g.ttf",
+        "italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOIz4SDuXOMCPfdoglY9JQEUViy4dxL4jSr.ttf"
+      },
+      "category": "sans-serif",
+      "kind": "webfonts#webfont",
+      "menu": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqkmFROE_snQ.ttf",
+      "axes": [
+        {
+          "tag": "wght",
+          "start": 400,
+          "end": 800
+        }
+      ]
+    }
+  ]
+}

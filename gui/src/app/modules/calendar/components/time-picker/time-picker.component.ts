@@ -9,7 +9,7 @@ export class TimePickerComponent implements OnInit, OnDestroy {
   @Input() hour?: number
   @Input() minutes?: number
   @Output() timeChanged: EventEmitter<{ hour: number, minutes: number }> = new EventEmitter();
-  minutesStep: number = 15
+  minutesStep: number = 5
   @Output() hourChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() minutesChange: EventEmitter<number> = new EventEmitter<number>();
   

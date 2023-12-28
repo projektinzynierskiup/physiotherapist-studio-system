@@ -7,7 +7,10 @@
   transform: skewX(-10deg); /* Adjust the skew angle as needed */
   left: -7%;
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap');
+*:not(mat-icon) {
+  font-family: 'Rethink Sans', sans-serif !important;
+}
 .center {
   width: 100%;
   padding: 0 20px; /* Adjust padding as needed */
@@ -17,6 +20,7 @@
   transform: skewX(10deg); /* Adjust the skew angle as needed */
   border: 0 !important;
 }
+
 
 /* Media query for smaller screens */
 @media screen and (max-width: 1200px) {
@@ -29,6 +33,7 @@
     width: 80%; /* Set an initial width */
   }
 }
+
 
 
 @media screen and (max-width: 800px) {
@@ -105,7 +110,7 @@ input {
 
    a {
      text-decoration: none;
-     color: black;
+     
      cursor: pointer;
    }
  }
@@ -113,14 +118,14 @@ input {
  .label {
   z-index: 1000;
   font-size: 13px;
-  color: rgb(63, 63, 63);
+  color: rgb(63, 63, 63)!important;;
   margin-bottom: -8px;
-  background-color:  white;
+  background-color:  transparent;
   text-align: left;
  }
 
  .bottom-label {
-  color: rgb(204, 0, 0);
+  color: rgb(204, 0, 0)!important;;
   font-weight: 400;
   min-height: 30px;
   margin-bottom: 3px;
@@ -137,3 +142,4 @@ input {
  .reset-password-dialog {
   width: 500px;
   }
+

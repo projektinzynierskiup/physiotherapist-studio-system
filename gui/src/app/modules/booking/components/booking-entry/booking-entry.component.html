@@ -1,6 +1,6 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center" >
 
-      <nb-card class="center main-card" fxFlex fxLayout="column">
+      <!-- <nb-card class="center main-card" fxFlex fxLayout="column">
          <nb-card-header fxFlex fxLayout="column">
             <a routerLink="/home" style="font-weight: bold">
                <img src="../../assets/logo.png" style="width: 80%;"/>
@@ -12,5 +12,120 @@
          <nb-card-body>
             <app-booking-form></app-booking-form>
          </nb-card-body>
-      </nb-card>
+      </nb-card> -->
+      <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+         <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+           <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+           <div  fxLayout="column" fxLayoutAlign="center center" class="text">
+            <h2>Umów się do nas</h2>
+           </div>
+         </div>
+       </div>
+     
+
+   
+   <div class="appointment-type select-row" fxFlex fxLayout="column">
+         <div class="select-item" fxLayout="column" >
+            <div class="select-offer-label" fxFlex fxLayoutAlign="center center">
+               Wybierz rodzaj wizyty
+            </div>
+            <div (click)="openStep(2)"  class="offer-items-container"  fxLayout="row" fxLayoutAlign="center center">
+
+               <div class="select-offer-item" *ngFor="let offerItem of offer" fxLayoutAlign="center center">
+                  <div
+                     class="background-image"
+                     [style.backgroundImage]="'url(' + getUrl(offerItem.id) + ')'"
+                     [ngClass]="{ 'not-selected': !isTypeSelected(offerItem.id) }"
+                     fxLayoutAlign="center center"
+                     (click)="setFormItem('type', offerItem.id)"
+                     [matTooltip]="!isTypeSelected(offerItem.id) ? 'Kliknij aby wybrać' : ' '" matTooltipPosition="after">
+                     <div class="overlay"></div> <!-- Add a background overlay -->
+                        <div fxLayoutAlign="center center" class="content">
+                           <p>{{ offerItem.massageName }}</p>
+                        </div>
+                     </div>
+               </div>
+            </div>
+         </div>
+
+         <div *ngIf="isExpanded(2)"  class="select-item" fxLayout="column">
+            <div class="select-offer-label"  fxFlex fxLayoutAlign="center center">
+               Wybierz termin
+            </div>
+            <div class="navigate-calendar" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <a (click)="currentWeek > 0 ? changeCurrentWeek(-1) : null" [ngClass]="currentWeek == 0 ? 'disabled' : 'link'"  fxLayoutAlign="center center">
+                  <mat-icon class="icon">navigate_before</mat-icon>
+                  <p  fxHide fxShow.gt-md>Poprzedni tydzień</p>
+               </a>
+               <hr>
+               <p  fxFlex fxLayout="row" fxLayoutAlign="center center">{{availableAppointmentsCalendar[currentWeek].week}}</p>
+               <hr>
+               <a (click)="changeCurrentWeek(1)" class="link"  fxLayoutAlign="center center">
+                  
+                  <p  fxHide fxShow.gt-md>Następny tydzień</p>
+                  <mat-icon class="icon">navigate_next</mat-icon>
+               </a>
+         
+            </div>
+            <div *ngIf="availableAppointmentsCalendar" fxFlex fxLayout="row wrap"  fxLayoutAlign="center start">
+               <div class="column" fxFlex fxLayout="column" [ngClass]="{'column': true, 'passed': day.passed}"  fxLayoutAlign="start space-between" *ngFor="let day of availableAppointmentsCalendar[currentWeek].days;  index as i">
+                  <div class="column-title" [innerHTML]="formatDate(day.day)" ></div>
+                  <div class="column-content" *ngIf="day.cells.length > 0">
+                     <div  [ngClass]="{'selected': isDateSelected(cell.id), 'not-selected': isDateNotSelected(cell.id)}" class="cell" *ngFor="let cell of day.cells" (click)="setFormItem('date', cell); openStep(3)" [matTooltip]="!isDateSelected(cell.id) ? 'Kliknij aby wybrać' : ' '" matTooltipPosition="after">
+                        <p>{{getTime(cell.startDate)}}</p>
+                        
+                     </div>
+                  </div>
+                  <div class="cell" *ngIf="day.cells.length == 0 || day.passed"  [ngClass]="{'not-selected': isDateNotSelected(-1)}">
+                     <p>Brak wolnych terminów</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+   <div *ngIf="isExpanded(3)"  class="select-item" fxLayout="column"  fxLayoutAlign="center center">
+      <div class="select-offer-label"  fxFlex fxLayoutAlign="center center">
+         Uzupełnij dane
+      </div>
+      <form  [formGroup]="appointmentForm" (ngSubmit)="onSubmit(dialog)" fxLayout="column"  fxLayoutAlign="center center">
+         <div class="register-form" fxLayout="column" fxLayoutAlign="center center">
+            <div fxLayout="row wrap" style="width: 100%;" fxLayoutAlign="space-around center">
+               <div fxLayout="column" fxLayoutAlign="center center">
+                  <label class="label" >Adres email:</label>
+                  <input nbInput  id="email" type="email" [ngClass]="{ 'danger': hasError('email') }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim/>
+                  <label class="label bottom-label">{{prepareTooltip('email')}}</label>
+               </div>
+               
+               <div fxLayout="column" fxLayoutAlign="center center">
+                  <label class="label" >Numer telefonu:</label>
+                  <input nbInput appPhoneMask maxlength="11" fullWidth [ngClass]="{ 'danger': hasError('phone') }"
+                  id="phone" type="text" fieldSize="small" placeholder="Numer telefonu"  formControlName="phone" required inputTrim />
+                  <label class="label bottom-label">{{prepareTooltip('phone')}}</label>
+               </div>
+            </div>
+            
+            <button nbButton fullWidth class="submit-btn" type="submit"  size="large" >
+               Umów wizytę
+            </button>
+            
+         </div>
+      </form>
+   </div>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+   <nb-card  class="reset-password-dialog" fxFlex fxLayout="column" fxLayoutAlign="space-between center">
+      <nb-card-header>Status wizyty</nb-card-header>
+      <div  class="reset-passsword-dialog-content" fxLayout="column" fxLayoutAlign="space-between center">
+         {{data}}            
+         <div *ngIf="bookingStatus?.failure" fxFlex fxLayout="row" fxLayoutAlign="center center">
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="bookAgain(); ref.close()">Spróbuj ponownie</button>
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="goToHome(); ref.close()">Wróć do strony głównej</button>
+         </div>
+         <div *ngIf="bookingStatus?.success" fxFlex fxLayout="row" fxLayoutAlign="center center">
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="bookAgain(); ref.close()">Umów kolejną wizytę</button>
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="goToHome(); ref.close()">Wróć do strony głównej</button>
+         </div>
+      </div>
+
+   </nb-card>
+ </ng-template>

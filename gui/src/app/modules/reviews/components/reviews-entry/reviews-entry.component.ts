@@ -76,6 +76,7 @@ export class ReviewsEntryComponent implements OnInit, OnDestroy {
         console.log(res)
       }
     })
+    console.log(this.reviews)
   }
 
   onRatingChange(rating: number) {

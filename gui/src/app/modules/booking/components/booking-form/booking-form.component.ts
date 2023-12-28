@@ -82,7 +82,6 @@ export class BookingFormComponent implements OnInit, OnDestroy {
 
       this.availableAppointmentsSubscription = this.store.select(selectAvailableAppointments).subscribe(res => {
         if(res) {
-          this.availableAppointments = res
           if(this.availableAppointments) {
             this.groupAvailableAppointments()
           }

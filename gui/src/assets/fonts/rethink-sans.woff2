@@ -1,0 +1,41 @@
+{
+  "kind": "webfonts#webfontList",
+  "items": [
+    {
+      "family": "Rethink Sans",
+      "variants": [
+        "regular",
+        "500",
+        "600",
+        "700",
+        "800",
+        "italic",
+        "500italic",
+        "600italic",
+        "700italic",
+        "800italic"
+      ],
+      "subsets": [
+        "latin",
+        "latin-ext"
+      ],
+      "version": "v3",
+      "lastModified": "2023-12-07",
+      "files": {
+        "regular": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqkmFRCEvmma-aua4.woff2",
+        "500": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqklNRCEvmma-aua4.woff2",
+        "600": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45Dmqkr9WCEvmma-aua4.woff2",
+        "700": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqkoZWCEvmma-aua4.woff2",
+        "800": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqkuFWCEvmma-aua4.woff2",
+        "italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOFz4SDuXOMCPfdoglY9JQEUUK5wyyTfpeth6kS4A3smI2fqa7iVQ.woff2",
+        "500italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOFz4SDuXOMCPfdoglY9JQEUUK5wyyTfpeth6kS0g3smI2fqa7iVQ.woff2",
+        "600italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOFz4SDuXOMCPfdoglY9JQEUUK5wyyTfpeth6kSPgrsmI2fqa7iVQ.woff2",
+        "700italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOFz4SDuXOMCPfdoglY9JQEUUK5wyyTfpeth6kSBwrsmI2fqa7iVQ.woff2",
+        "800italic": "http://fonts.gstatic.com/s/rethinksans/v3/AMOFz4SDuXOMCPfdoglY9JQEUUK5wyyTfpeth6kSYArsmI2fqa7iVQ.woff2"
+      },
+      "category": "sans-serif",
+      "kind": "webfonts#webfont",
+      "menu": "http://fonts.gstatic.com/s/rethinksans/v3/AMODz4SDuXOMCPfdoglY9JQuWHBGG0X45DmqkmFROE_smA.woff2"
+    }
+  ]
+}

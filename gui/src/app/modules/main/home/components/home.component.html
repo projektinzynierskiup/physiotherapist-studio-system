@@ -1,23 +1,22 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center" >
 
-   <nb-card class="title" fxFlex fxLayout="column" fxLayoutAlign="center center" >
-      <nb-card-header  fxFlex fxLayout="column" fxLayoutAlign="center center">
-         <div class="image-container">
-            <!-- Placeholder or default image -->
-            <img class="placeholder-image" src="placeholder.jpg" alt="Placeholder Image">
-            <!-- Use the "src" attribute to load the actual image when available -->
-            <!-- <img src="path/to/your/real-image.jpg" alt="Real Image"> -->
-        </div>
-        <br>
-         Opis działaności tego ziomeczka(może jakieś zdjecie powyżej)
+  <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <div class="background-image" [style.backgroundImage]="'url(' + getUrl() + ')'" fxLayoutAlign="center center">
+      <div class="overlay"></div> <!-- Dodaj tło overlay -->
+      <div  fxLayout="column" fxLayoutAlign="center center" class="text">
+        <h1>Witamy w świecie masażu</h1>
+        <p>Najlepsi terapeuci, unikalne doświadczenia. Odkryj harmonię dla ciała i duszy.</p>
+        <p>Masaże, terapie, relaks. Znajdź u nas schronienie od codziennego zgiełku.</p>
+        <p>Rozpocznij podróż ku zdrowiu i harmonii. Dołącz do naszej społeczności już dziś.</p>
+      </div>
+    </div>
+  </div>
 
-      </nb-card-header>
-      <nb-card-body>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae dicta sapiente perspiciatis magnam aspernatur adipisci hic, beatae suscipit laborum, tempore odit ex nesciunt aliquam nemo iste? Quod ipsam provident unde! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem aliquam voluptas consequuntur eveniet doloribus eius, impedit fugit, ullam consequatur, quam quos veritatis natus iure ipsam maiores libero repudiandae commodi! Perspiciatis!</nb-card-body>
-      
-   </nb-card>
-   <br>
-     <app-offer></app-offer>
-   <app-newsletter></app-newsletter>
+    
+    <br>
+    
+    <app-offer></app-offer>
+   <!-- <app-newsletter></app-newsletter> -->
 
   <!-- Button 1 -->
   <div class="button-container-1" [ngClass]="{'simulate-hover': simulateHover}"  (click)="navigateToReview()">
@@ -28,10 +27,49 @@
  </div>
 
  <!-- Button 2 -->
- <div class="button-container-2" [ngClass]="{'simulate-hover': simulateHover}"  (click)="navigateToReview()">
-   <div class="button"  fxLayoutAlign="center center">
-     <mat-icon class="icon">email</mat-icon>
-     <span class="button-text">Zapisz się do newslettera</span>
-   </div>
- </div>
+ <div class="button-container-2" [ngClass]="{'simulate-hover': simulateHover}" (click)="openSidebar()">
+  <div class="button" fxLayoutAlign="center center">
+    <mat-icon class="icon">email</mat-icon>
+    <span class="button-text">Zapisz się do newslettera</span>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div *ngIf="showSidebar" class="sidebar-container">
+  <div class="sidebar-backdrop" (click)="closeSidebar()"></div>
+  <div class="sidebar-content" fxLayout="column" fxLayoutAlign="space-between center ">
+    <!-- Treść sidebaru -->
+    <!-- ... (możesz dodać dowolną treść i style do sidebaru) ... -->
+    
+    <mat-icon (click)="closeSidebar()"  fxLayoutAlign="center start"> close</mat-icon>
+
+    <div>
+      <h2>ZAPISZ SIĘ DO NEWSLETTERA</h2>
+      <p>
+        Chcesz otrzymywać ekskluzywne oferty, porady dotyczące zdrowia i cenne wskazówki na temat relaksu?
+        <br>
+        Bądź na bieżąco z naszymi nowościami i daj sobie chwilę relaksu w swojej skrzynce mailowej. 
+        <br>
+        Zapisz się już teraz i zainwestuj w swój codzienny ukojenie!
+      </p>
+    </div>
+      
+    <form *ngIf="!signedToNewsletter" [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
+
+      <label class="label"fxLayoutAlign="center center" >Adres email:</label>
+        <input nbInput id="email" type="email" [ngClass]="{ 'danger': hasError('email') }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim />
+      <label class="label bottom-label">{{prepareTooltip('email')}}</label>
+      
+      <button nbButton  size="medium" fullWidth class="submit-btn" type="submit">
+        Zapisz się
+     </button>
+    </form>
+
+    <div *ngIf="signedToNewsletter">
+      <p fxLayoutAlign="center center ">
+        <mat-icon>check</mat-icon>Zapisano do newslettera, sprawdź maila!
+      </p>
+    </div>
+  </div>
+</div>
 </div>

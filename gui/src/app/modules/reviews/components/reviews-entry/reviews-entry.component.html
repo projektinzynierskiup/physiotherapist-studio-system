@@ -1,6 +1,6 @@
 <div class="container" fxFlex fxLayout="row wrap" >
-      <nb-card class="card"fxFlex fxLayout="column" fxLayoutAlign="center center">
-         <nb-card-header class="card-title">
+      <div class="card"fxFlex fxLayout="column" fxLayoutAlign="center center">
+         <div class="card-title">
             <h4 class="title-heading" fxLayoutAlign="center center">
               Twoja Opinia Ma Znaczenie!
             </h4>
@@ -9,23 +9,23 @@
               Podziel się swoimi spostrzeżeniami, aby pomóc innym w podjęciu decyzji. Wypełnij formularz poniżej i napisz, co sądzisz o naszych usługach. <br>
               Jesteśmy ciekawi Twoich opinii!
             </p>
-          </nb-card-header>
-         <nb-card-body class="card-description" fxLayoutAlign="center center">
-            <form *ngIf="!reviewSent" [formGroup]="addReviewForm" (ngSubmit)="submitForm()" fxLayout="column">
-               <label for="username">Imię:</label>
-               <input nbInput type="text" id="username" formControlName="username">
+          </div>
+         <div class="card-description" fxLayoutAlign="center center">
+            <form *ngIf="!reviewSent" [formGroup]="addReviewForm" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="center center">
+               <label  class="label" for="username">Imię:</label>
+               <input nbInput fullWidth fieldSize="small" type="text" id="username" formControlName="username">
                <br>
-               <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <label for="rate">Ocena:</label>
+               <div fxLayout="column" fxLayoutAlign="space-between center">
+                  <label  class="label rating-label" for="rate">Ocena:</label>
                   <app-star-rating [rating]="addReviewForm.get('rate')?.value" (ratingChange)="onRatingChange($event)"></app-star-rating>
                </div>
                <br>
-               <label for="description">Opinia:</label>
-               <textarea nbInput id="description" formControlName="description"></textarea>
-
-               <nb-card-footer>
-                  <button type="submit"nbButton type="primary" fullWidth shape="round" >Dodaj opinię</button>
-               </nb-card-footer>
+               <label  class="label" for="description">Opinia:</label>
+               <textarea nbInput fullWidth fieldSize="small" id="description" formControlName="description"></textarea>
+               <br>
+               <button nbButton  size="medium" fullWidth class="submit-btn" type="submit">
+                  Dodaj opinię
+               </button>
              </form>
              <div *ngIf="reviewSent"fxLayout="column"  fxLayoutAlign="center center">
                <h4 class="title-heading" fxLayoutAlign="center center">
@@ -35,13 +35,13 @@
                   Zapraszamy ponownie
                 </p>
              </div>
-         </nb-card-body>
-      </nb-card>
-      <nb-card class="card" fxFlex fxLayout="column" fxLayoutAlign="center center">
+         </div>
+      </div>
+      <div class="card" fxFlex fxLayout="column" fxLayoutAlign="center center">
          <nb-card-header class="card-title">
             Opinie:
          </nb-card-header>
-         <nb-card-body class="card-description" >
+         <div *ngIf="reviews" class="card-description" >
             <div *ngFor="let review of reviews" fxLayout="column" class="review">
                <div  fxLayout="row" fxLayoutAlign="space-between center">
                   <div class="username">{{ review.username }}</div>
@@ -53,8 +53,8 @@
                   <div class="review-description">{{ review.description }}</div>
                </div>
              </div>
-         </nb-card-body>
-         <nb-card-footer class="paging" fxLayout="row" fxLayoutAlign="space-around center">
+         </div>
+         <nb-card-footer  *ngIf="reviews"  class="paging" fxLayout="row" fxLayoutAlign="space-around center">
             <div [class.hidden]="currentPage <= 1" (click)="prevPage()" class="paging-button" fxLayout="row" fxLayoutAlign="center center">
                 <mat-icon>chevron_left</mat-icon>
                 Poprzednia strona
@@ -65,5 +65,5 @@
                 <mat-icon>chevron_right</mat-icon>
             </div>
         </nb-card-footer>
-      </nb-card>
+      </div>
 </div>

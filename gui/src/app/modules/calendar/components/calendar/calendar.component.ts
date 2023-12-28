@@ -29,8 +29,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   
   currentDateTime: string = moment().locale('pl').format('LLL')
 
+  configurationMode: boolean = false
 
-  configurationBoxExpanded: boolean = false
+  expanded: number = moment().day() - 1
+  nextVisitStart: string = ''
+  nextVisitEnd: string = ''
 
   configurationCalendar? : [
     {
@@ -45,24 +48,32 @@ export class CalendarComponent implements OnInit, OnDestroy {
     startHours: number,
     startMinutes: number,
     endHours: number,
-    endMinutes: number
+    endMinutes: number,
+    visitLength: number,
+    breaks:number
   } = {
     startHours: 8,
     startMinutes: 0,
     endHours: 16,
-    endMinutes: 0
+    endMinutes: 0,
+    visitLength: 55,
+    breaks: 5
   }
 
   singleWorkingTime : {
     startHours: number,
     startMinutes: number,
     endHours: number,
-    endMinutes: number
+    endMinutes: number,
+    visitLength: number,
+    breaks:number
   } = {
     startHours: 8,
     startMinutes: 0,
     endHours: 16,
-    endMinutes: 0
+    endMinutes: 0,
+    visitLength: 55,
+    breaks: 5
   }
 
   selectedWorkDays: string[] = [];
@@ -72,7 +83,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
     startHours: number,
     startMinutes: number,
     endHours: number,
-    endMinutes: number
+    endMinutes: number,
+    visitLength: number,
+    breaks:number
   }[] = []
 
   constructor(
@@ -132,10 +145,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  triggerExpand() {
-    this.configurationBoxExpanded = !this.configurationBoxExpanded
-  }
-
   openDialog(dialog: TemplateRef<any>, data : string) {
     this.dialogService.open(dialog, { context: data });
   }
@@ -161,35 +170,49 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.calendarService.cancelAppointment(data.id).subscribe(res => {
         console.log(res)
       })
-      this.getWeek(this.calendarData[this.currentWeek].days[0].day)
+      this.store.dispatch(setCalendarUpdate({flag: true}))
 
     }
   }
 
-  toggleDaySelection(day: string) {
-    const index = this.selectedWorkDays.indexOf(day);
+  finishAppointment( data : Appointment | undefined) {
+    if(data && data.id) {
+      this.resetCalendar()
+      
+      this.calendarService.finishAppointment(data.id).subscribe(res => {
+        console.log(res)
+      })
+      this.store.dispatch(setCalendarUpdate({flag: true}))
 
-    if (index === -1) {
-      this.selectedWorkDays.push(day);
+    }
+  }
+
+  onTimeChange(type: 'start' | 'end' | 'breaks' | 'length', general : boolean) {
+    if(general) {
+      this.differentWorkHours = this.differentWorkHours.map(day => {
+        const updatedDay = { ...day }; // Create a copy of the day object
+        
+        if (type === 'start') {
+          updatedDay.startHours = this.generalWorkingHours.startHours;
+          updatedDay.startMinutes = this.generalWorkingHours.startMinutes;
+        } else if (type === 'end') {
+          updatedDay.endHours = this.generalWorkingHours.endHours;
+          updatedDay.endMinutes = this.generalWorkingHours.endMinutes;
+        } else if (type === 'breaks') {
+          updatedDay.breaks = this.generalWorkingHours.breaks;
+        } else if (type === 'length') {
+          updatedDay.visitLength = this.generalWorkingHours.visitLength;
+        }
+        
+        return updatedDay;
+      });
     } else {
-      this.selectedWorkDays.splice(index, 1);
+      this.generateNextVisit();
     }
   }
 
-  onTimeChange(type: 'start' | 'end') {
-    this.differentWorkHours = this.differentWorkHours.map(day => {
-      const updatedDay = { ...day }; // Create a copy of the day object
-  
-      if (type === 'start') {
-        updatedDay.startHours = this.generalWorkingHours.startHours;
-        updatedDay.startMinutes = this.generalWorkingHours.startMinutes;
-      } else if (type === 'end') {
-        updatedDay.endHours = this.generalWorkingHours.endHours;
-        updatedDay.endMinutes = this.generalWorkingHours.endMinutes;
-      }
-  
-      return updatedDay;
-    });
+  toggleConfiguration() {
+    this.configurationMode = !this.configurationMode
   }
 
   generateCalendar() {
@@ -212,10 +235,43 @@ export class CalendarComponent implements OnInit, OnDestroy {
           + (this.generalWorkingHours.endMinutes < 10 ? '0' +  this.generalWorkingHours.endMinutes :  this.generalWorkingHours.endMinutes) + ":00"
         })
       }
-
     })
 
     this.store.dispatch(setWeeklyFreeSlots({workDays: workDays}))
+  }
+
+
+  addFreeSlot(index: number, day: string, startHours: number, startMinutes: number, visitLength: number, breakLength: number) {
+    const start = day + "T" + (startHours < 10 ? '0' + startHours : startHours) + ":" +
+      (startMinutes < 10 ? '0' + startMinutes : startMinutes) + ":00";
+  
+      const end = moment(start).add(visitLength, 'minutes').format("YYYY-MM-DDTHH:mm:ss")
+      this.calendarService.addFreeSlot(start, end).subscribe(res => {
+        try{
+
+          if(res) {
+            this.store.dispatch(setCalendarUpdate({flag: true}))
+          }
+        } catch(e : any) {
+          return
+        }
+      })
+
+    if(visitLength + breakLength < 60) {
+      this.differentWorkHours[index].startMinutes += visitLength + breakLength
+    } else if(visitLength + breakLength > 60) {
+      this.differentWorkHours[index].startHours += Math.floor((visitLength + breakLength) / 60)
+      this.differentWorkHours[index].startMinutes += visitLength + breakLength - Math.floor((visitLength + breakLength) / 60) * 60 
+
+    } else if((visitLength + breakLength) % 60 == 0) {
+      this.differentWorkHours[index].startHours += Math.floor((visitLength + breakLength) / 60)
+
+    }
+
+    if(this.differentWorkHours[index].startMinutes > 60) {
+      this.differentWorkHours[index].startHours += 1
+      this.differentWorkHours[index].startMinutes -= 60
+    }
   }
 
   generateSingleFreeSlot(day : string) {
@@ -227,15 +283,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }]}))
   }
 
-  onSubmitFreeSlot(day: any) {
-    console.log(day)
-    console.log(this.freeSlotForm.getRawValue())
-    const values = this.freeSlotForm.getRawValue()
-    const startDate = day + "T" + (values.startHours < 10 ? '0' + values.startHours : values.startHours) + ":" + (values.startMinutes < 10 ? '0' + values.startMinutes : values.startMinutes)
-    const endDate = day + "T" + (values.endHours < 10 ? '0' + values.endHours : values.endHours) + ":" + (values.endMinutes < 10 ? '0' + values.endMinutes : values.endMinutes)
-
-    this.calendarService.addFreeSlot(startDate, endDate)
+  generateNextVisit() {
+    this.nextVisitStart = ( this.differentWorkHours[this.expanded].startHours < 10 ? '0' +  this.differentWorkHours[this.expanded].startHours :  this.differentWorkHours[this.expanded].startHours) + ":" +
+    (this.differentWorkHours[this.expanded].startMinutes < 10 ? '0' + this.differentWorkHours[this.expanded].startMinutes : this.differentWorkHours[this.expanded].startMinutes);
+    this.nextVisitEnd = moment(this.nextVisitStart, "HH:mm").add(this.differentWorkHours[this.expanded].visitLength, 'minutes').format("HH:mm")
   }
+
+  // onSubmitFreeSlot(day: any) {
+
+  //   const values = this.freeSlotForm.getRawValue()
+  //   const startDate = day + "T" + (values.startHours < 10 ? '0' + values.startHours : values.startHours) + ":" + (values.startMinutes < 10 ? '0' + values.startMinutes : values.startMinutes)
+  //   const endDate = day + "T" + (values.endHours < 10 ? '0' + values.endHours : values.endHours) + ":" + (values.endMinutes < 10 ? '0' + values.endMinutes : values.endMinutes)
+
+  //   this.calendarService.addFreeSlot(startDate, endDate)
+  // }
 
   changeCurrentWeek(step : number) {
     this.currentWeek += step
@@ -257,17 +318,57 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  expand(i: number) {
+    this.expanded = i;
+    const visits = this.calendarData[this.currentWeek].days[this.expanded].cells;
+    
+    if (visits.length > 0) {
+      const lastElementEndDate = moment(visits[visits.length - 1].endDate, "HH:mm");
+
+      const modifiedEndDate = lastElementEndDate.clone().add(this.differentWorkHours[this.expanded].breaks, 'minutes');
+
+        this.differentWorkHours[this.expanded].startHours = moment(modifiedEndDate).get('hour')
+        this.differentWorkHours[this.expanded].startMinutes = moment(modifiedEndDate).get('minutes')
+
+        this.generateNextVisit();
+
+    } else {
+      this.differentWorkHours[this.expanded].startHours = this.generalWorkingHours.startHours
+      this.differentWorkHours[this.expanded].startMinutes = this.generalWorkingHours.startMinutes
+      this.generateNextVisit();
+    }
+  }
   
+  getBreak(lastEndDate: string, nextDate: any) {
+    if(nextDate) {
+      const timeDifferenceMinutes =  moment(nextDate.startDate, 'HH:mm').diff(moment(lastEndDate, 'HH:mm'), 'minutes')
+
+      if (timeDifferenceMinutes >= 60) {
+        // If the difference is 60 minutes or more, format as hours and minutes
+        const hours = Math.floor(timeDifferenceMinutes / 60);
+        const remainingMinutes = timeDifferenceMinutes % 60;
+      
+        return `${hours}h ${remainingMinutes}min`;
+      } else {
+        return`${timeDifferenceMinutes}min`;
+      }
+    } else {
+      return ''
+    }
+  }
 
   loadCalendar(res : any[]) {
     res.map(data => {
       var day = this.calendarData[this.currentWeek].days.find(day => day.day == data.localDate.split("T")[0])
       if(day) {
+        day.cells = []
         data.appointmentDTOList.map((appointment : any) => {
           day?.cells.push({
             startDate: moment(appointment.startDate).format("HH:mm"),
             endDate: moment(appointment.endDate).format("HH:mm"),
             isBooked: appointment.status == 'BOOKED',
+            isFinished: appointment.status == 'FINISHED',
             appointment: appointment,
             isExpanded: false
           })
@@ -275,6 +376,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
         console.log(day)
       }
     })
+    this.expand(this.expanded)
+
   }
 
   triggerCellExpand(cell: CalendarCell) {
