@@ -12,6 +12,10 @@ import { setCalendarUpdate, setWeeklyFreeSlots } from '../../store/calendar.acti
 import { Subscription } from 'rxjs';
 import { selectCalendarUpdate } from '../../store/calendar.selectors';
 import { Moment } from 'moment';
+import { Email } from 'src/app/modules/shared/models/email.model';
+import { EmailService } from 'src/app/modules/shared/services/email.service';
+import { setEditAppointment } from 'src/app/modules/booking/store/booking.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -91,8 +95,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private fb: FormBuilder,
+    private router: Router,
     private dialogService: NbDialogService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private emailService: EmailService
   ) {
     this.freeSlotForm = this.fb.group({
       startHours: ['', [Validators.required]],
@@ -158,20 +164,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.resetCalendar()
       this.calendarService.deleteAppointment(data.id).subscribe(res => {
         console.log(res)
+        this.sendRejection(data)
+        this.store.dispatch(setCalendarUpdate({flag: true}))
       })
       this.getWeek(this.calendarData[this.currentWeek].days[0].day)
-
     }
   }
 
-  cancelAppointment( data : Appointment | undefined) {
+ cancelAppointment( data : Appointment | undefined) {
     if(data && data.id) {
       this.resetCalendar()
-      this.calendarService.cancelAppointment(data.id).subscribe(res => {
+      this.calendarService.deleteAppointment(data.id).subscribe(res => {
         console.log(res)
       })
-      this.store.dispatch(setCalendarUpdate({flag: true}))
-
+      this.getWeek(this.calendarData[this.currentWeek].days[0].day)
     }
   }
 
@@ -185,6 +191,35 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.store.dispatch(setCalendarUpdate({flag: true}))
 
     }
+  }
+
+  goToEdit(appointment? : Appointment) {
+    if(appointment) {
+      this.store.dispatch(setEditAppointment({appointment : appointment}))
+
+      this.goToBooking()
+    }
+  }
+
+  goToBooking() {
+    this.router.navigateByUrl('/booking');
+  }
+
+  sendRejection(appointment : Appointment) {
+    const email : Email = {
+      visitId: appointment.id,
+      recipientEmail: appointment.usersDTO.email,
+      startTime: appointment.startDate + ".000Z",
+      endTime: appointment.endDate + ".000Z",
+      username: appointment.usersDTO.username,
+      eventName: appointment.massageDTO.massageName,
+      description: "Wizyta została anulowany",
+      emailStatus: "REJECTION"
+    }
+
+    this.emailService.sendEmail(email).subscribe(res => {
+      console.log(res)
+    })
   }
 
   onTimeChange(type: 'start' | 'end' | 'breaks' | 'length', general : boolean) {
@@ -321,9 +356,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   expand(i: number) {
     this.expanded = i;
-    const visits = this.calendarData[this.currentWeek].days[this.expanded].cells;
-    
-    if (visits.length > 0) {
+    const visits = this.calendarData[this.currentWeek].days[this.expanded]?.cells;
+    if(!visits) return
+    if (visits?.length > 0) {
       const lastElementEndDate = moment(visits[visits.length - 1].endDate, "HH:mm");
 
       const modifiedEndDate = lastElementEndDate.clone().add(this.differentWorkHours[this.expanded].breaks, 'minutes');
@@ -444,8 +479,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     while (currentDay.isSameOrBefore(endOfWeek)) {
       week.days.push({
         day: currentDay.format('YYYY-MM-DD'),
-        today: currentDay.isSame(moment().add(3, 'day'), 'day'),
-        passed: currentDay.isBefore(moment().add(3, 'day'), 'day'),
+        today: currentDay.isSame(moment(), 'day'),
+        passed: currentDay.isBefore(moment(), 'day'),
         cells: []
       });
       currentDay.add(1, 'day');
@@ -455,4 +490,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   
     return week
   }
+
+  getBackground() {
+    return `../../../../assets/background3.jpg`
+  }
+
 }

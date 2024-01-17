@@ -1,17 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
 import { User } from 'src/app/modules/shared/models/user.model';
 import { register } from '../../store/authentication.actions';
 import { NewsletterService } from 'src/app/modules/shared/services/newsletter.service';
+import { Subscription } from 'rxjs';
+import { Statuate } from 'src/app/modules/shared/models/statuate.model';
+import { selectStatuate } from 'src/app/modules/main/home/store/home.selectors';
+import { NbDialogService } from '@nebular/theme';
+import { getStatuate } from 'src/app/modules/main/home/store/home.actions';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit, OnDestroy {
+  statuateSubscription?: Subscription
+  statuate!: Statuate;
 
   registerForm: FormGroup;
   submitButtonClick: boolean = false
@@ -19,6 +26,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
+    private dialogService: NbDialogService,
     private newsletterService: NewsletterService
   ) {
 
@@ -30,8 +38,20 @@ export class RegisterComponent {
       surname: ['', [Validators.required]],
       phone: ['', [Validators.required,  Validators.pattern("^[1-9]{3} [1-9]{3} [1-9]{3}$")]],
       newsletter: ['', []],
-      // acceptPrivacy: [false]
+      acceptPrivacy: [false]
     }, { validator: this.checkPasswords });
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(getStatuate())
+
+    
+    this.statuateSubscription = this.store.select(selectStatuate).subscribe(res => {
+      console.log(res)
+      if(res) {
+        this.statuate = res
+      }
+    })
   }
 
   onSubmit(): void {
@@ -103,8 +123,18 @@ export class RegisterComponent {
           tip = "Numer telefonu powinien posiadać 9 cyfr";
         } 
         break; 
+      case 'acceptPrivacy':
+        const acceptPrivacyControl = this.registerForm.get('acceptPrivacy');
+        if(acceptPrivacyControl?.value === false && this.submitButtonClick) {
+          tip += "Akceptacja regulaminu wymagana"
+        } 
+        break; 
     }
     return tip
+  }
+
+  openStatuateDialog(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog)
   }
 
   hasError(name : string) {
@@ -115,5 +145,9 @@ export class RegisterComponent {
 
   checkPasswords(group: FormGroup) {
     return (group.get('password')?.value === group.get('confirmPassword')?.value)? null :{ notSame: true };
+  }
+
+  ngOnDestroy(): void {
+    if(this.statuateSubscription) this.statuateSubscription.unsubscribe()
   }
 }

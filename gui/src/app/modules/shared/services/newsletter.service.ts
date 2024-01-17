@@ -16,8 +16,15 @@ import { Observable } from "rxjs";
         return this.http.post<Newsletter>(`http://localhost:8080/guest/newsletter`, {userEmail});
     }
 
-    signOutFromNewsletter(id: string) {
-        return this.http.delete<Newsletter>(`apo/guest/newsletter/${id}`);
+    signOutFromNewsletter(email: string) {
+        return this.http.delete<Newsletter>(`http://localhost:8080/guest/newsletter/email/${email}`);
     }
     
+    isUserInNewsletter(email : string) {
+        return this.http.get(`http://localhost:8080/guest/newsletter/${email}`)
+    }
+
+    cancelNewsletter(uuid? : string) {
+        return this.http.delete(`http://localhost:8080/guest/newsletter/${uuid}`);
+    }
   }  

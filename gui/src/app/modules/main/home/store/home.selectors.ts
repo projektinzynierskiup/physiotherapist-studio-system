@@ -9,3 +9,14 @@ export const selectOffer = createSelector(
    selectHomeState,
   (state: HomeState) => state?.offer
 );
+
+
+export const selectMassage = createSelector(
+  selectHomeState,
+ (state: HomeState) => state?.massage
+);
+
+export const selectStatuate = createSelector(
+  selectHomeState,
+ (state: HomeState) => state?.statuate
+);

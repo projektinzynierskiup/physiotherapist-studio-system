@@ -2,6 +2,94 @@
    width: 100%;
    padding-left: 250px;
 }
+.title {
+   width: 100%;
+ }
+ 
+ .background-image-1 {
+   height: 100px;
+   width: 100%;
+   background-size: cover;
+   background-position: center;
+   position: relative; /* Ensure positioning for child elements */
+   overflow: hidden; /* Hide overflowing content */
+   transition: transform 0.3s;
+ }
+ 
+ .background-overlay-1 {
+   
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 1;
+   background: rgba(255, 255, 255, 0.3); /* Adjust the color and opacity of the overlay */
+ }
+ 
+ .text {
+   position: relative;
+   text-align: center;
+   z-index: 3;
+   padding: 0 5%;
+   width: 100%;
+  
+    h2 {
+      width: 100%;
+      z-index: 4;
+      color: #00010D!important;
+      letter-spacing: 0.6mm;
+      text-transform: uppercase;
+    }
+    h5 {
+      
+    }
+ }
+.massage-list, .offer-list {
+   width: 100%;
+   margin: 0 auto; /* Center the content */
+   h3 {
+      text-align: center;
+   }
+}
+
+.massage-list {
+   max-width: 800px; /* Set a maximum width for better readability */
+}
+
+.title-row {
+   border-bottom: 1px solid #ccc; /* Add a border between header and rows */
+   display: flex;
+   justify-content: space-between;
+}
+
+.column {
+   flex: 1; /* Make each column equally spaced */
+   text-align: center; /* Center text in columns */
+}
+
+.row {
+   border-bottom: 1px solid #eee; /* Add a border between rows */
+   display: flex;
+   justify-content: space-between;
+   align-items: center; /* Vertically center content in rows */
+   padding: 10px 0; /* Add some padding for better spacing */
+}
+
+.actions {
+   display: flex;
+   gap: 5px; /* Add some spacing between action icons */
+}
+
+.add-massage {
+   margin: 20px 0px; /* Add some spacing between the table and the "add massage" button */
+   cursor: pointer; /* Add a pointer cursor for the button */
+}
+
+.statuate-field {
+   background-color: white;
+
+}
 
 .card {
    min-width: 300px;
@@ -73,10 +161,206 @@
    width: 250px;
    background-color: white;
    position: fixed;
-   height: 100%;
-   z-index: 9999;
+   height: 1000vh;
+   z-index: 10;
    box-shadow: 5px 0 5px -2px  rgba(202, 202, 202, 0.5);
 
+ }
+
+ .background-image {
+   height: 200px;
+   width: 100%;
+   background-size: cover;
+   background-position: center;
+   position: relative; /* Ensure positioning for child elements */
+   overflow: hidden; /* Hide overflowing content */
+   transition: transform 0.3s;
+   cursor: pointer;
+ }
+
+ .background-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+ 
+ .overlay {
+   position: absolute;
+   z-index: 1;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   padding: 10px;
+   background: rgba(0, 0, 0, 0.2); /* Adjust the color and opacity of the overlay */
+ }
+ 
+ .content {
+   position: relative;
+   text-align: center;
+ }
+
+ .overlay:hover {
+   background: rgba(0, 0, 0, 0.7); /* Adjust the color and opacity of the overlay */
+   transition: all 0.3s;
+   b {
+      color: #ffffff!important; /* Set text color to white or a color that contrasts well with the overlay */
+      transition: all 0.3s;
+      height: 100%;
+   }
+ }
+
+ .overlay mat-icon {
+   color: white!important;
+ }
+
+ .close-icon {
+   margin-bottom: -20px;
+ }
+
+ .overlay b {
+   letter-spacing: 1mm;
+   color: #ffffffa8!important; /* Set text color to white or a color that contrasts well with the overlay */
+   font-size: 1.2em;
+   text-transform: uppercase;
+   height: 100%;
+
+}
+
+ #massageName,
+ #name,
+ #duration,
+ #price,
+ #massage,
+ #appointmentType,
+ #file-upload-button,
+ #empty-select,
+#description {
+   padding: 0.6em 1.6em;
+   margin: 0.3rem;
+
+   &:hover,
+   &:focus,
+   &:active {
+    border-color: darkgray !important;
+  }
+}
+
+input, textarea, #statuate{
+  border: 1px solid rgb(229, 229, 229)!important;
+  background-color:  white!important;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+}
+
+nb-select {
+   padding: 0!important;
+}
+
+#empty-select {
+   cursor: pointer;
+}
+
+.select-button {
+   background-color: white!important;
+}
+
+textarea, #statuate {
+   resize: vertical; /* You can use "none" to disable both horizontal and vertical resizing */
+   max-height: 600px;
+   min-height: 200px;
+   overflow-y: scroll;
+   overflow-x: hidden;
+ }
+
+ .edit-statuate-field textarea {
+   min-height: 600px;
+   }
+
+ #statuate, #statuateInput {
+   font-family: inherit;
+   font-size: 100%;
+   line-height: 1.15;
+   font-size: 0.8em;
+   font-weight: 400;
+   padding: 7px 16px;
+ }
+
+ .edit-statuate-field {
+   margin-bottom: -5px;
+   textarea {
+      font-size: 0.8em;
+      font-weight: 400;
+   }
+ }
+
+ .statuate-field {
+   cursor: pointer;
+   white-space: pre;
+   overflow: hidden;
+   word-wrap: break-word;
+}
+
+ .edit-statuate-label {
+   margin-right: 15px!important;
+   opacity: 0.7;
+   text-transform: uppercase;
+ }
+
+
+
+ .statuate-actions {
+    width: 100%;
+    margin-top: 30px;
+
+    .action {
+      cursor: pointer;
+    }
+ }
+
+.dialog {
+   width: 400px;
+   form {
+      height: 100%;
+   }
+
+   .card-description {
+      width: 100%;
+      padding: 10px;
+   }
+
+}
+.description {
+   width: 100%;
+   padding: 10px;
+}
+
+.signup-box {
+   margin: 0 10px;
+   min-width: 90px;
+ }
+
+ .label {
+   z-index: 1000;
+   font-size: 13px;
+   color: rgb(63, 63, 63)!important;;
+   margin-bottom: -8px;
+   margin-top: -5px;
+   background-color:  transparent;
+   text-align: left;
+
+
+  }
+
+  .invisible {
+   color: rgba(255, 255, 255, 0)!important;
+ }
+ 
+  .bottom-label {
+   color: rgb(204, 0, 0)!important;;
+   font-weight: 400;
+   min-height: 20px;
+   margin-bottom: 8px;
+   transition: color 0.3s ease, font-weight 0.3s ease;  // Adjust the duration and timing function as needed
  }
 
  /* On screens that are less than 700px wide, make the sidebar into a topbar */

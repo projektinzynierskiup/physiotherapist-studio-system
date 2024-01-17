@@ -35,10 +35,17 @@
    text-align: center;
    z-index: 3;
    padding: 0 5%;
+   width: 100%;
   
     h2 {
+      width: 100%;
+      z-index: 4;
       color: #00010D!important;
       letter-spacing: 0.6mm;
+      text-transform: uppercase;
+    }
+    h5 {
+      
     }
  }
 
@@ -131,10 +138,6 @@ nb-card-body {
  .cell {
    border: 1px solid rgb(241, 241, 241);
    width: 100%;
-   
-
-
-   
  }
 
 .selected {
@@ -183,30 +186,41 @@ nb-card-body {
    position: relative; /* Ensure positioning for child elements */
    overflow: hidden; /* Hide overflowing content */
    transition: transform 0.3s;
- }
+   cursor: pointer;
+}
  
- .overlay {
+ .content {
    position: absolute;
    top: 0;
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity of the overlay */
    z-index: 1; /* Ensure the overlay is on top of the background image */
  }
  
- .content {
+ .overlay {
    text-transform: uppercase;
-   font-size: 1.3em;
-
+   font-size: 1.5em;
+   background: rgba(0, 0, 0, 0.4); /* Adjust the color and opacity of the overlay */
+   width: 100%;
+   height: 100%;
    position: relative;
    z-index: 2; /* Ensure the content is on top of the overlay */
    p {
       letter-spacing: 1mm;
       color: white !important; /* Set text color to white or a color that contrasts well with the overlay */
-
+      font-weight: 600;
    }
  }
+
+ .background-image img {
+   width: 100%;
+   height: 100%;
+   
+   object-fit: cover;
+ }
+
+ 
  
  .background-image:hover {
    transform: scale(1.1);

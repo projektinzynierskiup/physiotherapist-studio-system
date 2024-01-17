@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './modules/authentication/components/rese
 import { LoginGuard } from './modules/authentication/guards/login.guard';
 import { CalendarEntryComponent } from './modules/calendar/components/calendar-entry/calendar-entry.component';
 import { ReviewsEntryComponent } from './modules/reviews/components/reviews-entry/reviews-entry.component';
+import { CancelNewsletterComponent } from './modules/shared/components/cancel-newsletter.component';
 
 const routes: Routes = [
   {
@@ -88,6 +89,11 @@ const routes: Routes = [
     path: 'guest/users/restartpassword/:uuid',
     canActivate: [LoginGuard],
     component: ResetPasswordComponent
+  },
+  {
+    path: 'newsletter/cancel/:uuid',
+    canActivate: [],
+    component: CancelNewsletterComponent
   }
 ];
 

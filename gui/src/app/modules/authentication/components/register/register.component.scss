@@ -116,17 +116,34 @@ input {
     margin: 0;
   }
 
-  a {
-    text-decoration: none;
-    color: black!important;;
-    cursor: pointer;
-  }
+
+}
+
+a {
+  text-decoration: none;
+  color: black!important;;
+  cursor: pointer;
+  
+
 }
 
 nb-checkbox {
   transform: scale(0.9);
 
 }
+
+#statuate {
+  resize: vertical; /* You can use "none" to disable both horizontal and vertical resizing */
+  max-width: 800px;
+  max-height: 600px;
+  margin: 20px;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+  overflow-x:auto;
+  word-wrap: break-word;
+}
+
+
 
 .label {
   z-index: 1000;

@@ -1,13 +1,22 @@
-<div class="container" *ngIf="user" fxFlex fxLayout="column" fxLayoutAlign="center center">
+<div class="container" *ngIf="user" fxLayout="column" fxLayoutAlign="center center">
+   <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+         <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+         <div  fxLayout="row" fxLayoutAlign="space-between center" class="text">
+            <h2>Witaj, {{user.username}}</h2>
+         </div>
+      </div>
+   </div>
+   <div class="content" fxLayout="column">
    <nb-card class="main-card" fxFlex fxLayout="column"  *ngIf="futureAppointments.length > 0">
       <nb-card-header>
          Nadchodzące wizyty:
       </nb-card-header>
       <div class="account-info"  fxLayout="column" >
-            <div class="row" fxFlex fxLayout="row" *ngFor="let appointment of futureAppointments">
+            <div class="row" fxFlex fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let appointment of futureAppointments">
                <div class="left-column"  fxFlex fxLayout="row" >{{formatDate(appointment.startDate)}}</div> 
                <div class="right-column"  fxFlex fxLayout="row" >{{appointment.massageDTO.massageName}}</div>
-               <mat-icon  class="appointment-action" class="icon" matTooltip="Odwołaj wizytę">close</mat-icon> 
+               <mat-icon  class="appointment-action" class="icon" matTooltip="Odwołaj wizytę" (click)="openCancelDialog(cancelDialog, appointment)">close</mat-icon> 
             </div>
       </div>
    </nb-card>
@@ -16,12 +25,12 @@
       <nb-card-header fxLayout="row" fxLayoutAlign="space-between center">
          <b>Dane użytkownika:</b>
          <div fxLayout="row">
-           <mat-icon (click)="toggleEditMode()" matTooltip="Zapisz">{{ isEditMode ? 'save' : '' }}</mat-icon>
+           <mat-icon (click)="isEditMode ? openConfirmationDialog(dialog) : null; toggleEditMode()" matTooltip="Zapisz">{{ isEditMode ? 'save' : '' }}</mat-icon>
            <mat-icon>settings-2-outline</mat-icon>
          </div>
        </nb-card-header>
       <nb-card-body class="account-info"  fxLayout="column" >
-         <form  [formGroup]="userInfo" (ngSubmit)="onSubmit()">
+         <form  [formGroup]="userInfo">
             <div class="register-form" fxLayout="column" fxLayoutAlign="center center" >
              <label class="label" >Adres email:</label>
              <div class="input-container">
@@ -56,7 +65,13 @@
               <mat-icon *ngIf="!isEditMode" class="edit-icon"  (click)="toggleEditMode()" matTooltip="Edytuj informacje">edit</mat-icon>
             </div>
             <label class="label bottom-label">{{prepareTooltip('phone')}}</label>
-
+            <br>
+            <div class="newsletter-info" *ngIf="inNewsletter" fxLayoutAlign="start center">
+               <mat-icon>check</mat-icon>
+               <p>Jesteś zapisany do newslettera.</p>
+               <mat-icon class="info" fxLayoutAlign="center center">info_outline</mat-icon>
+               <a fxLayoutAlign="center center" (click)="openConfirmationDialog(newsletterDialog)">Kliknij aby zrezygnować</a>
+            </div>
           </form>
       </nb-card-body>
    </nb-card>
@@ -73,4 +88,52 @@
          </div>
    </div>
    </nb-card>
+   
+      
 </div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź edycję danych</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz edytować swoje dane?
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="edit(); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+ 
+<ng-template #newsletterDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź operacje</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz wypisać się z newslettera?
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="signOutFromNewsletter(); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+ <ng-template #cancelDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Czy na pewno chcesz anulować wizytę?</nb-card-header>
+      <nb-card-body>
+         <div class="bottom-box">
+            <button  nbButton  size="medium" class="signup-box" type="submit" (click)="deleteAppointment(data); ref.close()">Tak</button>
+            <button  nbButton  size="medium" class="signup-box" type="submit" (click)=" ref.close()">Powrót</button>
+         </div>
+      </nb-card-body>
+   </nb-card>
+ </ng-template>

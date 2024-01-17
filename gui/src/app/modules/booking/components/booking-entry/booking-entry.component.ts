@@ -4,20 +4,25 @@ import { AppState } from 'src/app/store/app.states';
 import { setLastPageVisited } from '../../../main/store/main.actions';
 import { Subscription } from 'rxjs';
 import { selectOffer } from 'src/app/modules/main/home/store/home.selectors';
-import { OfferItem } from 'src/app/modules/shared/models/offeritem.model';
+import { OfferItem, OfferPhoto } from 'src/app/modules/shared/models/offeritem.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { selectIsAuthenticated, selectUser } from 'src/app/modules/authentication/store/authentication.selectors';
 import { User } from 'src/app/modules/shared/models/user.model';
-import { selectAvailableAppointments, selectSelectedItemType } from '../../store/booking.selectors';
+import { selectAvailableAppointments, selectEditAppointment, selectSelectedItemType } from '../../store/booking.selectors';
 import { Appointment, AvailableAppointment } from 'src/app/modules/shared/models/appointment.model';
 import * as moment from 'moment';
-import { getAvailableAppointments } from '../../store/booking.actions';
+import { getAvailableAppointments, setEditAppointment, setSelectedVisitType } from '../../store/booking.actions';
 import { CalendarDay, CalendarWeek } from 'src/app/modules/shared/models/calendar.model';
 import { CookieService } from 'ngx-cookie-service';
 import { BookingService } from '../../services/booking.service';
 import { ActionStatus } from 'src/app/modules/shared/models/actionstatus.model';
 import { NbDialogService } from '@nebular/theme';
 import { Router } from '@angular/router';
+import { AdministrationService } from 'src/app/modules/administration/services/administration.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Email } from 'src/app/modules/shared/models/email.model';
+import { EmailService } from 'src/app/modules/shared/services/email.service';
+import { CalendarService } from 'src/app/modules/calendar/services/calendar.service';
 
 @Component({
   selector: 'app-booking-entry',
@@ -31,6 +36,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
   userSubscription?: Subscription
   availableAppointmentsSubscription!: Subscription
   subscriptionBookingStatus? : Subscription
+  editAppointmentSubscription? : Subscription
 
   url: string = '/assets/offer-background.png'
   currentWeek = 0
@@ -44,6 +50,10 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
 
   bookingStep: number = 1
   bookingStatus?: ActionStatus
+
+  offerPhotoList!: OfferPhoto[]
+
+  editApointment!: Appointment;
 
   step:number = 0
   dialog: any
@@ -59,8 +69,12 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
     private fb: FormBuilder, 
     private store: Store<AppState>,
     private router: Router, 
+    private sanitizer: DomSanitizer,
+    private administrationService: AdministrationService,
     private bookingService: BookingService,
-    private dialogService: NbDialogService
+    private emailService: EmailService,
+    private dialogService: NbDialogService,
+    private calendarService: CalendarService
   ) {
     this.appointmentForm = this.fb.group({
       type: ['', [Validators.required]],
@@ -73,6 +87,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(setLastPageVisited({url: '/booking'}))
     this.store.dispatch(getAvailableAppointments())
+    this.getAllOfferPhoto()
 
     this.offerSubscription = this.store.select(selectOffer).subscribe(res => {
       if(res) {
@@ -83,6 +98,12 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
     this.selectedItemTypeSubscription = this.store.select(selectSelectedItemType).subscribe(res => {
       if(res) {
         this.selectedItemType = res
+      }
+    })
+
+    this.editAppointmentSubscription = this.store.select(selectEditAppointment).subscribe(res => {
+      if(res) {
+        this.editApointment = res
       }
     })
 
@@ -105,12 +126,31 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
       
     })
 
-    this.appointmentForm = this.fb.group({
-      type: [this.selectedItemType?.id || '', [Validators.required]],
-      date: ['', [Validators.required]],
-      email: [this.isAuthenticated ? this.user?.email : '', [Validators.required, Validators.email]],
-      phone: [this.isAuthenticated ? this.user?.phone : '', [Validators.required, Validators.pattern("^[1-9]{3} [1-9]{3} [1-9]{3}$")]]
-    });
+    if(this.editApointment) {
+      console.log(this.editApointment)
+      this.appointmentForm = this.fb.group({
+        type: [this.editApointment.massageId || '', [Validators.required]],
+        date: ['', [Validators.required]],
+        email: [this.editApointment.usersDTO.email, [Validators.required, Validators.email]],
+        phone: [this.editApointment.usersDTO.phone, [Validators.required, Validators.pattern("^[1-9]{3} [1-9]{3} [1-9]{3}$")]]
+      });
+
+      this.bookingStep = 3
+    } else {
+
+      this.appointmentForm = this.fb.group({
+        type: [this.selectedItemType?.massageId || '', [Validators.required]],
+        date: ['', [Validators.required]],
+        email: [this.isAuthenticated ? this.user?.email : '', [Validators.required, Validators.email]],
+        phone: [this.isAuthenticated ? this.user?.phone : '', [Validators.required, Validators.pattern("^[1-9]{3} [1-9]{3} [1-9]{3}$")]]
+      });
+      
+      if(this.selectedItemType) {
+        this.openStep(2)
+        this.store.dispatch(setSelectedVisitType({visitType: undefined}))
+        
+      }
+    }
   }
 
   changeCurrentWeek(step : number) {
@@ -129,7 +169,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
   }
 
   openStep(step : number) {
-    if(step >= this.bookingStep) {
+    if(step != this.bookingStep) {
       this.bookingStep += 1
     }
   }
@@ -164,7 +204,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
   }
 
 
-  isTypeSelected(id: number | undefined): boolean {
+  isTypeSelected(id: string | undefined): boolean {
     return this.appointmentForm?.get('type')?.value === id || this.appointmentForm?.get('type')?.value === id  || this.appointmentForm?.get('type')?.value === ''; 
   }
 
@@ -192,11 +232,25 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
       Object.entries(bookingDto).filter(([_, value]) => value !== undefined)
     );
         
+
     this.bookingService.bookAppointment(filteredBookingDto).subscribe(
       (res) => {
         this.bookingStatus = {
           success: true,
           failure: false
+        }
+
+        if(this.editApointment && this.editApointment.id) {
+          this.sendChangeConfirmation(filteredBookingDto)
+          this.calendarService.deleteAppointment(this.editApointment.id).subscribe(res => {
+            console.log(res)
+            this.calendarService.addFreeSlot(this.editApointment.startDate, this.editApointment.endDate).subscribe(res => {
+              console.log(res)
+            })
+          })
+          this.store.dispatch(setEditAppointment({appointment : undefined}))
+        } else {
+          this.sendConfirmation(bookingDto)
         }
 
         this.openDialog(dialog)
@@ -214,6 +268,40 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  sendConfirmation(appointment : Appointment) {
+    const email : Email = {
+      visitId: appointment.id,
+      recipientEmail: this.appointmentForm?.getRawValue().email,
+      startTime: appointment.startDate + ".000Z",
+      endTime: appointment.endDate + ".000Z",
+      username: this.isAuthenticated ? this.user.username : this.appointmentForm?.getRawValue().email,
+      eventName: this.offer?.find(off => off.massageId == this.appointmentForm?.getRawValue().type)?.name,
+      description: "Pomyślnie umówiono wizytę",
+      emailStatus: "ACCEPTATION"
+    }
+
+    this.emailService.sendEmail(email).subscribe(res => {
+      console.log(res)
+    })
+  }
+
+  sendChangeConfirmation(filteredBookingDto : Appointment) {
+    const email : Email = {
+      visitId: this.editApointment.id,
+      recipientEmail: this.appointmentForm?.getRawValue().email,
+      startTime: filteredBookingDto.startDate + ".000Z",
+      endTime: filteredBookingDto.endDate + ".000Z",
+      username: this.isAuthenticated ? this.user.username : this.appointmentForm?.getRawValue().email,
+      eventName: this.offer?.find(off => off.massageId == this.appointmentForm?.getRawValue().type)?.name,
+      description: "Wizyta została edytowana",
+      emailStatus: "CHANGE"
+    }
+
+    this.emailService.sendEmail(email).subscribe(res => {
+      console.log(res)
+    })
   }
 
   prepareTooltip(type: string): string {
@@ -257,6 +345,14 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
     const control = this.appointmentForm?.get(name);
     
     return this.submitButtonClick && control?.invalid;
+  }
+
+  
+  getAllOfferPhoto() {
+    this.administrationService.getAllOfferPhoto().subscribe((res : OfferPhoto[]) => {
+      console.log(res)
+      this.offerPhotoList = res
+    })
   }
 
   generateFirstWeek() : any | undefined {
@@ -335,13 +431,24 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
 
   openDialog(dialog : TemplateRef<any>) {
     console.log(this.bookingStatus)
-    if(this.bookingStatus?.success && !this.bookingStatus.failure) {
+    
+    if(this.editApointment && this.bookingStatus?.success && !this.bookingStatus.failure) {
+      this.dialogService.open(dialog, { context: 'Pomyślnie edytowano wizytę' });
+    } else if(this.editApointment && !this.bookingStatus?.success && this.bookingStatus?.failure) {
+      this.dialogService.open(dialog, { context: 'Błąd przy edytowaniu wizyty' });
+    } else if(this.bookingStatus?.success && !this.bookingStatus.failure) {
       this.dialogService.open(dialog, { context: 'Pomyślnie umówiono wizytę' });
-
     } else if(!this.bookingStatus?.success && this.bookingStatus?.failure) {
       this.dialogService.open(dialog, { context: 'Błąd przy umawianiu wizyty' });
-
     }
+  }
+  getOfferPhotoByOfferId(id : number | undefined) {
+    if(!this.offerPhotoList) return
+    const photoBytes = this.offerPhotoList.find(element => element.offerId == id)?.photoByte
+
+    if(!photoBytes) return undefined
+    
+    return this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + photoBytes);
   }
 
   goToHome() {
@@ -352,6 +459,15 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
       failure: false
     }
     // this.store.dispatch(resetBookingStatus())
+  }
+
+  goToCalendar() {
+    this.router.navigateByUrl('/calendar');
+
+    this.bookingStatus = {
+      success: false,
+      failure: false
+    }
   }
 
   bookAgain() {
@@ -379,5 +495,6 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
     if(this.isAuthenticatedSubscription) this.isAuthenticatedSubscription.unsubscribe()
     if(this.userSubscription) this.userSubscription.unsubscribe()
     if(this.availableAppointmentsSubscription) this.availableAppointmentsSubscription.unsubscribe()
+    if(this.editAppointmentSubscription) this.editAppointmentSubscription.unsubscribe()
   }
 }

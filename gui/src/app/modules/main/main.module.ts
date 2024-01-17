@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OfferComponent } from './home/components/offer/offer.component';
 import { NewsletterComponent } from '../newsletter/newsletter/newsletter.component';
 import { CalendarModule } from '../calendar/calendar.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { CalendarModule } from '../calendar/calendar.module';
     NavbarComponent,
     HomeComponent,
     OfferComponent,
-    NewsletterComponent
+    NewsletterComponent,
+    FooterComponent
 
   ]
 })

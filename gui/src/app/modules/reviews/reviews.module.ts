@@ -8,6 +8,7 @@ import { NbLayoutModule, NbButtonModule, NbCardModule, NbContextMenuModule, NbFo
 import { ReviewsEntryComponent } from './components/reviews-entry/reviews-entry.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { StarRateComponent } from './components/star-rating/star-rate.component';
+import { ReviewsService } from './services/reviews.service';
 
 
 
@@ -27,12 +28,14 @@ import { StarRateComponent } from './components/star-rating/star-rate.component'
     FlexLayoutModule,
     MatIconModule,
     NbContextMenuModule,
-    NbCardModule,
     NbFormFieldModule,
     ReactiveFormsModule,
     NbInputModule,
     NbIconModule,
     NbAlertModule
+  ],
+  providers: [
+    ReviewsService
   ]
 })
 export class ReviewsModule { }

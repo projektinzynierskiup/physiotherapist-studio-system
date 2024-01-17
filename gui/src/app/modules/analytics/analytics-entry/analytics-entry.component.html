@@ -1,1 +1,118 @@
-<p>analytics-entry works!</p>
+<div class="container" fxLayout="column" >
+    <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+           <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+           <div  fxLayout="row" fxLayoutAlign="space-between center" class="text">
+              <h2>Statystyki</h2>
+           </div>
+        </div>
+     </div>
+    <div class="navigation"  fxLayout="row" fxLayoutAlign="center center" >
+        <div class="navigation-header">
+            Okres analizy:
+        </div>
+        <div class="nav" fxLayout="column" fxLayoutAlign="center center">
+            <div class="year-nav" fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon (click)="changeYear(-1)">keyboard_arrow_left</mat-icon>
+                <h4>{{year}}</h4>
+                <mat-icon [ngClass]="isYearNavDisabled() ? 'disabled' : ''" (click)="changeYear(+1)">keyboard_arrow_right</mat-icon>
+            </div>
+            <div class="month-nav" fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon (click)="changeMonth(-1)">keyboard_arrow_left</mat-icon>
+                <h3>{{getFormattedMonth()}}</h3>
+                <mat-icon (click)="changeMonth(+1)">keyboard_arrow_right</mat-icon>
+            </div>
+        </div>
+    </div>
+    <div class="content" fxLayout="column">
+        <div class="row-1">
+            <div class="column-1" fxLayout="column" fxLayoutAlign="center center">
+                <div class="header">
+                    Liczba wizyt
+                </div>
+                <div class="cards" fxLayout="row" fxLayoutAlign="center center">
+                    <div class="single-bit-card"  fxLayout="column" fxLayoutAlign="center center">
+                        <p>Roczna</p>
+                        <h5>{{statistics.numberOfAppointmentsAYear}}</h5>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="single-bit-card"  fxLayout="column" fxLayoutAlign="center center">
+                        <p>Miesięczna</p>
+                        <h5>{{statistics.numberOfAppointmentsAMonth}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="column-2" fxLayout="column" fxLayoutAlign="center center">
+                <div class="header">
+                    Najpopularniejszy masaż
+                </div>
+                <div class="cards" fxLayout="row" fxLayoutAlign="center center">
+                    <div class="single-bit-card" fxLayout="column" fxLayoutAlign="center center">
+                        <p>Roku</p>
+                        <h5>{{statistics.mostWantedMassageYear}}</h5>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="single-bit-card" fxLayout="column" fxLayoutAlign="center center">
+                        <p>Miesiąca</p>
+                        <h5>{{statistics.mostWantedMassageMonth}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="column-3" fxLayout="column" fxLayoutAlign="center center">
+                <div class="header">
+                    Przychód
+                </div>
+                <div class="cards" fxLayout="row" fxLayoutAlign="center center">
+                    <div class="single-bit-card" fxLayout="column" fxLayoutAlign="center center">
+                        <p>Roczny</p>
+                        <h5>{{statistics.yearIncome}}<span> zł</span></h5>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="single-bit-card" fxLayout="column" fxLayoutAlign="center center">
+                        <p>Miesięczny</p>
+                        <h5>{{statistics.averageMonthIncome}}<span> zł</span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-2"  fxLayout="column">
+            <div class="column" fxLayout="column" fxLayoutAlign="center center">
+                <div class="header">
+                    Liczba poszczególnych masaży w tym miesiącu
+                </div>
+                <div class="cards" fxLayout="row" fxLayoutAlign="center center">
+                    <div class="single-bit-card multi" fxLayout="column" fxLayoutAlign="center center" *ngFor="let item of statistics.numberOfMassagesAMonth">
+                        <p>{{item.typeOf}}</p>
+                        <h5>{{item.numberOf}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="splitter"></div>
+            <div class="column" fxLayout="column" fxLayoutAlign="center center">
+                <div class="header">
+                    Liczba poszczególnych masaży w tym roku
+                </div>
+                <div class="cards" fxLayout="row" fxLayoutAlign="center center">
+                    <div class="single-bit-card multi" fxLayout="column" fxLayoutAlign="center center" *ngFor="let item of statistics.numberOfMassagesAYear">
+                        <p>{{item.typeOf}}</p>
+                        <h5>{{item.numberOf}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="multi-bit-card" fxLayout="column" fxLayoutAlign="center center">
+        <p>Liczba poszczególnych masaży w tym miesiącu</p>
+        <div class="bit" fxLayout="row" fxLayoutAlign="center center" *ngFor="let item of statistics.numberOfMassagesAMonth">
+            <p>{{item.typeOf}}</p> <h5>{{item.numberOf}}</h5>
+        </div>
+    </div>
+    <div class="multi-bit-card" fxLayout="column" fxLayoutAlign="center center" fxLayout="column" fxLayoutAlign="center center">
+        <p>Liczba poszczególnych masaży w tym roku</p>
+        <div class="bit" fxLayout="row" fxLayoutAlign="center center" *ngFor="let item of statistics.numberOfMassagesAYear">
+            <p>{{item.typeOf}}</p> <h5>{{item.numberOf}}</h5>
+        </div>
+    </div>
+</div> -->

@@ -4,17 +4,18 @@
 </div>
 <nb-column *ngIf="offer" class="container" fxLayout="row wrap" fxLayoutAlign="center center">
    <nb-card size="large" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="space-between center">
-      <div
-         class="background-image"
-         [style.backgroundImage]="'url(' + getUrl(offerItem.id) + ')'"
-         fxLayoutAlign="center center">
-            <div class="overlay"></div> <!-- Add a background overlay -->
-               <div fxLayoutAlign="center center" class="content">
-                  <b>{{ offerItem.massageName }}</b>
-               </div>
+         <div
+            class="background-image"
+            fxLayoutAlign="center center">
+            <div class="overlay" fxLayout="column" fxLayoutAlign="center center">
+               <p>{{ offerItem.name }}</p>
+            </div>
+            <div fxLayoutAlign="center center" class="content">
+               <img *ngIf="getOfferPhotoByOfferId(offerItem.id)" [src]="getOfferPhotoByOfferId(offerItem.id)" />
+            </div>
       </div>
       <div class="description"  fxFlex fxLayout="column" fxLayoutAlign="start center">
-         {{offerItem.description}}
+         {{offerItem.name}}
       </div>
       <nb-card-footer>
          <button nbButton type="primary" fullWidth shape="round" (click)="onOfferItemClick(offerItem)">Umów wizytę</button>

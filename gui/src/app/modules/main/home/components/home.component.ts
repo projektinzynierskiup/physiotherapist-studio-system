@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
 
   prepareTooltip(type: string): string {
     let tip: string = ''
+    console.log(type)
     switch (type) {
       case 'email':
         const emailControl = this.newsletterForm.get('email');

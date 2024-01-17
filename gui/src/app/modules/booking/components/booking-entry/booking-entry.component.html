@@ -13,14 +13,17 @@
             <app-booking-form></app-booking-form>
          </nb-card-body>
       </nb-card> -->
-      <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
-         <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
-           <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
-           <div  fxLayout="column" fxLayoutAlign="center center" class="text">
+   <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+         <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+         <div  fxLayout="row" fxLayoutAlign="space-between center" class="text">
+            <h5 *ngIf="editApointment" style="color: transparent;">TRYB EDYCJI WIZYTY</h5>
             <h2>Umów się do nas</h2>
-           </div>
+            <h5 *ngIf="editApointment" fxLayoutAlign="center center"><mat-icon>edit</mat-icon>TRYB EDYCJI WIZYTY</h5>
          </div>
-       </div>
+
+      </div>
+   </div>
      
 
    
@@ -34,15 +37,15 @@
                <div class="select-offer-item" *ngFor="let offerItem of offer" fxLayoutAlign="center center">
                   <div
                      class="background-image"
-                     [style.backgroundImage]="'url(' + getUrl(offerItem.id) + ')'"
-                     [ngClass]="{ 'not-selected': !isTypeSelected(offerItem.id) }"
+                     [ngClass]="{ 'not-selected': !isTypeSelected(offerItem.massageId) }"
                      fxLayoutAlign="center center"
-                     (click)="setFormItem('type', offerItem.id)"
-                     [matTooltip]="!isTypeSelected(offerItem.id) ? 'Kliknij aby wybrać' : ' '" matTooltipPosition="after">
-                     <div class="overlay"></div> <!-- Add a background overlay -->
-                        <div fxLayoutAlign="center center" class="content">
-                           <p>{{ offerItem.massageName }}</p>
-                        </div>
+                     (click)="setFormItem('type', offerItem.massageId)"
+                     [matTooltip]="!isTypeSelected(offerItem.massageId) ? 'Kliknij aby wybrać' : ' '" matTooltipPosition="after">
+                     <div class="overlay" fxLayout="column" fxLayoutAlign="center center">
+                        <p>{{ offerItem.name }}</p>
+                     </div>
+                     <div fxLayoutAlign="center center" class="content">
+                        <img *ngIf="getOfferPhotoByOfferId(offerItem.id)" [src]="getOfferPhotoByOfferId(offerItem.id)" />
                      </div>
                </div>
             </div>
@@ -103,10 +106,12 @@
                </div>
             </div>
             
-            <button nbButton fullWidth class="submit-btn" type="submit"  size="large" >
+            <button *ngIf="!editApointment" nbButton fullWidth class="submit-btn" type="submit"  size="large" >
                Umów wizytę
             </button>
-            
+            <button *ngIf="editApointment" nbButton fullWidth class="submit-btn" type="submit"  size="large" >
+               Edytuj wizytę
+            </button>
          </div>
       </form>
    </div>
@@ -121,7 +126,11 @@
             <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="bookAgain(); ref.close()">Spróbuj ponownie</button>
             <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="goToHome(); ref.close()">Wróć do strony głównej</button>
          </div>
-         <div *ngIf="bookingStatus?.success" fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div *ngIf="editApointment && bookingStatus?.success" fxFlex fxLayout="row" fxLayoutAlign="center center">
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="bookAgain(); ref.close()">Zamknij tryb edycji</button>
+            <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="goToCalendar(); ref.close()">Wróć do kalendarza</button>
+         </div>
+         <div *ngIf="!editApointment && bookingStatus?.success" fxFlex fxLayout="row" fxLayoutAlign="center center">
             <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="bookAgain(); ref.close()">Umów kolejną wizytę</button>
             <button nbButton  size="medium" fullWidth class="submit-btn" type="submit"  (click)="goToHome(); ref.close()">Wróć do strony głównej</button>
          </div>

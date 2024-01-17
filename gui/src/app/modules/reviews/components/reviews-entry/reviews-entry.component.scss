@@ -1,10 +1,41 @@
+
+.title {
+  width: 100%;
+}
+
+.background-image-1 {
+  height: 100px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative; /* Ensure positioning for child elements */
+  overflow: hidden; /* Hide overflowing content */
+  transition: transform 0.3s;
+}
+
+.background-overlay-1 {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.3); /* Adjust the color and opacity of the overlay */
+}
+h2 {
+  width: 100%;
+  z-index: 4;
+  color: #00010D!important;
+  letter-spacing: 0.6mm;
+  text-transform: uppercase;
+}
 .container {
    height: 100%;
    width: 100%;
 }
 .card {
    width: 100%;
-   height: 100%;
    margin: 5%
 }
 @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap');

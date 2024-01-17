@@ -5,16 +5,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { NbLayoutModule, NbButtonModule, NbCardModule, NbInputModule, NbTooltipModule, NbCheckboxModule } from '@nebular/theme';
+import { NbLayoutModule, NbButtonModule, NbCardModule, NbInputModule, NbTooltipModule, NbCheckboxModule, NbDialogModule, NbSelectModule } from '@nebular/theme';
 import { TruncatePipe } from '../shared/services/truncate.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NumberInputDirective } from './directives/number-input.directive';
 
 
 
 @NgModule({
   declarations: [
     AdministrationEntryComponent,
-    TruncatePipe 
+    TruncatePipe,
+    NumberInputDirective
   ],
   imports: [
     RouterModule,
@@ -29,9 +31,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NbTooltipModule,
     FlexLayoutModule,
     NbButtonModule,
+    NbSelectModule,
     NbCheckboxModule,
     CommonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NbDialogModule
+  ],
+  exports: [
+    NumberInputDirective
   ]
 })
 export class AdministrationModule { }

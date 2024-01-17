@@ -25,6 +25,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { CalendarModule } from './modules/calendar/calendar.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { AdministrationModule } from './modules/administration/administration.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 
 @NgModule({
@@ -59,9 +61,11 @@ import { AdministrationModule } from './modules/administration/administration.mo
     FormsModule,
     NbLayoutModule,
     NbIconModule,
+    AnalyticsModule,
     ReactiveFormsModule,
     NbEvaIconsModule,
-    CalendarModule
+    CalendarModule,
+    SharedModule
   ],
   providers: [
     AuthenticationGuard,

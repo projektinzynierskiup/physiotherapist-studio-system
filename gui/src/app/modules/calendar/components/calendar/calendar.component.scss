@@ -13,15 +13,58 @@
   font-family: 'Rethink Sans', sans-serif !important;
 }
 @media screen and (max-width: 1000px) {
-  .column {
-    padding: 0px 20px;
+  // .column {
+  //   padding: 0px 20px;
 
-  }
+  // }
 
-  .configuration-column {
-    padding: 0px 40px;
+  // .configuration-column {
+  //   padding: 0px 40px;
 
-  }
+  // }
+}
+
+.title {
+  width: 100%;
+}
+
+.background-image-1 {
+  height: 100px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative; /* Ensure positioning for child elements */
+  overflow: hidden; /* Hide overflowing content */
+  transition: transform 0.3s;
+}
+
+.background-overlay-1 {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.3); /* Adjust the color and opacity of the overlay */
+}
+.text {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  padding: 0 5%;
+  width: 100%;
+ 
+   h2 {
+     width: 100%;
+     z-index: 4;
+     color: #00010D!important;
+     letter-spacing: 0.6mm;
+     text-transform: uppercase;
+   }
+   h5 {
+     
+   }
 }
 
 #start,
@@ -158,7 +201,7 @@ mat-icon:hover {
  }
 
 .configuration-day-column {
-  padding: 5px 20px;
+  padding: 5px 0px!important;
   cursor: pointer;
 }
 .configuration-column-title {
@@ -171,7 +214,7 @@ mat-icon:hover {
 }
 
 .time-controls {
-  margin-left: 20px;
+  // margin-left: 20px;
 }
 
 label {
@@ -185,7 +228,6 @@ label {
 .today{
   border: 1px solid rgb(85, 85, 85);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
-
 }
 
 .passed {
@@ -219,9 +261,9 @@ label {
   padding: 10px 0px;
 }
 
-.time-controls {
-  margin-top: -60px;
-  max-width: 250px;
+
+.config-controls {
+  padding: 10px;
 }
 
 .config-cell {

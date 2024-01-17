@@ -3,7 +3,7 @@
    <div class="appointment-form" fxFlex fxLayout="column" fxLayoutAlign="center center">
 
       <nb-select *ngIf="offer" class="type" placeholder="Typ" formControlName="type" fullWidth required >
-         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.id"  >{{ offerItem.massageName }}</nb-option>
+         <nb-option *ngFor="let offerItem of offer" [value]="offerItem.id"  >{{ offerItem.name }}</nb-option>
       </nb-select>
 
       <nb-select *ngIf="groupedAppointments ; else noDates" class="date" placeholder="Available appointments" formControlName="date" fullWidth required>

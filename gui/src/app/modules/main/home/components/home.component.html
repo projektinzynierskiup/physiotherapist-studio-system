@@ -57,8 +57,8 @@
     <form *ngIf="!signedToNewsletter" [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
 
       <label class="label"fxLayoutAlign="center center" >Adres email:</label>
-        <input nbInput id="email" type="email" [ngClass]="{ 'danger': hasError('email') }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim />
-      <label class="label bottom-label">{{prepareTooltip('email')}}</label>
+      <input nbInput id="email" type="email" [ngClass]="{ 'danger': hasError('email') }" fullWidth fieldSize="small" placeholder="Wprowadź adres email" formControlName="email" required inputTrim />
+      <label class="label bottom-label">&nbsp;{{prepareTooltip('email')}}</label>
       
       <button nbButton  size="medium" fullWidth class="submit-btn" type="submit">
         Zapisz się
@@ -73,3 +73,7 @@
   </div>
 </div>
 </div>
+<nb-layout-footer fixed>
+  <app-footer fxFlex></app-footer>
+</nb-layout-footer>
+

@@ -48,7 +48,8 @@
               <div class="checkboxes"  fxLayout="column"  fxLayoutAlign="center center">
 
                 <nb-checkbox formControlName="newsletter"  class="checkbox" fxLayout="row" fullWidth  fxLayoutAlign="start center">Zapisz mnie do newslettera!</nb-checkbox>
-                <nb-checkbox  class="checkbox">Akceptuje regulamin</nb-checkbox>
+                <nb-checkbox formControlName="acceptPrivacy"  class="checkbox" >Akceptuje <a  (click)="openStatuateDialog(statuateDialog)" target=”_blank”> regulamin</a></nb-checkbox>
+                <label class="label bottom-label">{{prepareTooltip('acceptPrivacy')}}</label>
               </div>
             
             <button nbButton fullWidth class="submit-btn" type="submit"  size="medium" >
@@ -67,3 +68,15 @@
      </nb-card>
    </nb-layout-column>
  </nb-layout>
+
+ <ng-template #statuateDialog let-data let-ref="dialogRef">
+  <nb-card>
+      <div id="statuate">{{statuate ? statuate.content : "Regulamin nie istnieje"}}</div>
+     <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+        <div class="bottom-box">
+           <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Zamknij</button>
+        </div>
+     </nb-card-footer>
+
+  </nb-card>
+</ng-template>

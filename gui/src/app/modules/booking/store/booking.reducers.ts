@@ -6,11 +6,13 @@ import { Appointment, AvailableAppointment } from '../../shared/models/appointme
 export interface BookingState {
   selectedItemType: OfferItem | undefined
   availableAppointments: AvailableAppointment[] | undefined
+  editAppointment?: Appointment
 }
 
 export const initialState: BookingState = {
    selectedItemType: undefined,
-   availableAppointments: []
+   availableAppointments: [],
+  editAppointment: undefined
 };
 
 const bookingReducer = createReducer(
@@ -18,6 +20,10 @@ const bookingReducer = createReducer(
   on(BookingActions.setSelectedVisitType, (state, { visitType }) => ({
     ...state,
     selectedItemType: visitType
+  })),
+  on(BookingActions.setEditAppointment, (state, { appointment }) => ({
+    ...state,
+    editAppointment: appointment
   })),
   on(BookingActions.getAvailableAppointmentsSuccess, (state, { appointments }) => ({
     ...state,

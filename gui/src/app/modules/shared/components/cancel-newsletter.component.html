@@ -1,0 +1,46 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+    <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+       <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+          <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+          <div  fxLayout="row" fxLayoutAlign="space-between center" class="text">
+             <h2>Anulowanie subskrypcji newslettera</h2>
+          </div>
+       </div>
+    </div>
+    <div class="content" fxLayout="column">
+    <nb-card class="main-card" fxFlex fxLayout="column"  *ngIf="signedOutCorrectly == undefined">
+       <nb-card-header>
+          Czy napewno chcesz anulować newslettera?
+       </nb-card-header>
+       <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+        <div class="bottom-box">
+           <button nbButton  size="medium" class="signup-box" type="submit" (click)="cancelNewsletter();">Tak</button>
+           <button nbButton  size="medium" class="signup-box" type="submit" (click)="goToHome()">Cofnij</button>
+        </div>
+     </nb-card-footer>
+    </nb-card>
+    <nb-card class="main-card" fxFlex fxLayout="column"  *ngIf="signedOutCorrectly">
+        <nb-card-header>
+           Pomyślnie anulowanu subskrypcję
+        </nb-card-header>
+        <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="cancelNewsletter();">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="goToHome()">Wróć do strony głównej</button>
+         </div>
+      </nb-card-footer>
+     </nb-card>
+     <nb-card class="main-card" fxFlex fxLayout="column"  *ngIf="signedOutCorrectly == false">
+        <nb-card-header>
+           Wystąpił błąd
+        </nb-card-header>
+        <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="goToHome()">Wróć do strony głównej</button>
+         </div>
+      </nb-card-footer>
+     </nb-card>
+
+       
+ </div>
+ </div>

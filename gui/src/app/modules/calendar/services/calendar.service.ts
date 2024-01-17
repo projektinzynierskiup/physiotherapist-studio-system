@@ -38,7 +38,7 @@ export class CalendarService {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
     });
 
-    return this.http.put(`/mod/appointment/${id.toString()}/cancel`, {}, { headers })
+    return this.http.put(`/mod/appointment/${id.toString()}/cancel`, headers )
   }
 
   finishAppointment(id: number): Observable<any> {
@@ -51,7 +51,7 @@ export class CalendarService {
     return this.http.put(`/mod/appointment/${id}/finished`, {}, { headers });
   }
 
-  addFreeSlot(startDate: string, endDate: string) {
+  addFreeSlot(startDate?: string, endDate?: string) {
     const body = {
       startDate: startDate,
       endDate: endDate

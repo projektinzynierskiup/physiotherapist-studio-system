@@ -4,7 +4,7 @@ import { AccountEntryComponent } from './account-entry/account-entry.component';
 import { AccountCardComponent } from './account-entry/account-card/account-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NbLayoutModule, NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbOptionModule } from '@nebular/theme';
+import { NbLayoutModule, NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbOptionModule, NbDialogModule } from '@nebular/theme';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -33,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     FlexLayoutModule,
     MatIconModule,
     MatTooltipModule,
-    HttpClientModule
+    HttpClientModule,
+    NbDialogModule
   ], 
   entryComponents: [
     AccountEntryComponent,

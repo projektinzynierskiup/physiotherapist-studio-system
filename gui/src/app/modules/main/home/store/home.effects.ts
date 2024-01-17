@@ -7,7 +7,7 @@ import { login, loginSuccess, loginFailure } from "src/app/modules/authenticatio
 import { SharedService } from "src/app/modules/shared/services/shared.service";
 import { HomeService } from "../services/home.service";
 import { OfferItem } from "src/app/modules/shared/models/offeritem.model";
-import { getOffer, getOfferFailure, getOfferSuccess } from "./home.actions";
+import { getMassage, getMassageFailure, getMassageSuccess, getOffer, getOfferFailure, getOfferSuccess, getStatuate, getStatuateFailure, getStatuateSuccess } from "./home.actions";
 
 
 @Injectable()
@@ -33,4 +33,36 @@ export class HomeEffects {
           );
       })
    ));
+
+   getMassager$ = createEffect(() => this.actions.pipe(
+    ofType(getMassage),
+    switchMap(() => {
+      return this.homeService.getMassage()
+        .pipe(
+          map((massage: any) => {
+            return getMassageSuccess({ massage: massage });
+          }),
+          catchError((err) => {
+            console.log(err);
+            return of(getMassageFailure({ error: err.error }));
+          })
+        );
+    })
+ ));
+
+ getStatuate$ = createEffect(() => this.actions.pipe(
+  ofType(getStatuate),
+  switchMap(() => {
+    return this.homeService.getStatuate()
+      .pipe(
+        map((statuate: any) => {
+          return getStatuateSuccess({ statuate: statuate });
+        }),
+        catchError((err) => {
+          console.log(err);
+          return of(getStatuateFailure({ error: err.error }));
+        })
+      );
+  })
+));
 }

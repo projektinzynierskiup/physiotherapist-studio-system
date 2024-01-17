@@ -5,41 +5,314 @@
       {{item.active}}
    </div>
  </div>
- <div class="container" [ngSwitch]="switchCase">
-   <nb-column *ngSwitchCase="'offer'" fxLayout="row wrap" fxLayoutAlign="center center">
-     <nb-card size="large" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="center center">
-      <nb-card-header class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
-         <span fxFlex fxLayoutAlign="center center">{{offerItem.massageName}}</span>
-         <mat-icon class="delete-icon" matTooltip="Usuń element">delete</mat-icon>
-       </nb-card-header>
-       
-            <nb-card-body class="card-description" fxLayout="column" fxLayoutAlign="center center">
-              
-               <p>
-                  {{offerItem.description}}
-               </p>
-            </nb-card-body>
-            <nb-card-footer>
-               <mat-icon class="medium-icon" matTooltip="Edytuj element">edit</mat-icon>
-            </nb-card-footer>
-         </nb-card>
-         <nb-card size="large" class="card" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <nb-card-header class="card-title"  fxLayoutAlign="center center">
-               DODAJ OFERTĘ
-            </nb-card-header>
-            <nb-card-body class="card-description"  fxLayoutAlign="center center">
-              <mat-icon class="large-icon">playlist_add</mat-icon>
-            </nb-card-body>
-         </nb-card>
-      </nb-column>
+ <div class="container" fxLayout="column" [ngSwitch]="switchCase">
+   <div class="title" fxFlex fxLayout="column" fxLayoutAlign="center center">
+      <div class="background-image-1" [style.backgroundImage]="'url(' + getBackground() + ')'" fxLayoutAlign="center center">
+         <div class="background-overlay-1"></div> <!-- Dodaj tło overlay -->
+         <div  fxLayout="row" fxLayoutAlign="space-between center" class="text">
+            <h2>Administracja</h2>
+         </div>
+      </div>
+   </div>
+   <nb-column *ngSwitchCase="'offer'" fxLayout="column wrap" fxLayoutAlign="center center">
 
-      <nb-column *ngSwitchCase="'priceList'" fxLayout="column" fxLayoutAlign="center center">
-         <div size="small" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <div fxLayout="row" fxLayoutAlign="center center" class="card-title">
-               <p class="offer-price-title">{{offerItem.massageName}}</p>
-               <p>100zł</p>
-               <mat-icon class="edit-price-button">edit</mat-icon>
+      <div class="massage-list" fxFlex fxLayout="column">
+         <h3>Lista oferowanych masaży</h3>
+      
+         <div class="list" fxFlex fxLayout="column">
+            <div class="title-row" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+               <p class="column">Nazwa</p>
+               <p class="column">Opis</p>
+               <p class="column">Typ</p>
+               <p class="column"></p>
+            </div>
+            <div class="row" fxFlex fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let massage of massageList">
+               <p class="column">{{massage.massageName}}</p>
+               <p class="column">{{massage.description}}</p>
+               <p class="column">{{massage.appointmentType}}</p>
+               <div class="actions" fxFlex fxLayout="row" fxLayoutAlign="flex-end center">
+                  <div class="edit-massage" fxLayoutAlign="center center"  (click)="openEditMassageDialog(addMassageDialog, massage)">
+                     <mat-icon>edit</mat-icon>
+                  </div>
+                  <div class="delete-massage" fxLayoutAlign="center center" (click)="openDeleteDialog(deleteMassageDialog, massage)">
+                     <mat-icon>delete</mat-icon>
+                  </div>
+               </div>
             </div>
          </div>
+      
+         <div class="add-massage" fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="openAddDialog(addMassageDialog)">
+            <mat-icon>add</mat-icon> dodaj masaż
+         </div>
+      </div>
+      <br>
+      <div class="offer-list" fxFlex fxLayout="column">
+         <h3>Lista ofert</h3>
+
+         <nb-column fxLayout="row wrap" fxLayoutAlign="center center">
+            <nb-card size="medium" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="space-around center">
+               <div class="description"  fxLayoutAlign="end start" (click)="openDeleteDialog(deleteOfferDialog, offerItem)">
+                  <mat-icon>close</mat-icon>
+               </div>
+               <div class="background-image" fxLayoutAlign="center center" (click)="selectImage()">
+                  <div class="overlay" fxLayout="column" fxLayoutAlign="space-between center" (click)="setSelectedOfferId(offerItem.id)">
+                     <b *ngIf="getOfferPhotoByOfferId(offerItem.id)" fxLayout="row" fxLayoutAlign="center center"><mat-icon>edit</mat-icon>edytuj zdjęcie</b>
+                     <b *ngIf="!getOfferPhotoByOfferId(offerItem.id)" fxLayout="row" fxLayoutAlign="center center"><mat-icon>add</mat-icon>dodaj zdjęcie</b>
+                  </div> 
+                  <div fxLayoutAlign="center center" class="content">
+                     <img *ngIf="getOfferPhotoByOfferId(offerItem.id)" [src]="getOfferPhotoByOfferId(offerItem.id)" />
+                  </div>
+                  <!-- Hidden file input -->
+                  <input type="file" #imageInput style="display: none" (change)="handleImageSelect($event)">
+               </div>
+               
+               <div  class="description" fxFlex fxLayout="column" fxLayoutAlign="center center" >
+                  <b>{{ offerItem.name }}</b>
+               </div>
+
+               <div class="description" fxFlex fxLayout="column" fxLayoutAlign="center center">
+                  {{getMassageById(offerItem.massageId)}}
+               </div>
+               <div class="description" fxFlex fxLayout="column" fxLayoutAlign="center center">
+                  {{offerItem.price}} zł
+               </div>
+
+               <div class="description" fxFlex fxLayout="column" fxLayoutAlign="center center">
+                  {{convertMinutesToHoursAndMinutes(offerItem.duration)}}
+               </div>
+
+               <div class="add-massage" fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="openEditOfferDialog(dialog, offerItem)">
+                  <mat-icon>edit</mat-icon> edytuj ofertę
+               </div>
+            </nb-card>
+            <nb-card size="medium" class="card" fxFlex fxLayout="column" fxLayoutAlign="center center">
+               <nb-card-header class="card-title"  fxLayoutAlign="center center">
+                  Dodaj ofertę
+               </nb-card-header>
+               <nb-card-body class="description"  fxLayoutAlign="center center">
+                 <mat-icon (click)="openAddDialog(dialog)" class="large-icon">playlist_add</mat-icon>
+               </nb-card-body>
+            </nb-card>
+         </nb-column>
+         <!-- <nb-card size="large" class="card" *ngFor="let offerItem of offer" fxFlex fxLayout="column" fxLayoutAlign="center center">
+            <nb-card-header class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+               <span fxFlex fxLayoutAlign="center center">{{offerItem.name}}</span>
+               <mat-icon class="delete-icon" matTooltip="Usuń element" (click)="openDeleteDialog(deleteDialog, offerItem)">delete</mat-icon>
+            </nb-card-header>
+                  <nb-card-body class="card-description" fxLayout="column" fxLayoutAlign="center center">
+
+               <p>
+                  {{offerItem.name}}
+               </p>
+            </nb-card-body>
+            <nb-card-footer (click)="openEditOfferDialog(dialog, offerItem)">
+               <mat-icon class="medium-icon" matTooltip="Edytuj element">edit</mat-icon>
+            </nb-card-footer>
+         </nb-card> -->
+
+      </div>
+      
+
+      </nb-column>
+
+      <nb-column *ngSwitchCase="'regulations'" fxLayout="column" fxLayoutAlign="center center">
+         <div class="massage-list" fxFlex fxLayout="column">
+            <h3>Zarządzanie regulaminem</h3>
+            <label  *ngIf="editStatuate" class="edit-statuate-label label"  fxFlex fxLayoutAlign="end center">tryb edycji</label>
+            <label  *ngIf="!editStatuate" class="edit-statuate-label label invisible"  fxFlex fxLayoutAlign="end center">tryb edycji</label>
+            <div *ngIf="!editStatuate" class="statuate-field" (click)="triggerEditStatuateMode()" matTooltip="Kliknij aby edytować" matTooltipPosition="above" matTooltipShowDelay="50">
+               <div id="statuate">{{statuate ? statuate.content : editStatuateContent}}</div>
+            </div>
+            <div *ngIf="editStatuate" class="edit-statuate-field">
+               <textarea nbInput fullWidth fieldSize="small" id="statuateInput" [(ngModel)]="editStatuateContent"></textarea>
+            </div>
+            <div *ngIf="editStatuate" class="statuate-actions" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <div class="action" fxFlex fxLayout="row" fxLayoutAlign="center center"  (click)="triggerEditStatuateMode()">
+                  <mat-icon></mat-icon> ANULUJ
+               </div>
+               <div class="action" fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="openConfirmEditDialog(editStatuateDialog)">
+                  <mat-icon></mat-icon> ZAPISZ
+               </div>
+            </div>
+            <div *ngIf="!editStatuate" class="statuate-actions" fxFlex fxLayout="row" fxLayoutAlign="center center">
+               <div fxFlex fxLayout="row" fxLayoutAlign="center center" >
+                  <mat-icon></mat-icon>
+               </div>
+               <div class="action" fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="triggerEditStatuateMode()">
+                  <mat-icon></mat-icon> EDYTUJ
+               </div>
+            </div>
+
+         </div>
+
       </nb-column>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+   <nb-card  class="dialog" fxLayout="column" fxLayoutAlign="center space-between">
+      <form [formGroup]="addOfferForm" (ngSubmit)="saveOffer()" fxLayout="column" >
+         <nb-card-header class="card-title"  fxLayoutAlign="center center">
+            Dodaj ofertę
+         </nb-card-header>
+         <div class="card-description" fxLayout="column" fxLayoutAlign="start center">
+            <label class="label" for="name">Nazwa:</label>
+            <input nbInput fullWidth fieldSize="small" type="text" id="name" formControlName="name">
+            <label class="label bottom-label">{{prepareOfferTooltip('name')}}</label>
+
+            <label  class="label" for="duration">Czas trwania(w minutach):</label>
+            <input appNumberInputMask nbInput fullWidth fieldSize="small" id="duration" formControlName="duration">
+            <label class="label bottom-label">{{prepareOfferTooltip('duration')}}</label>
+
+            <label  class="label" for="price">Cena:</label>
+            <input appNumberInputMask nbInput fullWidth fieldSize="small" id="price" formControlName="price">
+            <label class="label bottom-label">{{prepareOfferTooltip('price')}}</label>
+
+            <label  class="label" for="massage">Typ masażu:</label>
+            <nb-select *ngIf="availableMassageList?.length" fullWidth fieldSize="small" id="massage"  formControlName="massageId" >
+               <nb-option [value]="massageItem.id" *ngFor="let massageItem of availableMassageList">{{massageItem.massageName}}</nb-option>
+            </nb-select>
+            <input id="empty-select"  matTooltip="Kliknij aby dodać" (click)="openAddDialog(addMassageDialog); ref.close()" fullWidth fieldSize="small" nbInput *ngIf="!availableMassageList?.length" placeholder="Brak dostępnych masaży">
+            <label class="label bottom-label">{{prepareOfferTooltip('massage')}}</label>
+
+            <!-- <label  class="label" for="description">Zdjęcie dla oferty:</label>
+            <input nbInput fullWidth fieldSize="small" type="file" id="description" (change)="onFileSelected($event)" />
+            <div *ngIf="selectedImage">
+               <img [src]="selectedImage" alt="Selected Image" width="380" />
+             </div> -->
+
+         </div>
+         <nb-card-footer fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="editOffer ? openConfirmOfferEditDialog(confirmEditOfferDialog) : saveOffer(); addOfferForm.valid ? ref.close() : null">
+            <mat-icon class="small-icon">add</mat-icon><p style="cursor: pointer;">{{editOffer ? 'Edytuj' : 'Dodaj'}}</p>
+         </nb-card-footer>
+      </form>
+
+   </nb-card>
+ </ng-template>
+
+ <ng-template #addMassageDialog let-data let-ref="dialogRef">
+   <nb-card  class="dialog" fxLayout="column" fxLayoutAlign="center space-between">
+      <form [formGroup]="addMassageForm" (ngSubmit)="saveMassage()" fxLayout="column" >
+         <nb-card-header class="card-title"  fxLayoutAlign="center center">
+            Dodaj masaż
+         </nb-card-header>
+         <div  class="card-description" fxLayout="column" fxLayoutAlign="start center">
+            <label class="label" for="massageName">Nazwa:</label>
+            <input nbInput fullWidth fieldSize="small" type="text" id="massageName" formControlName="massageName">
+            <label class="label bottom-label">{{prepareTooltip('massageName')}}</label>
+
+            <label  class="label" for="description">Opis:</label>
+            <textarea nbInput fullWidth fieldSize="small" id="description" formControlName="description"></textarea>
+            <label class="label bottom-label">{{prepareTooltip('description')}}</label>
+
+            <label  class="label" for="appointmentType">Typ:</label>
+            <input nbInput fullWidth fieldSize="small" id="appointmentType" formControlName="appointmentType">
+            <label class="label bottom-label">{{prepareTooltip('type')}}</label>
+         </div>
+         <nb-card-footer fxFlex fxLayout="row" fxLayoutAlign="center center" (click)="editMassage ? openConfirmEditDialog(confirmEditDialog) : saveMassage(); ref.close()">
+            <mat-icon class="small-icon">add</mat-icon><p style="cursor: pointer;">{{editMassage ? 'Edytuj' : 'Dodaj'}}</p>
+         </nb-card-footer>
+      </form>
+
+   </nb-card>
+ </ng-template>
+
+ <ng-template #deleteMassageDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź usunięcie masażu</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz usunąć <b>{{data?.massageName}}</b>*
+         <br>
+         <p style="font-size: 0.7em;">*zostaną również usunięte oferty związane z tym masażem</p>
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="deleteMassage(data.id); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+ <ng-template #editStatuateDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź edycję regulaminu</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz edytować regulamin
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="editStatuateMethod(); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="triggerEditStatuateMode(); ref.close()">Anuluj</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+ <ng-template #deleteOfferDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź usunięcie oferty</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz usunąć <b>{{data?.name}}</b>
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="deleteOffer(data.id); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+
+ <ng-template #deleteDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź usunięcie oferty</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz usunąć <b>{{data}}</b>
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="deleteOffer(data); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+ 
+ <ng-template #confirmEditDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź edycję oferty</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz edytować <b>{{data}}</b>
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="saveMassage(); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>
+
+  
+ <ng-template #confirmEditOfferDialog let-data let-ref="dialogRef">
+   <nb-card>
+      <nb-card-header>Potwierdź edycję oferty</nb-card-header>
+      <nb-card-body>
+         Czy na pewno chcesz edytować <b>{{data}}</b>
+      </nb-card-body>
+      <nb-card-footer  fxFlex fxLayout="row" fxLayoutAlign="center center">
+         <div class="bottom-box">
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="saveOffer(); ref.close()">Tak</button>
+            <button nbButton  size="medium" class="signup-box" type="submit" (click)="ref.close()">Cofnij</button>
+         </div>
+      </nb-card-footer>
+
+   </nb-card>
+ </ng-template>

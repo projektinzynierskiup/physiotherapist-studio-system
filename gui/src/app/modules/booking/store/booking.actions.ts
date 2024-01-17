@@ -7,6 +7,12 @@ export const setSelectedVisitType = createAction(
    props<{ visitType: any }>()
 );
 
+export const setEditAppointment = createAction(
+   '[Booking] Set Edit Appointment',
+   props<{ appointment?: Appointment  }>()
+);
+
+
 export const getCalendar = createAction(
    '[Booking] Get Calendar'
 )
