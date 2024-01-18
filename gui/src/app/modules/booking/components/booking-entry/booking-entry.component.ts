@@ -57,7 +57,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
 
   step:number = 0
   dialog: any
-
+  isMod!:boolean
   availableAppointments?: AvailableAppointment[]
   availableAppointmentsCalendar : CalendarWeek[] = []
   groupedAppointments?: {
@@ -114,6 +114,7 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
     this.userSubscription = this.store.select(selectUser).subscribe(res => {
       if(res) {
         this.user = res
+        this.user && this.user.role == "MOD" ? this.isMod = true : this.isMod = false
       }
     })
 
@@ -326,6 +327,12 @@ export class BookingEntryComponent implements OnInit, OnDestroy {
         const surnameControl = this.appointmentForm?.get('surname');
         if(surnameControl?.value === '' && this.submitButtonClick) {
           tip += "Nazwisko wymagane"
+        }
+        break;
+      case 'date':
+        const dateControl = this.appointmentForm?.get('date');
+        if(dateControl?.value === '' && this.submitButtonClick) {
+          tip += "Wybór terminu wymagany"
         }
         break;
       case 'phone':

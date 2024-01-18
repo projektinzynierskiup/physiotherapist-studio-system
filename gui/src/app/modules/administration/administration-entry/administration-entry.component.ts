@@ -96,14 +96,14 @@ export class AdministrationEntryComponent implements OnInit, OnDestroy {
     this.getAllOfferPhoto()
     this.massageSubscription = this.store.select(selectMassage).subscribe(res => {
       console.log(res)
-      if(res.length) {
+      if(res != undefined) {
         this.massageList = res
       } 
     })
 
     this.offerSubscription = this.store.select(selectOffer).subscribe(res => {
       console.log(res)
-      if(res.length) {
+      if(res != undefined) {
         this.offer = res
         this.getAvailableMassageList()
       } 

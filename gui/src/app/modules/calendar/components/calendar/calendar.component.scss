@@ -90,6 +90,7 @@
 .cell {
   border-bottom: 1px solid rgb(241, 241, 241);
   width: 100%;
+  transition: all 0.2s ease-out;
 }
 
 .cell:hover {

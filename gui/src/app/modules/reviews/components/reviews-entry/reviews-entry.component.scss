@@ -111,8 +111,10 @@ nb-icon {
 
 input, textarea {
   border: 1px solid #d8d8d8 !important;
-  background-color:  #ececec !important;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+  background-color:  #f3f3f3 !important;
+  margin: 2px;
+  width: 100% !important;
+  box-shadow: 0 0 2px rgba(175, 175, 175, 0.1); /* Add light gray shadow */
 }
 
 
@@ -124,7 +126,7 @@ input, textarea {
  .submit-btn {
    padding: 0.9em 1.8em;
    border: 1px solid #d8d8d8 !important;
-   background-color: #ececec !important;
+   background-color:  #f3f3f3 !important;
    cursor: pointer;
  }
 

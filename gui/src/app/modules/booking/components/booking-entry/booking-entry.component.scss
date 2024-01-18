@@ -50,10 +50,12 @@
  }
 
 .column {
-   border: 1px solid rgb(241, 241, 241);
+   border: 1px solid #e5e5e5 !important;
+   background-color:  #f3f3f3 !important;   
    text-align: center;
-   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+   // box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
    border-radius: 3px;
+   margin: 0px 3px;
 }
 
 .column-content {
@@ -138,35 +140,38 @@ nb-card-body {
  .cell {
    border: 1px solid rgb(241, 241, 241);
    width: 100%;
+   transition: all 0.2s ease-out;
  }
 
 .selected {
    border-radius: 3px;
-   border: 1px solid gray;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add light gray shadow */
-   background-color: white;
+   background-color: rgb(237, 237, 237);
    z-index: 100;
 
 }
 
 .cell .not-selected {
-   color: rgba(0, 0, 0, 0.1)!important;
+   opacity: 0.7;
 }
  
  .cell:hover {
-   background-color: rgb(247, 247, 247);
+   background-color: rgb(237, 237, 237);
+   cursor: pointer;
+ }
+ .cell:active {
+   background-color: rgb(225, 225, 225);
    cursor: pointer;
  }
     
 
- .today{
-   border: 1px solid rgb(85, 85, 85);
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
+//  .today{
+//    border: 1px solid rgb(85, 85, 85);
+//    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add light gray shadow */
  
- }
+//  }
  
  .passed {
-   opacity: 0.5; /* Adjust the opacity as needed */
+   opacity: 0.4; /* Adjust the opacity as needed */
  
  }
 
@@ -255,7 +260,7 @@ nb-card-body {
 
 input {
    border: 1px solid #d8d8d8 !important;
-   background-color:  #ececec !important;
+   background-color:  #f3f3f3 !important;
  margin: 2px;
  width: 100% !important;
  box-shadow: 0 0 2px rgba(175, 175, 175, 0.1); /* Add light gray shadow */
@@ -275,7 +280,7 @@ input {
  margin-top: 10px;
  padding: 1.2em 2.8em;
  border: 1px solid #d8d8d8 !important;
- background-color: #ececec !important;
+ background-color:  #f3f3f3 !important;
  cursor: pointer;
 }
 

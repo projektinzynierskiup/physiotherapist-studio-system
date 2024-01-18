@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           tip += "Hasło wymagane"
         } else 
         if (passwordControl?.hasError('pattern') || passwordControl?.hasError('minlength')) {
-          tip = "Hasło musi zawierać co najmniej 8 znaków, dużą i małą literę oraz znak specjalny.";
+          tip = "Hasło musi zawierać co najmniej 8 znaków, dużą i małą literę.";
         }
         break;
       case 'confirmPassword':

@@ -53,6 +53,8 @@
    }
 }
 
+
+
 .massage-list {
    max-width: 800px; /* Set a maximum width for better readability */
 }
@@ -124,6 +126,10 @@
    margin-left: 5px;
 }
 
+mat-icon:hover {
+  transform: scale(1.1);
+}
+
 .large-icon {
    transform: scale(2);
    cursor: pointer;
@@ -131,6 +137,16 @@
 
 .medium-icon {
    transform: scale(1.5);
+   cursor: pointer;
+}
+
+.large-icon:hover {
+   transform: scale(2.1);
+   cursor: pointer;
+}
+
+.medium-icon:hover {
+   transform: scale(1.6);
    cursor: pointer;
 }
 
@@ -203,7 +219,10 @@
  .overlay:hover {
    background: rgba(0, 0, 0, 0.7); /* Adjust the color and opacity of the overlay */
    transition: all 0.3s;
+   
    b {
+      transform: scale(1.2);
+
       color: #ffffff!important; /* Set text color to white or a color that contrasts well with the overlay */
       transition: all 0.3s;
       height: 100%;

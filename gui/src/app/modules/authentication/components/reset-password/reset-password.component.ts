@@ -120,7 +120,7 @@ export class ResetPasswordComponent implements OnInit {
           tip += "Hasło wymagane"
         } else 
         if (passwordControl?.hasError('pattern')) {
-          tip = "Hasło musi mieć co najmniej 8 znaków, zawierać dużą i małą literę oraz znak specjalny.";
+          tip = "Hasło musi mieć co najmniej 8 znaków, zawierać dużą i małą literę.";
         }
         break;
       case 'confirmPassword':

@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { OfferItem, OfferPhoto } from 'src/app/modules/shared/models/offeritem.model';
 import { AppState } from 'src/app/store/app.states';
-import { selectOffer } from '../../store/home.selectors';
+import { selectMassage, selectOffer } from '../../store/home.selectors';
 import { setSelectedVisitType } from 'src/app/modules/booking/store/booking.actions';
 import { Router } from '@angular/router';
-import { getOffer } from '../../store/home.actions';
+import { getMassage, getOffer } from '../../store/home.actions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AdministrationService } from 'src/app/modules/administration/services/administration.service';
+import { Massage } from 'src/app/modules/shared/models/massage.model';
 
 @Component({
   selector: 'app-offer',
@@ -18,11 +19,13 @@ import { AdministrationService } from 'src/app/modules/administration/services/a
 export class OfferComponent implements OnInit, OnDestroy {
 
   offerSubscription?: Subscription
+  massageSubscription?: Subscription
 
   modRole: boolean = false
 
   offer?: OfferItem[]
   offerPhotoList!: OfferPhoto[]
+  massageList?: Massage[]
 
   constructor(
     private store: Store<AppState>,
@@ -34,6 +37,15 @@ export class OfferComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.modRole = localStorage.getItem('role') == 'MOD'
     this.getAllOfferPhoto()
+    this.store.dispatch(getMassage())
+    this.store.dispatch(getOffer())
+
+    this.massageSubscription = this.store.select(selectMassage).subscribe(res => {
+      console.log(res)
+      if(res != undefined) {
+        this.massageList = res
+      } 
+    })
 
     this.offerSubscription = this.store.select(selectOffer).subscribe(res => {
       console.log(res)
@@ -75,7 +87,14 @@ export class OfferComponent implements OnInit, OnDestroy {
     })
   }
 
+  getDescription(id?: string) {
+    console.log(id)
+    console.log(this.massageList)
+    return this.massageList?.find(massage => massage.id == id)?.description
+  }
+
   ngOnDestroy(): void {
     if(this.offerSubscription) this.offerSubscription.unsubscribe()
+    if(this.massageSubscription) this.massageSubscription.unsubscribe()
   }
 }

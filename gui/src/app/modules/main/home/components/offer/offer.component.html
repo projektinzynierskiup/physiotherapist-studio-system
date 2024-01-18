@@ -15,7 +15,10 @@
             </div>
       </div>
       <div class="description"  fxFlex fxLayout="column" fxLayoutAlign="start center">
-         {{offerItem.name}}
+         {{getDescription(offerItem.massageId)}}
+      </div>
+      <div class="description" style="opacity: 0.75; font-size: 0.9em;" fxFlex fxLayout="column" fxLayoutAlign="end center">
+         {{offerItem.price}}zł - {{offerItem.duration}}min
       </div>
       <nb-card-footer>
          <button nbButton type="primary" fullWidth shape="round" (click)="onOfferItemClick(offerItem)">Umów wizytę</button>

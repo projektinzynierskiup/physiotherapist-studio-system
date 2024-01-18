@@ -46,7 +46,7 @@
    <div *ngIf="calendarData.length > 0" fxFlex fxLayout="row wrap" >
       <div [ngClass]="{'column': true, 'today': days.today, 'passed': days.passed}" fxFlex fxLayout="column" fxLayoutAlign="center space-between" *ngFor="let days of calendarData[currentWeek].days;  index as i">
          <div class="column-title" [innerHTML]="formatDate(days.day)"></div>
-         <div [ngClass]="{'booked': cell.isBooked, 'cell': true, 'finished': cell.isFinished}" *ngFor="let cell of days.cells" (click)="(cell.isBooked || cell.isFinished) ? triggerCellExpand(cell) : goToBooking()" [matTooltip]="cell.isFinished ? 'Wizyta zakończona' : (cell.isBooked && !cell.isExpanded ? 'Wizyta umówiona' : 'Wolny termin, kliknij aby dodać wizytę')" matTooltipPosition="after">
+         <div [ngClass]="{'booked': cell.isBooked, 'cell': true, 'finished': cell.isFinished}" *ngFor="let cell of days.cells" (click)="(cell.isBooked || cell.isFinished) ? triggerCellExpand(cell) : goToBooking()" [matTooltip]="!days.passed ? (cell.isFinished ? 'Wizyta zakończona' : (cell.isBooked && !cell.isExpanded ? 'Wizyta umówiona' : 'Wolny termin, kliknij aby dodać wizytę')) : ''" matTooltipPosition="after">
             <p>{{cell.startDate}}</p>
             <div *ngIf="(cell.isBooked || cell.isFinished) && cell.isExpanded">
                <p><b>Typ wizyty:</b> {{cell.appointment?.massageDTO.massageName}}</p>
@@ -90,7 +90,7 @@
       <nb-card-header>Czy na pewno chcesz anulować wizytę?</nb-card-header>
       <nb-card-body>
          <div class="bottom-box">
-            <button  nbButton  size="medium" class="signup-box" type="submit" (click)="deleteAppointment(data); ref.close()">Tak</button>
+            <button  nbButton  size="medium" class="signup-box" type="submit" (click)="deleteAppointment(data, true); ref.close()">Tak</button>
             <button  nbButton  size="medium" class="signup-box" type="submit" (click)=" ref.close()">Powrót</button>
          </div>
       </nb-card-body>
@@ -176,7 +176,7 @@
                <div style="width: 100%" fxLayout="row wrap" fxLayoutAlign="space-around center">
                   <mat-icon *ngIf="expanded == i && !cell.isBooked && !cell.isFinished" style="color: transparent;">close</mat-icon> 
                   <p>{{cell.startDate}} - {{cell.endDate}}</p>
-                  <mat-icon *ngIf="expanded == i && !cell.isBooked  && !cell.isFinished" fxLayoutAlign="center center" (click)="deleteAppointment(cell.appointment)">close</mat-icon> 
+                  <mat-icon *ngIf="expanded == i && !cell.isBooked  && !cell.isFinished" fxLayoutAlign="center center" (click)="deleteAppointment(cell.appointment, false)">close</mat-icon> 
                </div>
 
                <div class="break-label label">{{getBreak(cell.endDate, days.cells[element + 1])}}</div>

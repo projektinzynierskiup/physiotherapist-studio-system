@@ -159,12 +159,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.dialogService.open(dialog, {context: data});
   }
 
-  deleteAppointment( data : Appointment | undefined) {
+  deleteAppointment( data : Appointment | undefined, sendRejection: boolean) {
     if(data && data.id) {
       this.resetCalendar()
       this.calendarService.deleteAppointment(data.id).subscribe(res => {
         console.log(res)
-        this.sendRejection(data)
+        if(sendRejection) this.sendRejection(data)
         this.store.dispatch(setCalendarUpdate({flag: true}))
       })
       this.getWeek(this.calendarData[this.currentWeek].days[0].day)
