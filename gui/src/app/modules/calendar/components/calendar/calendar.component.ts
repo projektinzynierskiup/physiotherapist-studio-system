@@ -39,15 +39,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   nextVisitStart: string = ''
   nextVisitEnd: string = ''
 
-  configurationCalendar? : [
-    {
-      day: string,
-      startOfTheDay: string,
-      endOfTheDay: string,
-      breaks: string,
-    }
-  ]
-
   generalWorkingHours : {
     startHours: number,
     startMinutes: number,
@@ -357,16 +348,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
   expand(i: number) {
     this.expanded = i;
     const visits = this.calendarData[this.currentWeek].days[this.expanded]?.cells;
+    const isToday = this.calendarData[this.currentWeek].days[this.expanded]?.today
     if(!visits) return
-    if (visits?.length > 0) {
+
+    if(isToday && visits?.length == 0) {
+      this.differentWorkHours[this.expanded].startHours = moment().add(1, 'hour').get('hour')
+      this.differentWorkHours[this.expanded].startMinutes = this.generalWorkingHours.startMinutes
+      this.generateNextVisit();
+    } else if (visits?.length > 0) {
       const lastElementEndDate = moment(visits[visits.length - 1].endDate, "HH:mm");
 
       const modifiedEndDate = lastElementEndDate.clone().add(this.differentWorkHours[this.expanded].breaks, 'minutes');
 
-        this.differentWorkHours[this.expanded].startHours = moment(modifiedEndDate).get('hour')
-        this.differentWorkHours[this.expanded].startMinutes = moment(modifiedEndDate).get('minutes')
+      this.differentWorkHours[this.expanded].startHours = moment(modifiedEndDate).get('hour')
+      this.differentWorkHours[this.expanded].startMinutes = moment(modifiedEndDate).get('minutes')
 
-        this.generateNextVisit();
+      this.generateNextVisit();
 
     } else {
       this.differentWorkHours[this.expanded].startHours = this.generalWorkingHours.startHours
